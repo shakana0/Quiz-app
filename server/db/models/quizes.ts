@@ -18,6 +18,10 @@ const schema = new Schema<QuizType>({
   questions: { type: [Object], required: true },
 });
 
-// "quizes" är namnet på mongoDB collectionen
+// "quizes" är namnet på mongoDB collectionen i powershell
+// const QuizModel = model<QuizType>("quizes", schema);
+
 const QuizModel = model<QuizType>("quizes", schema);
+
+
 export default QuizModel;
