@@ -1,10 +1,14 @@
 import express, { Request, Response, json } from "express";
 import quizRouter from "./routes/quiz";
 import dotenv from "dotenv";
+import cors from "cors"
 
 dotenv.config();
 const app = express();
 app.use(json());
+
+//för aktivera alla CORS-förfrågningar
+app.use(cors())
 app.use("/quiz", quizRouter);
 import { connect } from "mongoose";
 
