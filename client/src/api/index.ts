@@ -1,7 +1,8 @@
 import axios from "axios";
 
-// axios.defaults.baseURL = "https://quiz-app-backend-heroku.herokuapp.com/";
-axios.defaults.baseURL = "http://localhost:3030";
+axios.defaults.baseURL = "https://quiz-app-backend-heroku.herokuapp.com";
+
+// axios.defaults.baseURL = "http://localhost:3030";
 
 export const getAllQuizes = async () => {
   try {
