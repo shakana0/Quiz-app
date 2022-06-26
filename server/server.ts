@@ -24,7 +24,9 @@ connect(
   });
 });
 
-const PORT = 3030;
+// const PORT = 3030;
+const PORT = process.env.PORT || 3030;
+
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello world :)");
 });
