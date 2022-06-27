@@ -1,26 +1,25 @@
 import React from "react";
 import "./App.css";
-import { useState, useEffect } from "react";
-import * as api from "./api/index";
-import { QuizType } from "./interface/quizType";
+
+import { Layout } from "./components/Layout";
+import { Routes, Route } from 'react-router-dom';
+import { LandingPage } from './features/home/LandingPageView';
+import { ProfileView } from "./features/profile/ProfileView";
+import { SingleQuizView } from "./features/singleQuiz/SingleQuizView";
+
 
 const App = () => {
-  const [allQuizes, setQuiz] = useState<QuizType[]>([]);
 
-  useEffect(() => {
-    const loadQuizes = async () => {
-      const res = await api.getAllQuizes();
-      setQuiz(res.data);
-    };
-    loadQuizes();
-  }, []);
+
   return (
     <>
-      <h1>Hello from APP</h1>
-      {allQuizes &&
-        allQuizes.map((quiz, index: number) => (
-          <li key={index}>{quiz.titel}</li>
-        ))}
+      <Layout>
+      <Routes>
+          <Route  path="/" element={<LandingPage />} />
+          <Route path="/quiz/:id" element={<SingleQuizView />} />
+          <Route path="/profile" element={<ProfileView />} />
+        </Routes>
+      </Layout>
     </>
   );
 };
