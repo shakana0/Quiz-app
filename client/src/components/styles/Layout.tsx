@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Header } from "../features/header/Header";
+import { Header } from "../../features/header/Header";
 
 const LaoutStyling = styled.div`
   margin: 0;
@@ -12,8 +12,8 @@ const LaoutStyling = styled.div`
   }
 
   footer{
-    padding: 2rem 0;
-    background-color: #2cf289;
+    padding: 1.5rem 0;
+    background-color: #342882;
   }
 `;
 
