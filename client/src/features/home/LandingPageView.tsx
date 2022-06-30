@@ -3,12 +3,9 @@ import { SignUpBtn } from "../buttons/SignUpBtn";
 import { LandingPageStyling } from "../../components/styles/LandingPage.styled"
 
 
-
 export const LandingPage = () => {
   return (
     <LandingPageStyling>
-      {/* <img src={require('../../assets/img/space-dessert.jpg')} alt="picture of spaceships in dessert"
-            /> */}
       <div className="hero-img">
         <div className="overlay">
           <h1>HAVE FUN LEANRING</h1>

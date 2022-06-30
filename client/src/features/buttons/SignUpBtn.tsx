@@ -1,5 +1,7 @@
 import React from "react";
-import { SignUpBtnStyling, LogiInButtonProps } from "../../components/styles/SignUpBtn.styled";
+import { SignUpBtnStyling } from "../../components/styles/SignUpBtn.styled";
+import { LogiInButtonProps } from "../../interface/componentsPropsTypes"
+
 
 
 export const SignUpBtn = ({ variant, btnText, isFullWidth }: LogiInButtonProps) => {

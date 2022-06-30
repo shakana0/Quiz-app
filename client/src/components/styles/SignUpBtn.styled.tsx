@@ -1,11 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
-export interface LogiInButtonProps {
-  variant?: "primary" | "secondary" ;
-  isFullWidth?: true | false;
-  btnText?: string;
-}
+import { LogiInButtonProps } from "../../interface/componentsPropsTypes"
 
 //2 variationer: " primary secondary " skillnad i styling: strl, color, text
 //4 variationer (två var), gul-stor och liten, rosa -stor och liten
@@ -20,4 +15,6 @@ export const SignUpBtnStyling = styled.button<LogiInButtonProps>`
   border-radius: 10px;
   font-size: 1.2rem;
   border: none;
+  box-shadow: -10px 10px 4px 0px rgba(0,0,0,0.25);
+  cursor: pointer;
 `;
