@@ -4,7 +4,7 @@ import { LogiInButtonProps } from "../../interface/componentsPropsTypes"
 
 
 
-export const SignUpBtn = ({ variant, btnText, isFullWidth }: LogiInButtonProps) => {
+export const SignUpBtn = ({ variant, btnText, isFullWidth, onClick }: LogiInButtonProps) => {
 
   const testingProp = () =>{
     if(btnText === "Sign Up"){
@@ -16,7 +16,7 @@ export const SignUpBtn = ({ variant, btnText, isFullWidth }: LogiInButtonProps) 
   }
   // testingProp()
   return (
-    <SignUpBtnStyling type="button" isFullWidth={isFullWidth} variant={variant}>
+    <SignUpBtnStyling type="button" isFullWidth={isFullWidth} variant={variant} onClick={onClick}>
       {btnText}
     </SignUpBtnStyling>
   );

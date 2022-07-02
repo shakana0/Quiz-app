@@ -6,8 +6,9 @@ import { LogiInButtonProps } from "../../interface/componentsPropsTypes"
 //4 variationer (två var), gul-stor och liten, rosa -stor och liten
 
 export const SignUpBtnStyling = styled.button<LogiInButtonProps>`
-  /* padding: 0.8rem 8rem; */
-  padding: ${(props) => props.isFullWidth === true ? ".8rem 5rem" : ".8rem 2rem"};
+  padding: .8rem 2rem;
+  width: ${(props) =>
+    props.isFullWidth === true ? "60%" : ""};
   background: ${(props) =>
     props.variant === "primary"
       ? "linear-gradient(90deg, rgba(239,206,44,1) 34%, rgba(249,67,111,1) 100%)"
@@ -16,5 +17,5 @@ export const SignUpBtnStyling = styled.button<LogiInButtonProps>`
   font-size: 1.2rem;
   border: none;
   box-shadow: -10px 10px 4px 0px rgba(0,0,0,0.25);
-  cursor: pointer;
+  /* cursor: pointer; */
 `;

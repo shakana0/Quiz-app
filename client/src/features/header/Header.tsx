@@ -1,5 +1,3 @@
-//mountar login knapparna, när knapparna rendreras bestämms m hjälp av en funktion
-
 import React from "react";
 import { HeaderStyling } from "../../components/styles/Header.styled";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -14,6 +12,8 @@ import { useState } from "react";
 
 export const Header = () => {
   const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState("");
+
 
   const closeModal = () => {
     setShowModal(!showModal);
@@ -21,7 +21,7 @@ export const Header = () => {
 
   const RenderModal = () => {
     if (showModal) {
-      return <Modal closeModal={closeModal} />;
+      return <Modal closeModal={closeModal} modalType={modalType}/>;
     } else {
       return;
     }
@@ -47,10 +47,19 @@ export const Header = () => {
             isFullWidth={false}
             btnText="Log In"
             onClick={(event: React.MouseEvent<HTMLElement>) => {
+              setModalType("Log In")
               setShowModal(!showModal);
             }}
           />
-          <SignUpBtn variant="primary" isFullWidth={false} btnText="Sign Up" />
+          <SignUpBtn
+            variant="primary"
+            isFullWidth={false}
+            btnText="Sign Up"
+            onClick={(event: React.MouseEvent<HTMLElement>) => {
+              setModalType("Sign Up")
+              setShowModal(!showModal);
+            }}
+          />
         </div>
       </HeaderStyling>
     </>

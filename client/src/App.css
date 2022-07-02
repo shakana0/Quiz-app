@@ -5,7 +5,18 @@
   padding: 0;
   font-family: Fredoka One, Helvetica, sans-serif;
   color: white;
+  transition: .3s ease;
 }
+
+/*STÖR HEADER KNAPARNA, dem försvinner inte*/
+button:hover{
+  cursor: pointer;
+  transform: scale(1.1);
+} 
+button:active{
+  background-color: rgba(128, 128, 128, 0.534);
+}
+
 
 /* .App {
   text-align: center;
