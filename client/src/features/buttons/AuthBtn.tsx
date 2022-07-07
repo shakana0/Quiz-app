@@ -1,23 +1,24 @@
 import React from "react";
-import { LogInBtnStyling } from "../../components/styles/LogInBtn.styled";
+import { AuthBtnStyle } from "../../components/styles/AuthBtn.styled"
+import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 import { LogiInButtonProps } from "../../interface/componentsPropsTypes";
 
-export const LogInBtn = ({
+export const AuthBtn = ({
   variant,
   btnText,
   isFullWidth,
   onClick,
-  isActive
 }: LogiInButtonProps) => {
   return (
-    <LogInBtnStyling
+    <AuthBtnStyle
       type="button"
       isFullWidth={isFullWidth}
       variant={variant}
       onClick={onClick}
-      isActive={isActive}
     >
       {btnText}
-    </LogInBtnStyling>
+   <KeyboardArrowDownRoundedIcon className="down-icon" />
+
+    </AuthBtnStyle>
   );
 };

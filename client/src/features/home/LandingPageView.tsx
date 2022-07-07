@@ -1,16 +1,19 @@
 import React from "react";
-import { SignUpBtn } from "../buttons/SignUpBtn";
-import { LandingPageStyling } from "../../components/styles/LandingPage.styled"
-
+import { AuthBtn } from "../buttons/AuthBtn";
+import { LandingPageStyling } from "../../components/styles/LandingPage.styled";
 
 export const LandingPage = () => {
   return (
     <LandingPageStyling>
       <div className="hero-img">
         <div className="overlay">
-          <h1>HAVE FUN LEANRING</h1>
+          <h1>HAVE FUN LEARNING</h1>
         </div>
-        <SignUpBtn variant="secondary" isFullWidth={false} btnText="Get Started" />
+        <AuthBtn
+          variant="primary-pink"
+          isFullWidth={false}
+          btnText="Get Started"
+        />
       </div>
       <section>
         <article>

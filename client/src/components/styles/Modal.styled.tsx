@@ -41,16 +41,25 @@ export const ModalStyling = styled.article`
       align-items: center;
       flex-direction: column;
 
+      button:nth-child(2) {
+        margin-left: 1.5rem;
+      }
+
       div {
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-center;
         width: 60%;
         margin-bottom: 1rem;
-        
+
         button {
           border: none;
           margin: 0;
+          /* display: flex;
+          align-items: center;
+          justify-content: center; */
+          /* border: 2px solid white; */
+          font-size: 1.6rem;
 
           &:hover {
             text-decoration: underline;
@@ -62,25 +71,29 @@ export const ModalStyling = styled.article`
         display: flex;
         flex-direction: column;
         /* justify-content: space-between; */
+
+        button:nth-child(2) {
+          margin-left: 1.5rem;
+        }
         div {
           display: flex;
           width: 100%;
-          justify-content: space-between;
+          /* justify-content: space-between; */
           /* box-sizing: border-box; */
 
-          button:nth-child(2){
+          /* button:nth-child(2){
             margin-left: 1.5rem;
-          }
-
+          } */
         }
 
         button {
-          border: 2px solid white;
+          /* border: 2px solid white; */
           box-sizing: border-box;
+          border: 2px solid white;
+
           p {
-            /* color: purple; */
-            font-size: .7rem;
-            margin-left: .5rem;
+            font-size: 0.7rem;
+            margin-left: 0.5rem;
           }
         }
         .or-email {
@@ -98,10 +111,12 @@ export const ModalStyling = styled.article`
       }
 
       button {
+        border: 2px solid green;
         width: 60%;
         padding: 0.5rem 0;
         display: flex;
         align-items: center;
+        justify-content: center;
         background-color: transparent;
         border: 3px solid white;
         margin: 1rem;
@@ -114,7 +129,7 @@ export const ModalStyling = styled.article`
         p {
           color: purple;
           font-size: 1.3rem;
-          margin-left: 3rem;
+          width: 80%;
         }
       }
     }
@@ -141,5 +156,8 @@ export const ModalStyling = styled.article`
   }
   button:last-child {
     margin: 2.5rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;

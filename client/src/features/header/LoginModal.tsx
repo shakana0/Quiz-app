@@ -3,8 +3,11 @@ import { ModalStyling } from "../../components/styles/Modal.styled";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
+import { AuthBtn } from "../buttons/AuthBtn";
+
 import { LogInBtn } from "../buttons/LogInBtn";
 // import { SignUpBtn } from "../buttons/SignUpBtn";
+import { NavLink } from "react-router-dom";
 
 interface ModalProps {
   closeModal?: any;
@@ -13,17 +16,60 @@ interface ModalProps {
 
 export const Modal = ({ closeModal, modalType }: ModalProps) => {
   const [newModalType, setNewModalType] = useState("");
+  // const [toggleIsActive, setToffleIsActive] = useState(false);
 
-  const setModalType = () => {
-    console.log("hejsan hoppsan:)");
-    modalType = newModalType;
-    console.log(modalType);
-    FormHandler();
+  const RenderModalToggleBtns = () => {
+    //react toggle active class width multiple elements
+    return (
+      <div>
+
+        <AuthBtn
+         variant="secondary-light"
+         isFullWidth={false}
+         btnText="Log In"
+         onClick={(event: React.MouseEvent<HTMLElement>) => {
+           setNewModalType("Log In");
+           FormHandler();
+         }}
+        />
+           <AuthBtn
+         variant="secondary-light"
+         isFullWidth={false}
+         btnText="Sign Up"
+         onClick={(event: React.MouseEvent<HTMLElement>) => {
+           setNewModalType("Sign Up");
+           FormHandler();
+         }}
+        />
+            {/* <LogInBtn
+            variant="primary"
+            isFullWidth={true}
+            btnText="Log In"
+            onClick={(event: React.MouseEvent<HTMLElement>) => {
+              setNewModalType("Log In");
+              FormHandler();
+            }}
+          />
+
+        <LogInBtn
+          variant="primary"
+          isFullWidth={true}
+          btnText="Sign Up"
+          onClick={(event: React.MouseEvent<HTMLElement>) => {
+            setNewModalType("Sign Up");
+            FormHandler();
+          }}
+        /> */}
+      </div>
+    );
   };
-  const FormHandler = () => {
-    if (modalType === "Sign Up") {
-      console.log("sign up says heyy");
 
+  const FormHandler = () => {
+    if (newModalType != "") {
+      modalType = newModalType;
+    }
+
+    if (modalType === "Sign Up") {
       return (
         <form
           action=""
@@ -35,22 +81,8 @@ export const Modal = ({ closeModal, modalType }: ModalProps) => {
             <CloseRoundedIcon className="close-icon" onClick={closeModal} />
           </div>
           <div className="btn-container">
-            <div>
-              <LogInBtn
-                variant="primary"
-                isFullWidth={true}
-                btnText="Log In"
-                onClick={(event: React.MouseEvent<HTMLElement>) => {
-                  setNewModalType("Log In");
-                  setModalType();
-                }}
-              />
-              <LogInBtn
-                variant="primary"
-                isFullWidth={true}
-                btnText="Sign Up"
-              />
-            </div>
+            {RenderModalToggleBtns()}
+
             <div className="sign-up-btn-container">
               <div>
                 <button>
@@ -72,12 +104,11 @@ export const Modal = ({ closeModal, modalType }: ModalProps) => {
           <input type="text" placeholder="email address..." />
           <input type="text" placeholder="username..." />
           <input type="password" placeholder="password..." />
-          <LogInBtn variant="secondary" isFullWidth={true} btnText="Sign Up" />
+          <AuthBtn variant="secondary" isFullWidth={true} btnText="Sign Up" />
         </form>
       );
     }
     if (modalType === "Log In") {
-      console.log("hllo from the other sideee");
       return (
         <form
           action=""
@@ -89,14 +120,7 @@ export const Modal = ({ closeModal, modalType }: ModalProps) => {
             <CloseRoundedIcon className="close-icon" onClick={closeModal} />
           </div>
           <div className="btn-container">
-            <div>
-              <LogInBtn variant="primary" isFullWidth={true} btnText="Log In" />
-              <LogInBtn
-                variant="primary"
-                isFullWidth={true}
-                btnText="Sign Up"
-              />
-            </div>
+            {RenderModalToggleBtns()}
             <button>
               <GoogleIcon className="google-icon" />
               <p>Log In With Google</p>
@@ -111,7 +135,7 @@ export const Modal = ({ closeModal, modalType }: ModalProps) => {
             placeholder="Type your username or email address"
           />
           <input type="password" placeholder="Type your password" />
-          <LogInBtn variant="secondary" isFullWidth={true} btnText="Log In" />
+          <AuthBtn variant="secondary" isFullWidth={true} btnText="Log In" />
         </form>
       );
     }
@@ -119,8 +143,8 @@ export const Modal = ({ closeModal, modalType }: ModalProps) => {
 
   return (
     <ModalStyling>
-      <LogInBtn variant="knappJävel" isFullWidth={true} btnText="Log In" />
-      <LogInBtn variant="bajsKnapp" isFullWidth={true} btnText="Log In" />
+      {/* <LogInBtn variant="knappJävel" isFullWidth={true} btnText="Log In" />
+      <LogInBtn variant="bajsKnapp" isFullWidth={true} btnText="Log In" /> */}
 
       <div className="pic-container">
         <img

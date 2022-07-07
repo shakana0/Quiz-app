@@ -24,4 +24,8 @@ export const HeaderStyling = styled.header`
     justify-content: space-between;
     width: 25%;
   }
+  button{
+      height: 50px;
+
+  }
 `;
