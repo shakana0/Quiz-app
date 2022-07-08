@@ -4,71 +4,41 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import { AuthBtn } from "../buttons/AuthBtn";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleModalState } from "./HeaderSlice";
 
-import { LogInBtn } from "../buttons/LogInBtn";
-// import { SignUpBtn } from "../buttons/SignUpBtn";
-import { NavLink } from "react-router-dom";
-
-interface ModalProps {
-  closeModal?: any;
-  modalType?: string;
-}
-
-export const Modal = ({ closeModal, modalType }: ModalProps) => {
-  const [newModalType, setNewModalType] = useState("");
-  // const [toggleIsActive, setToffleIsActive] = useState(false);
+export const Modal = () => {
+  const dispatch = useDispatch();
+  const { modalType } = useSelector((state: any) => state.modal);
 
   const RenderModalToggleBtns = () => {
-    //react toggle active class width multiple elements
     return (
       <div>
-
         <AuthBtn
-         variant="secondary-light"
-         isFullWidth={false}
-         btnText="Log In"
-         onClick={(event: React.MouseEvent<HTMLElement>) => {
-           setNewModalType("Log In");
-           FormHandler();
-         }}
+          variant="secondary-light"
+          isFullWidth={false}
+          btnText="Log In"
+          onClick={(event: React.MouseEvent<HTMLElement>) => {
+            dispatch(
+              toggleModalState({ showModal: true, modalType: "Log In" })
+            );
+          }}
         />
-           <AuthBtn
-         variant="secondary-light"
-         isFullWidth={false}
-         btnText="Sign Up"
-         onClick={(event: React.MouseEvent<HTMLElement>) => {
-           setNewModalType("Sign Up");
-           FormHandler();
-         }}
-        />
-            {/* <LogInBtn
-            variant="primary"
-            isFullWidth={true}
-            btnText="Log In"
-            onClick={(event: React.MouseEvent<HTMLElement>) => {
-              setNewModalType("Log In");
-              FormHandler();
-            }}
-          />
-
-        <LogInBtn
-          variant="primary"
-          isFullWidth={true}
+        <AuthBtn
+          variant="secondary-light"
+          isFullWidth={false}
           btnText="Sign Up"
           onClick={(event: React.MouseEvent<HTMLElement>) => {
-            setNewModalType("Sign Up");
-            FormHandler();
+            dispatch(
+              toggleModalState({ showModal: true, modalType: "Sign Up" })
+            );
           }}
-        /> */}
+        />
       </div>
     );
   };
 
   const FormHandler = () => {
-    if (newModalType != "") {
-      modalType = newModalType;
-    }
-
     if (modalType === "Sign Up") {
       return (
         <form
@@ -78,7 +48,12 @@ export const Modal = ({ closeModal, modalType }: ModalProps) => {
           }}
         >
           <div className="close-icon-container">
-            <CloseRoundedIcon className="close-icon" onClick={closeModal} />
+            <CloseRoundedIcon
+              className="close-icon"
+              onClick={() =>
+                dispatch(toggleModalState({ showModal: false, modalType: "" }))
+              }
+            />
           </div>
           <div className="btn-container">
             {RenderModalToggleBtns()}
@@ -117,7 +92,10 @@ export const Modal = ({ closeModal, modalType }: ModalProps) => {
           }}
         >
           <div className="close-icon-container">
-            <CloseRoundedIcon className="close-icon" onClick={closeModal} />
+            <CloseRoundedIcon
+              className="close-icon"
+              onClick={() => dispatch(toggleModalState(false))}
+            />
           </div>
           <div className="btn-container">
             {RenderModalToggleBtns()}
@@ -143,9 +121,6 @@ export const Modal = ({ closeModal, modalType }: ModalProps) => {
 
   return (
     <ModalStyling>
-      {/* <LogInBtn variant="knappJävel" isFullWidth={true} btnText="Log In" />
-      <LogInBtn variant="bajsKnapp" isFullWidth={true} btnText="Log In" /> */}
-
       <div className="pic-container">
         <img
           src={require("../../assets/img/astronaut-coming-down.PNG")}

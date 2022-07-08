@@ -1,8 +1,12 @@
 import React from "react";
 import { AuthBtn } from "../buttons/AuthBtn";
 import { LandingPageStyling } from "../../components/styles/LandingPage.styled";
+import { useDispatch } from "react-redux";
+import { toggleModalState } from "../header/HeaderSlice";
 
 export const LandingPage = () => {
+  const dispatch = useDispatch();
+
   return (
     <LandingPageStyling>
       <div className="hero-img">
@@ -13,6 +17,9 @@ export const LandingPage = () => {
           variant="primary-pink"
           isFullWidth={false}
           btnText="Get Started"
+          onClick={() =>
+            dispatch(toggleModalState({ showModal: true, modalType: "Sign Up" }))
+          }
         />
       </div>
       <section>
