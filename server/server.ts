@@ -1,5 +1,6 @@
 import express, { Request, Response, json } from "express";
 import quizRouter from "./routes/quiz";
+import userRouter from "./routes/user"
 import dotenv from "dotenv";
 import cors from "cors"
 
@@ -10,6 +11,7 @@ app.use(json());
 //för aktivera alla CORS-förfrågningar
 app.use(cors())
 app.use("/quiz", quizRouter);
+app.use("/user", userRouter);
 import { connect } from "mongoose";
 
 //"quiz-db" är namnet på docker-containern / databasen
