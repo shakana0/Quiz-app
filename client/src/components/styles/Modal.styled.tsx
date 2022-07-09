@@ -154,6 +154,11 @@ export const ModalStyling = styled.article`
       }
     }
   }
+  .error{
+    color: red;
+    width: 60%;
+    font-size: .8rem;
+  }
   button:last-child {
     margin: 2.5rem 0;
     display: flex;

@@ -6,10 +6,60 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import { AuthBtn } from "../buttons/AuthBtn";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleModalState } from "./HeaderSlice";
+import { credentialsType } from "../../interface/userType";
+//https://hevodata.com/learn/mongodb-join-two-collections/#l2
+//https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation
+//https://dev.to/andyrewlee/cheat-sheet-for-updating-objects-and-arrays-in-react-state-48np
 
 export const Modal = () => {
+  const [credentials, setCredentials] = useState({
+    emailAdress: "",
+    userName: "",
+    password: "",
+  });
+  const [errors, setErrors] = useState({
+      emailAdress: "",
+      userName: "",
+      password: "",
+    });
   const dispatch = useDispatch();
   const { modalType } = useSelector((state: any) => state.modal);
+
+  // let newError = {
+  //   emailAdress: "",
+  //   userName: "",
+  //   password: "",
+  // };
+  const handleSubmit = (event: any) => {
+    // event.preventDefault();
+    // let newErr = Object.assign({}, errors)
+    let newErr = {
+      emailAdress: "",
+      userName: "",
+      password: "",
+    };
+
+    if (credentials.emailAdress === "") {
+      // newError.emailAdress = "Email adress is required (You can't leave this field blank)."
+      console.log("email är tom");
+      // setErrors((prev) => ({...prev.errors, emailAdress: "email är tom"}))
+      newErr.emailAdress = "email är tom";
+    }
+    if (credentials.userName === "") {
+      // newError.userName = "Username is required (You can't leave this field blank)."
+      console.log("user name är tom");
+      // setErrors((prev) => ({...errors, userName: prev + "user name är tom"}))
+      newErr.userName = "user name är tom";
+    }
+    if (credentials.password === "") {
+      // newError.password = "Password is required (You can't leave this field blank)."
+      console.log("password är tom");
+      newErr.password = "password är tom";
+    }
+    setErrors(newErr);
+    console.log(errors);
+  };
+  // console.log(errors);
 
   const RenderModalToggleBtns = () => {
     return (
@@ -41,12 +91,7 @@ export const Modal = () => {
   const FormHandler = () => {
     if (modalType === "Sign Up") {
       return (
-        <form
-          action=""
-          onClick={(event) => {
-            event.preventDefault();
-          }}
-        >
+        <form action="">
           <div className="close-icon-container">
             <CloseRoundedIcon
               className="close-icon"
@@ -76,10 +121,41 @@ export const Modal = () => {
               </div>
             </div>
           </div>
-          <input type="text" placeholder="email address..." />
-          <input type="text" placeholder="username..." />
-          <input type="password" placeholder="password..." />
-          <AuthBtn variant="secondary" isFullWidth={true} btnText="Sign Up" />
+          <input
+            type="email"
+            placeholder="email address..."
+            onChange={(event) =>
+              setCredentials({
+                ...credentials,
+                emailAdress: event?.target.value,
+              })
+            }
+          />
+          <p className="error">{errors && errors.emailAdress}</p>
+
+          <input
+            type="text"
+            placeholder="username..."
+            onChange={(event) =>
+              setCredentials({ ...credentials, userName: event?.target.value })
+            }
+          />
+          <p className="error">{errors.userName}</p>
+          <input
+            type="password"
+            placeholder="password..."
+            onChange={(event) =>
+              setCredentials({ ...credentials, password: event?.target.value })
+            }
+          />
+          <p className="error">{errors.password}</p>
+
+          <AuthBtn
+            variant="secondary"
+            isFullWidth={true}
+            btnText="Sign Up"
+            onClick={handleSubmit}
+          />
         </form>
       );
     }
