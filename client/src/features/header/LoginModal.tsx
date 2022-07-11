@@ -3,13 +3,11 @@ import { ModalStyling } from "../../components/styles/Modal.styled";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
+import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import { AuthBtn } from "../buttons/AuthBtn";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleModalState } from "./HeaderSlice";
-import { credentialsType } from "../../interface/userType";
-//https://hevodata.com/learn/mongodb-join-two-collections/#l2
-//https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation
-//https://dev.to/andyrewlee/cheat-sheet-for-updating-objects-and-arrays-in-react-state-48np
+import * as api from "../../api/userApi"
 
 export const Modal = () => {
   const [credentials, setCredentials] = useState({
@@ -18,49 +16,109 @@ export const Modal = () => {
     password: "",
   });
   const [errors, setErrors] = useState({
-      emailAdress: "",
-      userName: "",
-      password: "",
-    });
+    emailAdress: "",
+    userName: "",
+    password: "",
+  });
+  const [isCorrect, setIsCorrect] = useState({
+    email: false,
+    userName: false,
+    password: false,
+  });
   const dispatch = useDispatch();
   const { modalType } = useSelector((state: any) => state.modal);
 
-  // let newError = {
-  //   emailAdress: "",
-  //   userName: "",
-  //   password: "",
-  // };
-  const handleSubmit = (event: any) => {
-    // event.preventDefault();
-    // let newErr = Object.assign({}, errors)
+  const validateForm = (event: any) => {
+    event.preventDefault();
     let newErr = {
       emailAdress: "",
       userName: "",
       password: "",
     };
+    const validChar = /^[0-9a-zA-Z@.-_]+$/;
+    const emailValidFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+    //validation for email
     if (credentials.emailAdress === "") {
-      // newError.emailAdress = "Email adress is required (You can't leave this field blank)."
-      console.log("email är tom");
-      // setErrors((prev) => ({...prev.errors, emailAdress: "email är tom"}))
-      newErr.emailAdress = "email är tom";
+      newErr.emailAdress = "Email adress is required";
+    } else if (!emailValidFormat.test(credentials.emailAdress)) {
+      newErr.emailAdress =
+        "Email adress must be in correct format for e.g. name@gmail.com :( ";
+    } else if (
+      credentials.emailAdress.length! < 10 ||
+      credentials.emailAdress.length! > 20
+    ) {
+      newErr.emailAdress =
+        "Your email adress needs to be between 10 and 20 characters long";
+    } else {
+      setIsCorrect((current) => {
+        return {
+          ...current,
+          email: true,
+        };
+      });
     }
+
+    //validation for user name
     if (credentials.userName === "") {
-      // newError.userName = "Username is required (You can't leave this field blank)."
-      console.log("user name är tom");
-      // setErrors((prev) => ({...errors, userName: prev + "user name är tom"}))
-      newErr.userName = "user name är tom";
+      newErr.userName = "User name is required";
+    } else if (!validChar.test(credentials.userName)) {
+      newErr.userName = "Invalid characters detected :(";
+    } else if (
+      credentials.userName.length! < 8 ||
+      credentials.userName.length! > 15
+    ) {
+      newErr.userName =
+        "Your user name needs to be between 8 and 15 characters long";
+    } else {
+      setIsCorrect((current) => {
+        return {
+          ...current,
+          userName: true,
+        };
+      });
     }
+
+    //validation for password
     if (credentials.password === "") {
-      // newError.password = "Password is required (You can't leave this field blank)."
-      console.log("password är tom");
-      newErr.password = "password är tom";
+      newErr.password = "Password is required";
+    } else if (
+      credentials.password.length! < 8 ||
+      credentials.password.length! > 15
+    ) {
+      newErr.password =
+        "Your password needs to be between 8 and 15 characters long";
+    } else {
+      setIsCorrect((current) => {
+        return {
+          ...current,
+          password: true,
+        };
+      });
     }
     setErrors(newErr);
-    console.log(errors);
-  };
-  // console.log(errors);
 
+    //checking if there is any errors
+    let noErr = [];
+    for (let value of Object.values(newErr)) {
+      if (value !== "") {
+        console.log("errors :(");
+        noErr.push("error");
+      }
+    }
+    if (!noErr.length) {
+      console.log("inga errors :)");
+      sendCredentials(); //vet inte om den ska va här :(
+    }
+  };
+
+  const sendCredentials = () => {
+    console.log("you have made it :)");
+    //sending credentials to api.postUser function
+    api.postUser(credentials)
+  };
+
+  /****/
   const RenderModalToggleBtns = () => {
     return (
       <div>
@@ -88,6 +146,7 @@ export const Modal = () => {
     );
   };
 
+  /*****/
   const FormHandler = () => {
     if (modalType === "Sign Up") {
       return (
@@ -121,40 +180,60 @@ export const Modal = () => {
               </div>
             </div>
           </div>
-          <input
-            type="email"
-            placeholder="email address..."
-            onChange={(event) =>
-              setCredentials({
-                ...credentials,
-                emailAdress: event?.target.value,
-              })
-            }
-          />
+          <div className="input-box">
+            <input
+              type="email"
+              placeholder="email address..."
+              onChange={(event) =>
+                setCredentials({
+                  ...credentials,
+                  emailAdress: event?.target.value,
+                })
+              }
+            />
+            <CheckRoundedIcon
+              className={isCorrect.email ? "check-icon" : "hide-check-icon"}
+            />
+          </div>
           <p className="error">{errors && errors.emailAdress}</p>
-
-          <input
-            type="text"
-            placeholder="username..."
-            onChange={(event) =>
-              setCredentials({ ...credentials, userName: event?.target.value })
-            }
-          />
+          <div className="input-box">
+            <input
+              type="text"
+              placeholder="username..."
+              onChange={(event) =>
+                setCredentials({
+                  ...credentials,
+                  userName: event?.target.value,
+                })
+              }
+            />
+            <CheckRoundedIcon
+              className={isCorrect.userName ? "check-icon" : "hide-check-icon"}
+            />
+          </div>
           <p className="error">{errors.userName}</p>
-          <input
-            type="password"
-            placeholder="password..."
-            onChange={(event) =>
-              setCredentials({ ...credentials, password: event?.target.value })
-            }
-          />
+          <div className="input-box">
+            <input
+              type="password"
+              placeholder="password..."
+              onChange={(event) =>
+                setCredentials({
+                  ...credentials,
+                  password: event?.target.value,
+                })
+              }
+            />
+            <CheckRoundedIcon
+              className={isCorrect.password ? "check-icon" : "hide-check-icon"}
+            />
+          </div>
           <p className="error">{errors.password}</p>
 
           <AuthBtn
             variant="secondary"
             isFullWidth={true}
             btnText="Sign Up"
-            onClick={handleSubmit}
+            onClick={validateForm}
           />
         </form>
       );

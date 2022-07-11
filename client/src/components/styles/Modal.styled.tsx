@@ -15,10 +15,23 @@ export const ModalStyling = styled.article`
 
   form {
     width: 50%;
+    /* height: 610px; */
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
+    overflow-y: auto;
+
+    ::-webkit-scrollbar {
+      background-color: transparent;
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #55018655;
+      border-radius: 10px;
+      width: 10px;
+    }
 
     .close-icon-container {
       align-self: flex-end;
@@ -133,8 +146,42 @@ export const ModalStyling = styled.article`
         }
       }
     }
+    .input-box {
+      border: none;
+      border-bottom: 3px solid white;
+      display: flex;
+      align-items: center;
+      width: 60%;
+      margin-top: 1rem;
 
-    input {
+      input {
+        width: 80%;
+        font-size: 1.2rem;
+        border: none;
+        background-color: transparent;
+        padding: 1rem 0;
+
+        ::placeholder {
+          color: white;
+          font-size: 1rem;
+        }
+
+        &:focus {
+          border-color: rgba(130, 57, 223, 1);
+          outline: none;
+        }
+      }
+      .check-icon {
+        width: 20%;
+        fill: #008000b6;
+        font-size: 1.8rem;
+        display: block;
+      }
+      .hide-check-icon{
+        display: none;
+      }
+    }
+    /* input {
       margin-top: 1rem;
       padding: 1rem 0;
       width: 60%;
@@ -152,12 +199,12 @@ export const ModalStyling = styled.article`
         border-color: rgba(130, 57, 223, 1);
         outline: none;
       }
-    }
+    } */
   }
-  .error{
+  .error {
     color: red;
     width: 60%;
-    font-size: .8rem;
+    font-size: 0.8rem;
   }
   button:last-child {
     margin: 2.5rem 0;
