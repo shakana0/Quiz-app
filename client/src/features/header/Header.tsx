@@ -5,10 +5,10 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 import { Link } from "react-router-dom";
 import { AuthBtn } from "../buttons/AuthBtn";
-import { Modal } from "./LoginModal";
+import { Modal } from "../Modal/AuthModal"
 
 import { useDispatch, useSelector } from "react-redux";
-import { toggleModalState } from "./HeaderSlice";
+import { toggleModalState } from "../Modal/ModalSlice";
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ export const Header = () => {
 
   const RenderModal = () => {
     if (showModal) {
-      return <Modal />;
+      return <Modal/>
     } else {
       return;
     }

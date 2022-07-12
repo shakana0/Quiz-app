@@ -1,15 +1,19 @@
-import React, { useState } from "react";
-import { ModalStyling } from "../../components/styles/Modal.styled";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ModalStyling } from "../../components/styles/Modal.styled"
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import { AuthBtn } from "../buttons/AuthBtn";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleModalState } from "./HeaderSlice";
+import { toggleModalState } from "./ModalSlice";
+import { credentialsType } from "../../interface/userType";
 import * as api from "../../api/userApi"
+import { fetchUsers } from "./ModalSlice"
 
 export const Modal = () => {
+  const dispatch = useDispatch();
+  const { modalType } = useSelector((state: any) => state.modal);
   const [credentials, setCredentials] = useState({
     emailAdress: "",
     userName: "",
@@ -25,9 +29,6 @@ export const Modal = () => {
     userName: false,
     password: false,
   });
-  const dispatch = useDispatch();
-  const { modalType } = useSelector((state: any) => state.modal);
-
   const validateForm = (event: any) => {
     event.preventDefault();
     let newErr = {
@@ -114,11 +115,34 @@ export const Modal = () => {
 
   const sendCredentials = () => {
     console.log("you have made it :)");
-    //sending credentials to api.postUser function
-    api.postUser(credentials)
+    // sending credentials to api.postUser function
+    api.postUser(credentials);
   };
 
-  /****/
+  const [allUsers, setAllUsers] = useState<credentialsType[]>([]);
+  useEffect(() => {
+    const loadUsers = async () => {
+      const res = await dispatch(fetchUsers());
+      console.log(res.payload, 'från modal')
+      setAllUsers(res.payload);
+    };
+    loadUsers();
+  }, []);
+  
+  const handleLogIn = () => {
+    //LoginModal kan ha sin egen mapp i features
+    /*loopa igeon allUsers .find och kolla om ngn mejl eller användarnamn matchar input OCH password
+    Om sant log in == success else failed och visa error
+    */
+    /*
+    *Gör själva formuläret till en egen (child)komponent. 
+    *Identifiera och bryt ut repetitiva elements till små funktioner.
+    *Alla events som onChange, onClick får kommonicera med Modal via props
+    */
+
+  };
+
+  //Renders authentication buttons
   const RenderModalToggleBtns = () => {
     return (
       <div>
@@ -263,19 +287,51 @@ export const Modal = () => {
               <p>Log In With Facebook</p>
             </button>
           </div>
-          <input
-            type="text"
-            placeholder="Type your username or email address"
+          <div className="input-box">
+            <input
+              type="email"
+              placeholder="email address..."
+              onChange={(event) =>
+                setCredentials({
+                  ...credentials,
+                  emailAdress: event?.target.value,
+                })
+              }
+            />
+            <CheckRoundedIcon
+              className={isCorrect.email ? "check-icon" : "hide-check-icon"}
+            />
+          </div>
+          <p className="error">{errors && errors.emailAdress}</p>
+          <div className="input-box">
+            <input
+              type="password"
+              placeholder="password..."
+              onChange={(event) =>
+                setCredentials({
+                  ...credentials,
+                  password: event?.target.value,
+                })
+              }
+            />
+            <CheckRoundedIcon
+              className={isCorrect.password ? "check-icon" : "hide-check-icon"}
+            />
+          </div>
+          <p className="error">{errors.password}</p>
+          <AuthBtn
+            variant="secondary"
+            isFullWidth={true}
+            btnText="Log In"
+            onClick={validateForm}
           />
-          <input type="password" placeholder="Type your password" />
-          <AuthBtn variant="secondary" isFullWidth={true} btnText="Log In" />
         </form>
       );
     }
   };
 
   return (
-    <ModalStyling>
+   <ModalStyling>
       <div className="pic-container">
         <img
           src={require("../../assets/img/astronaut-coming-down.PNG")}
@@ -285,7 +341,8 @@ export const Modal = () => {
         />
       </div>
 
-      {FormHandler()}
-    </ModalStyling>
-  );
+  
+      {FormHandler()}   
+       </ModalStyling>
+  )
 };

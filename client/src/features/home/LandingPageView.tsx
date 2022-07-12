@@ -2,7 +2,7 @@ import React from "react";
 import { AuthBtn } from "../buttons/AuthBtn";
 import { LandingPageStyling } from "../../components/styles/LandingPage.styled";
 import { useDispatch } from "react-redux";
-import { toggleModalState } from "../header/HeaderSlice";
+import { toggleModalState } from "../Modal/ModalSlice";
 
 export const LandingPage = () => {
   const dispatch = useDispatch();

@@ -3,3 +3,9 @@ export interface credentialsType {
     userName: string;
     password: string;
   }
+
+  export interface isCorrectType{
+      email: boolean,
+      userName: boolean,
+      password: boolean,
+  }
