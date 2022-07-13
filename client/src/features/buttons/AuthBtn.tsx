@@ -8,6 +8,7 @@ export const AuthBtn = ({
   btnText,
   isFullWidth,
   onClick,
+  className
 }: LogiInButtonProps) => {
   return (
     <AuthBtnStyle
@@ -15,6 +16,7 @@ export const AuthBtn = ({
       isFullWidth={isFullWidth}
       variant={variant}
       onClick={onClick}
+      className={className}
     >
       {btnText}
    <KeyboardArrowDownRoundedIcon className="down-icon" />

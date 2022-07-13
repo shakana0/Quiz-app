@@ -1,34 +1,65 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ModalStyling } from "../../components/styles/Modal.styled"
+import { ModalStyling } from "../../components/styles/Modal.styled";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import { AuthBtn } from "../buttons/AuthBtn";
-import { toggleModalState } from "./ModalSlice";
+import { toggleModalState, setActiveForm, setLogInSuccess } from "./ModalSlice";
 import { credentialsType } from "../../interface/userType";
-import * as api from "../../api/userApi"
-import { fetchUsers } from "./ModalSlice"
+import * as api from "../../api/userApi";
+import { fetchUsers } from "./ModalSlice";
+import { useNavigate } from "react-router-dom";
 
 export const Modal = () => {
+  const initialCredentialsState = {
+    emailAdress: "",
+    userName: "",
+    password: "",
+  };
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const ref = useRef<HTMLFormElement>(null);
   const { modalType } = useSelector((state: any) => state.modal);
-  const [credentials, setCredentials] = useState({
-    emailAdress: "",
-    userName: "",
-    password: "",
-  });
-  const [errors, setErrors] = useState({
-    emailAdress: "",
-    userName: "",
-    password: "",
-  });
+  const { activeForm } = useSelector((state: any) => state.modal);
+  //decreing state varibles
+  const [credentials, setCredentials] = useState(initialCredentialsState);
+  const [errors, setErrors] = useState(initialCredentialsState);
+  const [logInCredentials, setLogInCredentials] = useState(
+    initialCredentialsState
+  );
   const [isCorrect, setIsCorrect] = useState({
     email: false,
     userName: false,
     password: false,
   });
+  const resetForm = () => {
+    //clears all input fields in form
+    if (ref.current != null) {
+      ref.current.reset();
+    }
+    //clears all errors
+    setErrors((current) => {
+      return {
+        ...current,
+        emailAdress: "",
+        userName: "",
+        password: "",
+      };
+    });
+    //clear check marks
+    setIsCorrect((current) => {
+      return {
+        ...current,
+        email: false,
+        userName: false,
+        password: false,
+      };
+    });
+  };
+
   const validateForm = (event: any) => {
     event.preventDefault();
     let newErr = {
@@ -36,7 +67,7 @@ export const Modal = () => {
       userName: "",
       password: "",
     };
-    const validChar = /^[0-9a-zA-Z@.-_]+$/;
+    const validChar = /^[0-9a-zA-Z@.-_åäöÅÄÖ]+$/;
     const emailValidFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     //validation for email
@@ -98,48 +129,58 @@ export const Modal = () => {
       });
     }
     setErrors(newErr);
-
     //checking if there is any errors
     let noErr = [];
     for (let value of Object.values(newErr)) {
       if (value !== "") {
-        console.log("errors :(");
         noErr.push("error");
       }
     }
     if (!noErr.length) {
-      console.log("inga errors :)");
-      sendCredentials(); //vet inte om den ska va här :(
+      sendCredentials();
     }
   };
 
   const sendCredentials = () => {
     console.log("you have made it :)");
-    // sending credentials to api.postUser function
     api.postUser(credentials);
+    dispatch(setLogInSuccess(true));
+    dispatch(toggleModalState({ showModal: false, modalType: "" }));
+    navigate("/");
   };
 
   const [allUsers, setAllUsers] = useState<credentialsType[]>([]);
   useEffect(() => {
     const loadUsers = async () => {
       const res = await dispatch(fetchUsers());
-      console.log(res.payload, 'från modal')
       setAllUsers(res.payload);
     };
     loadUsers();
   }, []);
-  
-  const handleLogIn = () => {
-    //LoginModal kan ha sin egen mapp i features
-    /*loopa igeon allUsers .find och kolla om ngn mejl eller användarnamn matchar input OCH password
-    Om sant log in == success else failed och visa error
-    */
-    /*
-    *Gör själva formuläret till en egen (child)komponent. 
-    *Identifiera och bryt ut repetitiva elements till små funktioner.
-    *Alla events som onChange, onClick får kommonicera med Modal via props
-    */
 
+  const handleLogIn = () => {
+    //checks if user does exist
+    if (
+      allUsers.find(
+        (user) =>
+          user.emailAdress === logInCredentials.emailAdress ||
+          (user.userName === logInCredentials.userName &&
+            user.password === logInCredentials.password)
+      )
+    ) {
+      dispatch(setLogInSuccess(true));
+      dispatch(toggleModalState({ showModal: false, modalType: "" }));
+      navigate("/");
+    } else {
+      setErrors((current) => {
+        return {
+          ...current,
+          emailAdress: "Email adress or user name does not exit",
+          userName: "",
+          password: "Wrong password",
+        };
+      });
+    }
   };
 
   //Renders authentication buttons
@@ -150,20 +191,26 @@ export const Modal = () => {
           variant="secondary-light"
           isFullWidth={false}
           btnText="Log In"
+          className={activeForm.logIn ? "isActive" : ""}
           onClick={(event: React.MouseEvent<HTMLElement>) => {
             dispatch(
               toggleModalState({ showModal: true, modalType: "Log In" })
             );
+            resetForm();
+            dispatch(setActiveForm({ logIn: true, signUp: false }));
           }}
         />
         <AuthBtn
           variant="secondary-light"
           isFullWidth={false}
           btnText="Sign Up"
+          className={activeForm.signUp ? "isActive" : ""}
           onClick={(event: React.MouseEvent<HTMLElement>) => {
             dispatch(
               toggleModalState({ showModal: true, modalType: "Sign Up" })
             );
+            resetForm();
+            dispatch(setActiveForm({ logIn: false, signUp: true }));
           }}
         />
       </div>
@@ -174,7 +221,7 @@ export const Modal = () => {
   const FormHandler = () => {
     if (modalType === "Sign Up") {
       return (
-        <form action="">
+        <form action="" ref={ref}>
           <div className="close-icon-container">
             <CloseRoundedIcon
               className="close-icon"
@@ -266,6 +313,7 @@ export const Modal = () => {
       return (
         <form
           action=""
+          ref={ref}
           onClick={(event) => {
             event.preventDefault();
           }}
@@ -292,9 +340,10 @@ export const Modal = () => {
               type="email"
               placeholder="email address..."
               onChange={(event) =>
-                setCredentials({
-                  ...credentials,
+                setLogInCredentials({
+                  ...logInCredentials,
                   emailAdress: event?.target.value,
+                  userName: event?.target.value,
                 })
               }
             />
@@ -308,8 +357,8 @@ export const Modal = () => {
               type="password"
               placeholder="password..."
               onChange={(event) =>
-                setCredentials({
-                  ...credentials,
+                setLogInCredentials({
+                  ...logInCredentials,
                   password: event?.target.value,
                 })
               }
@@ -323,7 +372,7 @@ export const Modal = () => {
             variant="secondary"
             isFullWidth={true}
             btnText="Log In"
-            onClick={validateForm}
+            onClick={handleLogIn}
           />
         </form>
       );
@@ -331,7 +380,7 @@ export const Modal = () => {
   };
 
   return (
-   <ModalStyling>
+    <ModalStyling>
       <div className="pic-container">
         <img
           src={require("../../assets/img/astronaut-coming-down.PNG")}
@@ -341,8 +390,7 @@ export const Modal = () => {
         />
       </div>
 
-  
-      {FormHandler()}   
-       </ModalStyling>
-  )
+      {FormHandler()}
+    </ModalStyling>
+  );
 };

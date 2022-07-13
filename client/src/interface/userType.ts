@@ -4,8 +4,7 @@ export interface credentialsType {
     password: string;
   }
 
-  export interface isCorrectType{
-      email: boolean,
-      userName: boolean,
-      password: boolean,
+  export interface activeFormType{
+      logIn: boolean,
+      signUp: boolean,
   }

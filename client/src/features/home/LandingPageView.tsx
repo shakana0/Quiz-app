@@ -2,7 +2,7 @@ import React from "react";
 import { AuthBtn } from "../buttons/AuthBtn";
 import { LandingPageStyling } from "../../components/styles/LandingPage.styled";
 import { useDispatch } from "react-redux";
-import { toggleModalState } from "../Modal/ModalSlice";
+import { toggleModalState, setActiveForm } from "../Modal/ModalSlice";
 
 export const LandingPage = () => {
   const dispatch = useDispatch();
@@ -17,9 +17,11 @@ export const LandingPage = () => {
           variant="primary-pink"
           isFullWidth={false}
           btnText="Get Started"
-          onClick={() =>
+          onClick={() => {
             dispatch(toggleModalState({ showModal: true, modalType: "Sign Up" }))
-          }
+            dispatch(setActiveForm({ logIn: false, signUp: true }))
+
+          }}
         />
       </div>
       <section>

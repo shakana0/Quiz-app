@@ -5,18 +5,50 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 import { Link } from "react-router-dom";
 import { AuthBtn } from "../buttons/AuthBtn";
-import { Modal } from "../Modal/AuthModal"
-
+import { Modal } from "../Modal/AuthModal";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleModalState } from "../Modal/ModalSlice";
+import { toggleModalState, setActiveForm } from "../Modal/ModalSlice";
 
 export const Header = () => {
   const dispatch = useDispatch();
   const { showModal } = useSelector((state: any) => state.modal);
-
+  const { logInSuccess } = useSelector((state: any) => state.modal);
   const RenderModal = () => {
     if (showModal) {
-      return <Modal/>
+      return <Modal />;
+    } else {
+      return;
+    }
+  };
+
+  const renderAuthBtns = () => {
+    if (!logInSuccess) {
+      return (
+        <div className="btn-container">
+          <AuthBtn
+            variant="secondary-light"
+            isFullWidth={false}
+            btnText="Log In"
+            onClick={(event: React.MouseEvent<HTMLElement>) => {
+              dispatch(
+                toggleModalState({ showModal: true, modalType: "Log In" })
+              );
+              dispatch(setActiveForm({ logIn: true, signUp: false }));
+            }}
+          />
+          <AuthBtn
+            variant="primary"
+            isFullWidth={false}
+            btnText="Sign Up"
+            onClick={(event: React.MouseEvent<HTMLElement>) => {
+              dispatch(
+                toggleModalState({ showModal: true, modalType: "Sign Up" })
+              );
+              dispatch(setActiveForm({ logIn: false, signUp: true }));
+            }}
+          />
+        </div>
+      );
     } else {
       return;
     }
@@ -42,28 +74,7 @@ export const Header = () => {
             />
           </Link>
         </div>
-        <div className="btn-container">
-          <AuthBtn
-            variant="secondary-light"
-            isFullWidth={false}
-            btnText="Log In"
-            onClick={(event: React.MouseEvent<HTMLElement>) => {
-              dispatch(
-                toggleModalState({ showModal: true, modalType: "Log In" })
-              );
-            }}
-          />
-          <AuthBtn
-            variant="primary"
-            isFullWidth={false}
-            btnText="Sign Up"
-            onClick={(event: React.MouseEvent<HTMLElement>) => {
-              dispatch(
-                toggleModalState({ showModal: true, modalType: "Sign Up" })
-              );
-            }}
-          />
-        </div>
+        {renderAuthBtns()}
       </HeaderStyling>
     </>
   );

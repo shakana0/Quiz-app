@@ -15,7 +15,6 @@ export const ModalStyling = styled.article`
 
   form {
     width: 50%;
-    /* height: 610px; */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -53,6 +52,15 @@ export const ModalStyling = styled.article`
       display: flex;
       align-items: center;
       flex-direction: column;
+
+      .isActive {
+        text-decoration: underline;
+        text-decoration-color: orange;
+        text-decoration-thickness: 3px;
+        color: #7f0186a8;
+      }
+      .is-not-active {
+      }
 
       button:nth-child(2) {
         margin-left: 1.5rem;
@@ -177,7 +185,7 @@ export const ModalStyling = styled.article`
         font-size: 1.8rem;
         display: block;
       }
-      .hide-check-icon{
+      .hide-check-icon {
         display: none;
       }
     }

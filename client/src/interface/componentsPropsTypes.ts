@@ -6,17 +6,5 @@ export interface LogiInButtonProps {
     isActive?: true | false;
     btnText?: string;
     onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
+    className?: any & React.HTMLAttributes<HTMLButtonElement> | undefined;
   }
-
-  /*
-  background-colors:
-  transparent
-  orange
-  purple-white
-  pink-red
-
-  --
-width:
-small 
-big
-  */
