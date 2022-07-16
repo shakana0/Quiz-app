@@ -382,8 +382,14 @@ export const Modal = () => {
   return (
     <ModalStyling>
       <div className="pic-container">
-        <img
+        {/* <img
           src={require("../../assets/img/astronaut-coming-down.PNG")}
+          alt=" picture of stronaut coming down"
+          width={450}
+          height={450}
+        /> */}
+           <img
+          src={require("../../assets/img/astronaut-coming-down.png")}
           alt=" picture of stronaut coming down"
           width={450}
           height={450}

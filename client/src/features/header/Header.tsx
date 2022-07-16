@@ -66,7 +66,7 @@ export const Header = () => {
             <AccountCircleOutlinedIcon className="profile-icon" />
           </Link>
           <TextsmsOutlinedIcon className="chat-icon" />
-          <Link to={"/profile"}>
+          <Link to={"/create-quiz"}>
             <AuthBtn
               variant="secondary-icon"
               isFullWidth={false}

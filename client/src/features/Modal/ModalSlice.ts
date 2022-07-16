@@ -39,9 +39,10 @@ const ModalSlice = createSlice({
       state.activeForm.logIn = payload.logIn;
       state.activeForm.signUp = payload.signUp;
     },
+    //skapa useeffest eller ngt som hämtar logInSuccess värdet från localStorage för varje gång applikationen rendreras om
     setLogInSuccess: (state, { payload }) => {
       state.logInSuccess = payload;
-      console.log(state.logInSuccess )
+      console.log(state.logInSuccess);
     },
   },
   extraReducers: {
@@ -52,5 +53,6 @@ const ModalSlice = createSlice({
   },
 });
 
-export const { toggleModalState, setActiveForm, setLogInSuccess } = ModalSlice.actions;
+export const { toggleModalState, setActiveForm, setLogInSuccess } =
+  ModalSlice.actions;
 export default ModalSlice.reducer;

@@ -14,12 +14,14 @@ export const AuthBtnStyle = styled.button<LogiInButtonProps>`
       ? "linear-gradient(-90deg, rgba(240,9,64,1) 3%, rgba(229,60,111,1) 22%, rgba(186,140,191,1) 100%)"
       : props.variant === "secondary"
       ? "linear-gradient(90deg, rgba(205,163,209,1) 3%, rgba(130,57,223,1) 100%)"
+      : props.variant === "tertiary"
+      ? "linear-gradient(90deg, rgba(249,135,210,1) 3%, rgba(130,57,223,1) 100%)"
       : "transparent"};
   border: none;
   box-shadow: ${(props) =>
-    props.variant === "secondary-light" || "secondary-icon"
+    props.variant === "secondary-light" ||  props.variant === "secondary-icon"
       ? "none"
-      : "-10px 10px 4px 0px rgba(0,0,0,0.25)"};
+      : "-5px 7px 4px 0px rgba(0,0,0,0.25)"};
  
 
   display: flex;
@@ -31,11 +33,4 @@ export const AuthBtnStyle = styled.button<LogiInButtonProps>`
     display: ${(props) =>
       props.variant != "secondary-icon" ? "none" : "block"};
   }
-
-  /* text-decoration: ${(props) =>
-    props.isActive === true ? "underline" : "none"};
-      text-decoration-color: #f5a104;
-      text-decoration-thickness: 10px; */
-
-  /* cursor: pointer; */
 `;

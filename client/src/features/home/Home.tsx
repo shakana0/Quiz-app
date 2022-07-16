@@ -4,7 +4,23 @@ import { HomeStyling } from "../../components/styles/Home.styled"
 export const Home = () => {
     return(
 <HomeStyling>
-    <h1>Hello from Home</h1>
+      <div className="hero-img">
+        <div className="overlay">
+        <h1>HOME</h1>
+        </div>
+        <img 
+        src={require("../../assets/img/astronaut-hanging-ship.png")}
+        alt="astronaut on computer"
+        width={390}
+        height={400}
+      />
+      </div>
+      <section>
+        <h1>Recent</h1>
+        <div className="box"></div>
+        
+      </section>
+    
 </HomeStyling>
     )
 }
