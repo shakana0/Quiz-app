@@ -53,6 +53,13 @@ export const ModalStyling = styled.article`
       align-items: center;
       flex-direction: column;
 
+      /* button:focus{
+        text-decoration: underline;
+        text-decoration-color: orange;
+        text-decoration-thickness: 3px;
+        color: #7f0186a8;
+      } */
+
       .isActive {
         text-decoration: underline;
         text-decoration-color: orange;
@@ -76,10 +83,6 @@ export const ModalStyling = styled.article`
         button {
           border: none;
           margin: 0;
-          /* display: flex;
-          align-items: center;
-          justify-content: center; */
-          /* border: 2px solid white; */
           font-size: 1.6rem;
 
           &:hover {
@@ -91,24 +94,15 @@ export const ModalStyling = styled.article`
       .sign-up-btn-container {
         display: flex;
         flex-direction: column;
-        /* justify-content: space-between; */
-
         button:nth-child(2) {
           margin-left: 1.5rem;
         }
         div {
           display: flex;
           width: 100%;
-          /* justify-content: space-between; */
-          /* box-sizing: border-box; */
-
-          /* button:nth-child(2){
-            margin-left: 1.5rem;
-          } */
         }
 
         button {
-          /* border: 2px solid white; */
           box-sizing: border-box;
           border: 2px solid white;
 
@@ -161,7 +155,7 @@ export const ModalStyling = styled.article`
       align-items: center;
       width: 60%;
       margin-top: 1rem;
-
+     
       input {
         width: 80%;
         font-size: 1.2rem;
@@ -174,10 +168,10 @@ export const ModalStyling = styled.article`
           font-size: 1rem;
         }
 
-        &:focus {
+        /* &:focus {
           border-color: rgba(130, 57, 223, 1);
           outline: none;
-        }
+        } */
       }
       .check-icon {
         width: 20%;
@@ -189,25 +183,6 @@ export const ModalStyling = styled.article`
         display: none;
       }
     }
-    /* input {
-      margin-top: 1rem;
-      padding: 1rem 0;
-      width: 60%;
-      border: none;
-      border-bottom: 3px solid white;
-      background-color: transparent;
-      font-size: 1.4rem;
-
-      ::placeholder {
-        color: white;
-        font-size: 1rem;
-      }
-
-      &:focus {
-        border-color: rgba(130, 57, 223, 1);
-        outline: none;
-      }
-    } */
   }
   .error {
     color: red;

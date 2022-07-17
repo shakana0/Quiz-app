@@ -22,6 +22,10 @@ export const CreateQuizStyling = styled.div`
         color: #ffffffb7;
         font-size: 1.1rem;
       }
+      &:focus{
+        outline: none;
+        border-bottom-color: rgba(130,57,223,1);
+      }
     }
     .quiz-info {
       display: flex;
@@ -53,7 +57,7 @@ export const CreateQuizStyling = styled.div`
         flex-direction: column;
         margin: 2rem 0;
         padding: 0 2rem 2rem 2rem;
-        .top {
+       .top {
           width: 100%;
           display: flex;
           align-items: center;

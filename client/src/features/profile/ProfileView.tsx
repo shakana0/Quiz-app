@@ -1,16 +1,15 @@
-import React from "react";
-import { LandingPageStyling } from "../../components/styles/Profile.styled";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { ProfileViewStyling } from "../../components/styles/Profile.styled";
 import { useDispatch } from "react-redux";
 import * as api from "../../api/index";
 import { QuizType } from "../../interface/quizType";
 import { setLogInSuccess } from "../Modal/ModalSlice";
 import { useNavigate } from "react-router-dom";
-
+import { AuthBtn } from "../buttons/AuthBtn";
 
 export const ProfileView = () => {
-  const disptach = useDispatch()
-  const navigate = useNavigate()
+  const disptach = useDispatch();
+  const navigate = useNavigate();
   const [allQuizes, setQuiz] = useState<QuizType[]>([]);
 
   useEffect(() => {
@@ -22,21 +21,38 @@ export const ProfileView = () => {
   }, []);
 
   return (
-    <LandingPageStyling>
-      <div className="nr1">
-        <h2>Hello from Profile View!</h2>
-        {allQuizes &&
-          allQuizes.map((quiz, index: number) => (
-            <li key={index}>{quiz.titel}</li>
-          ))}
-      </div>
-      <div className="nr2">
-        <button onClick={() =>{
-          disptach(setLogInSuccess(false))
-          navigate('/')
-        }}>Log Out</button>
-      </div>
-      <div className="nr3"></div>
-    </LandingPageStyling>
+    <ProfileViewStyling>
+      <section className="profile">
+        <button
+          className="log-out-btn"
+          onClick={() => {
+            disptach(setLogInSuccess(false));
+            navigate("/");
+          }}
+        >
+          Log Out
+        </button>
+
+        <section className="profile-info">
+          <div>
+            <div className="circle"></div>
+            <h1>User Name</h1>
+          </div>
+          <img
+            src={require("../../assets/img/astronaut-reading2.png")}
+            alt="astronaut reading books"
+            width={350}
+            height={360}
+          />
+        </section>
+      </section>
+      <section className="list"></section>
+      <AuthBtn
+        className="create-btn"
+        variant="tertiary"
+        isFullWidth={true}
+        btnText="Create"
+      />
+    </ProfileViewStyling>
   );
 };

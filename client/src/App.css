@@ -11,7 +11,7 @@
 /*STÖR HEADER KNAPARNA, dem försvinner inte*/
 button:hover{
   cursor: pointer;
-  transform: scale(1.1);
+  transform: scale(1.05);
 } 
 button:active{
   background-color: rgba(128, 128, 128, 0.534);
