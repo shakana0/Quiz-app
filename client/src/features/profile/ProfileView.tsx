@@ -6,19 +6,23 @@ import { QuizType } from "../../interface/quizType";
 import { setLogInSuccess } from "../Modal/ModalSlice";
 import { useNavigate } from "react-router-dom";
 import { AuthBtn } from "../buttons/AuthBtn";
+import { useSelector } from "react-redux";
 
 export const ProfileView = () => {
   const disptach = useDispatch();
   const navigate = useNavigate();
-  const [allQuizes, setQuiz] = useState<QuizType[]>([]);
+  const { activeUser } = useSelector((state: any) => state.modal);
+  // console.log(activeUser, 'profile')
+ 
+  // const [allQuizes, setQuiz] = useState<QuizType[]>([]);
 
-  useEffect(() => {
-    const loadQuizes = async () => {
-      const res = await api.getAllQuizes();
-      setQuiz(res.data);
-    };
-    loadQuizes();
-  }, []);
+  // useEffect(() => {
+  //   const loadQuizes = async () => {
+  //     const res = await api.getAllQuizes();
+  //     setQuiz(res.data);
+  //   };
+  //   loadQuizes();
+  // }, []);
 
   return (
     <ProfileViewStyling>
@@ -36,7 +40,7 @@ export const ProfileView = () => {
         <section className="profile-info">
           <div>
             <div className="circle"></div>
-            <h1>User Name</h1>
+            <h1>{activeUser.userName}</h1>
           </div>
           <img
             src={require("../../assets/img/astronaut-reading2.png")}
@@ -46,7 +50,11 @@ export const ProfileView = () => {
           />
         </section>
       </section>
-      <section className="list"></section>
+      <section className="list">
+        <button onClick={(()=>{
+          navigate('/single-quiz')
+        })}>Single Quiz</button>
+      </section>
       <AuthBtn
         className="create-btn"
         variant="tertiary"

@@ -1,6 +1,7 @@
 import React from "react";
 import { CreateQuizStyling } from "../../components/styles/CreateQuiz.styled";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import AddIcon from '@mui/icons-material/Add';
 import { AuthBtn } from "../buttons/AuthBtn";
 
 export const CreateQuiz = () => {
@@ -34,7 +35,10 @@ export const CreateQuiz = () => {
             </div>
             <input type="text" placeholder="Enter Definition..." />
           </div>
-          <button className="add-card-btn">+ Add Another Card</button>
+          <button className="add-card-btn">
+            <AddIcon className="add-icon"/>
+            <h2> Add Another Card</h2>
+             </button>
         </section>
         <AuthBtn
           className="create-btn"

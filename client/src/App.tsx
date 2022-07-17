@@ -8,7 +8,7 @@ import { Routes, Route } from "react-router-dom";
 import { LandingPage } from "./features/home/LandingPageView";
 import { Home } from "./features/home/Home";
 import { ProfileView } from "./features/profile/ProfileView";
-// import { SingleQuizView } from "./features/singleQuiz/SingleQuizView";
+import { SingleQuizView } from "./features/singleQuiz/SingleQuizView";
 import { CreateQuiz } from "./features/quiz/CreateQuiz";
 
 const App = () => {
@@ -23,10 +23,12 @@ const App = () => {
           ) : (
             <Route path="/" element={<LandingPage />} />
           )}
-          {/* <Route path="/quiz/:id" element={<SingleQuizView />} /> */}
+          {/* <Route path="/quiz/:id" element={<SingleQuizView />} /> 
+          ORIGINAL ROUTE
+          */}
+          <Route path="/single-quiz" element={<SingleQuizView />} />
           <Route path="/profile" element={<ProfileView />} />
           <Route path="/create-quiz" element={<CreateQuiz />} />
-
         </Routes>
       </Layout>
     </>

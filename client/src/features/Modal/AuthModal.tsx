@@ -6,7 +6,7 @@ import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import { AuthBtn } from "../buttons/AuthBtn";
-import { toggleModalState, setActiveForm, setLogInSuccess } from "./ModalSlice";
+import { toggleModalState, setActiveForm, setLogInSuccess, setActiveUser } from "./ModalSlice";
 import { credentialsType } from "../../interface/userType";
 import * as api from "../../api/userApi";
 import { fetchUsers } from "./ModalSlice";
@@ -163,12 +163,19 @@ export const Modal = () => {
     if (
       allUsers.find(
         (user) =>
-          user.emailAdress === logInCredentials.emailAdress ||
+          (user.emailAdress === logInCredentials.emailAdress &&
+            user.password === logInCredentials.password)
+      ) 
+      ||
+      allUsers.find(
+        (user) =>
           (user.userName === logInCredentials.userName &&
             user.password === logInCredentials.password)
-      )
-    ) {
+      ) 
+
+    ){
       dispatch(setLogInSuccess(true));
+      dispatch(setActiveUser(logInCredentials))
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
       navigate("/");
     } else {
@@ -382,13 +389,7 @@ export const Modal = () => {
   return (
     <ModalStyling>
       <div className="pic-container">
-        {/* <img
-          src={require("../../assets/img/astronaut-coming-down.PNG")}
-          alt=" picture of stronaut coming down"
-          width={450}
-          height={450}
-        /> */}
-           <img
+        <img
           src={require("../../assets/img/astronaut-coming-down.png")}
           alt=" picture of stronaut coming down"
           width={450}

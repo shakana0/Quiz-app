@@ -99,7 +99,17 @@ export const CreateQuizStyling = styled.div`
         margin: 2rem 0;
         border: 2px solid white;
         border-radius: 10px;
-        font-size: 1.6rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        .add-icon{
+          font-size: 2.5rem;
+          margin-right: .5rem;
+        }
+       h2{
+        font-size: 1.5rem;
+       }
       }
     }
 

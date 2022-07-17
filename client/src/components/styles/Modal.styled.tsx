@@ -155,7 +155,7 @@ export const ModalStyling = styled.article`
       align-items: center;
       width: 60%;
       margin-top: 1rem;
-     
+
       input {
         width: 80%;
         font-size: 1.2rem;
@@ -168,10 +168,9 @@ export const ModalStyling = styled.article`
           font-size: 1rem;
         }
 
-        /* &:focus {
-          border-color: rgba(130, 57, 223, 1);
+        &:focus {
           outline: none;
-        } */
+        }
       }
       .check-icon {
         width: 20%;

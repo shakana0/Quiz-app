@@ -8,6 +8,7 @@ interface ModalType {
   userList: Array<credentialsType>;
   activeForm: activeFormType;
   logInSuccess: boolean;
+  activeUser: credentialsType;
 }
 
 const initialState: ModalType = {
@@ -16,6 +17,11 @@ const initialState: ModalType = {
   userList: [],
   activeForm: { logIn: false, signUp: false },
   logInSuccess: false,
+  activeUser: {
+    emailAdress: "",
+    userName: "",
+    password: "",
+  },
 };
 
 //fetching all uesers
@@ -44,6 +50,11 @@ const ModalSlice = createSlice({
       state.logInSuccess = payload;
       console.log(state.logInSuccess);
     },
+    setActiveUser: (state, { payload }) => {
+      state.activeUser.emailAdress = payload.emailAdress;
+      state.activeUser.userName = payload.userName;
+      state.activeUser.password = payload.password;
+    },
   },
   extraReducers: {
     [fetchUsers.fulfilled]: (state, { payload }) => {
@@ -53,6 +64,6 @@ const ModalSlice = createSlice({
   },
 });
 
-export const { toggleModalState, setActiveForm, setLogInSuccess } =
+export const { toggleModalState, setActiveForm, setLogInSuccess, setActiveUser } =
   ModalSlice.actions;
 export default ModalSlice.reducer;

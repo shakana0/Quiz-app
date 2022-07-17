@@ -13,6 +13,7 @@ export const Header = () => {
   const dispatch = useDispatch();
   const { showModal } = useSelector((state: any) => state.modal);
   const { logInSuccess } = useSelector((state: any) => state.modal);
+
   const RenderModal = () => {
     if (showModal) {
       return <Modal />;
@@ -20,6 +21,12 @@ export const Header = () => {
       return;
     }
   };
+  const SignUp = () =>{
+      dispatch(
+       toggleModalState({ showModal: true, modalType: "Sign Up" })
+     );
+     dispatch(setActiveForm({ logIn: false, signUp: true }));
+  }
 
   const renderAuthBtns = () => {
     if (!logInSuccess) {
@@ -40,12 +47,7 @@ export const Header = () => {
             variant="primary"
             isFullWidth={false}
             btnText="Sign Up"
-            onClick={(event: React.MouseEvent<HTMLElement>) => {
-              dispatch(
-                toggleModalState({ showModal: true, modalType: "Sign Up" })
-              );
-              dispatch(setActiveForm({ logIn: false, signUp: true }));
-            }}
+            onClick={SignUp}
           />
         </div>
       );
@@ -54,14 +56,10 @@ export const Header = () => {
     }
   };
 
-  return (
-    <>
-      {RenderModal()}
-      <HeaderStyling>
-        <div className="icons-container">
-          <Link to={"/"}>
-            <HomeOutlinedIcon className="home-icon" />
-          </Link>
+  const RenderIcons = () => {
+    if (logInSuccess) {
+      return (
+        <>
           <Link to={"/profile"}>
             <AccountCircleOutlinedIcon className="profile-icon" />
           </Link>
@@ -73,6 +71,33 @@ export const Header = () => {
               btnText="Create"
             />
           </Link>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <AccountCircleOutlinedIcon className="profile-icon" onClick={SignUp} />
+          <TextsmsOutlinedIcon className="chat-icon" onClick={SignUp}/>
+          <AuthBtn
+            variant="secondary-icon"
+            isFullWidth={false}
+            btnText="Create"
+            onClick={SignUp}
+          />
+        </>
+      );
+    }
+  };
+
+  return (
+    <>
+      {RenderModal()}
+      <HeaderStyling>
+        <div className="icons-container">
+          <Link to={"/"}>
+            <HomeOutlinedIcon className="home-icon" />
+          </Link>
+          {RenderIcons()}
         </div>
         {renderAuthBtns()}
       </HeaderStyling>
