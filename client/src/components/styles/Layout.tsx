@@ -5,13 +5,11 @@ import { Header } from "../../features/header/Header";
 const LaoutStyling = styled.div`
   margin: 0;
   padding: 0;
-  /* background-color: orange; */
 
-  main{
-    /* height: 100vh; */
+  main {
   }
 
-  footer{
+  footer {
     padding: 1.5rem 0;
     background-color: #342882;
   }
@@ -23,7 +21,7 @@ interface childrenProps {
 export const Layout = ({ children }: childrenProps) => {
   return (
     <LaoutStyling>
-      <Header/>
+      <Header />
       <main>{children}</main>
       <footer>Hi I'm footer</footer>
     </LaoutStyling>

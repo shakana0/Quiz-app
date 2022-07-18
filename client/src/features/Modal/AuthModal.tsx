@@ -25,9 +25,9 @@ export const Modal = () => {
   const { modalType } = useSelector((state: any) => state.modal);
   const { activeForm } = useSelector((state: any) => state.modal);
   //decreing state varibles
-  const [credentials, setCredentials] = useState(initialCredentialsState);
-  const [errors, setErrors] = useState(initialCredentialsState);
-  const [logInCredentials, setLogInCredentials] = useState(
+  const [credentials, setCredentials] = useState<credentialsType>(initialCredentialsState);
+  const [errors, setErrors] = useState<credentialsType>(initialCredentialsState);
+  const [logInCredentials, setLogInCredentials] = useState<credentialsType>(
     initialCredentialsState
   );
   const [isCorrect, setIsCorrect] = useState({

@@ -60,6 +60,9 @@ export const ProfileView = () => {
         variant="tertiary"
         isFullWidth={true}
         btnText="Create"
+        onClick={(() =>{
+          navigate('/create-quiz')
+        })}
       />
     </ProfileViewStyling>
   );

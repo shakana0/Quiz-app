@@ -1,4 +1,4 @@
-export interface QuestionType {
+ interface QuestionType {
   term: string;
   definition: string;
 }
