@@ -22,10 +22,14 @@ export const CreateQuizStyling = styled.div`
         color: #ffffffb7;
         font-size: 1.1rem;
       }
-      &:focus{
+      &:focus {
         outline: none;
-        border-bottom-color: rgba(130,57,223,1);
+        border-bottom-color: rgba(130, 57, 223, 1);
       }
+    }
+    .error {
+      color: red;
+      font-size: 0.8rem;
     }
     .quiz-info {
       display: flex;
@@ -36,7 +40,7 @@ export const CreateQuizStyling = styled.div`
       div {
         display: flex;
         flex-direction: column;
-  
+
         width: 100%;
         h1 {
           margin: 2rem 0 6rem 0;
@@ -49,6 +53,22 @@ export const CreateQuizStyling = styled.div`
     .card-section {
       width: 100%;
       margin-top: 2rem;
+      .show-error{
+        margin: 3rem auto;
+        padding: 1rem;
+        width: 60%;
+        display: block;
+        border: 3px solid red;
+        border-radius: 10px;
+        background-color: #ff00003c;
+        h4{
+          color: red;
+          text-align: center;
+        }
+      }
+      .hide-error{
+      display: none;
+    }
       .quiz-card {
         background-color: #ffffff29;
         border: 2px solid white;
@@ -57,7 +77,7 @@ export const CreateQuizStyling = styled.div`
         flex-direction: column;
         margin: 2rem 0;
         padding: 0 2rem 2rem 2rem;
-       .top {
+        .top {
           width: 100%;
           display: flex;
           align-items: center;
@@ -102,14 +122,14 @@ export const CreateQuizStyling = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        
-        .add-icon{
+
+        .add-icon {
           font-size: 2.5rem;
-          margin-right: .5rem;
+          margin-right: 0.5rem;
         }
-       h2{
-        font-size: 1.5rem;
-       }
+        h2 {
+          font-size: 1.5rem;
+        }
       }
     }
 

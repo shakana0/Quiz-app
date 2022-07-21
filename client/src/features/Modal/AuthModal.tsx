@@ -6,7 +6,12 @@ import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import { AuthBtn } from "../buttons/AuthBtn";
-import { toggleModalState, setActiveForm, setLogInSuccess, setActiveUser } from "./ModalSlice";
+import {
+  toggleModalState,
+  setActiveForm,
+  setLogInSuccess,
+  setActiveUser,
+} from "./ModalSlice";
 import { credentialsType } from "../../interface/userType";
 import * as api from "../../api/userApi";
 import { fetchUsers } from "./ModalSlice";
@@ -25,8 +30,12 @@ export const Modal = () => {
   const { modalType } = useSelector((state: any) => state.modal);
   const { activeForm } = useSelector((state: any) => state.modal);
   //decreing state varibles
-  const [credentials, setCredentials] = useState<credentialsType>(initialCredentialsState);
-  const [errors, setErrors] = useState<credentialsType>(initialCredentialsState);
+  const [credentials, setCredentials] = useState<credentialsType>(
+    initialCredentialsState
+  );
+  const [errors, setErrors] = useState<credentialsType>(
+    initialCredentialsState
+  );
   const [logInCredentials, setLogInCredentials] = useState<credentialsType>(
     initialCredentialsState
   );
@@ -35,6 +44,7 @@ export const Modal = () => {
     userName: false,
     password: false,
   });
+  // const [repeatPassword, setRepeatPassword] = useState(false);
   const resetForm = () => {
     //clears all input fields in form
     if (ref.current != null) {
@@ -73,6 +83,8 @@ export const Modal = () => {
     //validation for email
     if (credentials.emailAdress === "") {
       newErr.emailAdress = "Email adress is required";
+    } else if (!validChar.test(credentials.emailAdress)) {
+      newErr.emailAdress = "Invalid characters detected :(";
     } else if (!emailValidFormat.test(credentials.emailAdress)) {
       newErr.emailAdress =
         "Email adress must be in correct format for e.g. name@gmail.com :( ";
@@ -81,7 +93,7 @@ export const Modal = () => {
       credentials.emailAdress.length! > 20
     ) {
       newErr.emailAdress =
-        "Your email adress needs to be between 10 and 20 characters long";
+        "Your email adress needs to be between 13 and 20 characters long";
     } else {
       setIsCorrect((current) => {
         return {
@@ -120,7 +132,9 @@ export const Modal = () => {
     ) {
       newErr.password =
         "Your password needs to be between 8 and 15 characters long";
-    } else {
+    } 
+    // else if (newErr.password === ""){}
+    else {
       setIsCorrect((current) => {
         return {
           ...current,
@@ -143,7 +157,7 @@ export const Modal = () => {
 
   const sendCredentials = () => {
     console.log("you have made it :)");
-    api.postUser(credentials);
+    //api.postUser(credentials);
     dispatch(setLogInSuccess(true));
     dispatch(toggleModalState({ showModal: false, modalType: "" }));
     navigate("/");
@@ -163,19 +177,17 @@ export const Modal = () => {
     if (
       allUsers.find(
         (user) =>
-          (user.emailAdress === logInCredentials.emailAdress &&
-            user.password === logInCredentials.password)
-      ) 
-      ||
+          user.emailAdress === logInCredentials.emailAdress &&
+          user.password === logInCredentials.password
+      ) ||
       allUsers.find(
         (user) =>
-          (user.userName === logInCredentials.userName &&
-            user.password === logInCredentials.password)
-      ) 
-
-    ){
+          user.userName === logInCredentials.userName &&
+          user.password === logInCredentials.password
+      )
+    ) {
       dispatch(setLogInSuccess(true));
-      dispatch(setActiveUser(logInCredentials))
+      dispatch(setActiveUser(logInCredentials));
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
       navigate("/");
     } else {
@@ -270,7 +282,7 @@ export const Modal = () => {
               }
             />
             <CheckRoundedIcon
-              className={isCorrect.email ? "check-icon" : "hide-check-icon"}
+              className={isCorrect.email ? "check-icon" : "hide"}
             />
           </div>
           <p className="error">{errors && errors.emailAdress}</p>
@@ -286,7 +298,7 @@ export const Modal = () => {
               }
             />
             <CheckRoundedIcon
-              className={isCorrect.userName ? "check-icon" : "hide-check-icon"}
+              className={isCorrect.userName ? "check-icon" : "hide"}
             />
           </div>
           <p className="error">{errors.userName}</p>
@@ -302,10 +314,22 @@ export const Modal = () => {
               }
             />
             <CheckRoundedIcon
-              className={isCorrect.password ? "check-icon" : "hide-check-icon"}
+              className={isCorrect.password ? "check-icon" : "hide"}
             />
           </div>
           <p className="error">{errors.password}</p>
+          {/* <div className={repeatPassword ? "hide" : "input-box"}>
+            <input
+              type="password"
+              placeholder="repeat password..."
+              onChange={(event) =>
+               
+              }
+            />
+            <CheckRoundedIcon
+              className={isCorrect.password ? "check-icon" : "hide"}
+            />
+          </div> */}
 
           <AuthBtn
             variant="secondary"
@@ -345,7 +369,7 @@ export const Modal = () => {
           <div className="input-box">
             <input
               type="email"
-              placeholder="email address..."
+              placeholder="email address or user name..."
               onChange={(event) =>
                 setLogInCredentials({
                   ...logInCredentials,
@@ -355,7 +379,7 @@ export const Modal = () => {
               }
             />
             <CheckRoundedIcon
-              className={isCorrect.email ? "check-icon" : "hide-check-icon"}
+              className={isCorrect.email ? "check-icon" : "hide"}
             />
           </div>
           <p className="error">{errors && errors.emailAdress}</p>
@@ -371,7 +395,7 @@ export const Modal = () => {
               }
             />
             <CheckRoundedIcon
-              className={isCorrect.password ? "check-icon" : "hide-check-icon"}
+              className={isCorrect.password ? "check-icon" : "hide"}
             />
           </div>
           <p className="error">{errors.password}</p>

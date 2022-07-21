@@ -178,7 +178,7 @@ export const ModalStyling = styled.article`
         font-size: 1.8rem;
         display: block;
       }
-      .hide-check-icon {
+      .hide {
         display: none;
       }
     }
