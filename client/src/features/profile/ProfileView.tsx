@@ -1,28 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { ProfileViewStyling } from "../../components/styles/Profile.styled";
 import { useDispatch } from "react-redux";
-import * as api from "../../api/quizApi";
 import { setLogInSuccess } from "../Modal/ModalSlice";
-import { useNavigate } from "react-router-dom";
 import { AuthBtn } from "../buttons/AuthBtn";
 import { useSelector } from "react-redux";
+import { QuizList } from "../quiz/QuizList"
+import { useNavigate } from "react-router";
 
 export const ProfileView = () => {
-  const disptach = useDispatch();
   const navigate = useNavigate();
+  const disptach = useDispatch();
   const { activeUser } = useSelector((state: any) => state.modal);
-  // console.log(activeUser, 'profile')
- 
-  // const [allQuizes, setQuiz] = useState<QuizType[]>([]);
-
-  // useEffect(() => {
-  //   const loadQuizes = async () => {
-  //     const res = await api.getAllQuizes();
-  //     setQuiz(res.data);
-  //   };
-  //   loadQuizes();
-  // }, []);
-
   return (
     <ProfileViewStyling>
       <section className="profile">
@@ -49,11 +37,7 @@ export const ProfileView = () => {
           />
         </section>
       </section>
-      <section className="list">
-        <button onClick={(()=>{
-          navigate('/single-quiz')
-        })}>Single Quiz</button>
-      </section>
+      <QuizList/>
       <AuthBtn
         className="create-btn"
         variant="tertiary"

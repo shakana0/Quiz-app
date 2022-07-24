@@ -1,5 +1,6 @@
 import React from "react";
 import { HomeStyling } from "../../components/styles/Home.styled"
+import { QuizList } from "../quiz/QuizList";
 
 export const Home = () => {
     return(
@@ -17,8 +18,7 @@ export const Home = () => {
       </div>
       <section>
         <h1>Recent</h1>
-        <div className="box"></div>
-        
+        <QuizList/>
       </section>
     
 </HomeStyling>

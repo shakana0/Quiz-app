@@ -45,13 +45,6 @@ export const ProfileViewStyling = styled.div`
       }
     }
   }
-
-  .list {
-    width: 80%;
-    height: 300px;
-    background-color: #ffffff41;
-    margin: 0 auto;
-  }
   .create-btn {
     width: 20%;
     align-self: flex-end;
@@ -59,5 +52,8 @@ export const ProfileViewStyling = styled.div`
     justify-content: center;
     font-size: 1.6rem;
     margin: 3rem 10% 2rem 0;
+  }
+  .nav-btn{
+    width: 100px;
   }
 `;

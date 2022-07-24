@@ -55,12 +55,5 @@ export const HomeStyling = styled.div`
       align-self: flex-start;
       margin: 0 0 2rem 9rem;
     }
-    .box {
-      border: 2px solid white;
-      height: 400px;
-      width: 80%;
-      border-radius: 30px;
-      background-color: #ffffff21;
-    }
   }
 `;

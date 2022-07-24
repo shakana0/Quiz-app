@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { CreateQuizStyling } from "../../components/styles/CreateQuiz.styled";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import AddIcon from "@mui/icons-material/Add";
@@ -6,8 +6,10 @@ import { AuthBtn } from "../buttons/AuthBtn";
 import { QuizType } from "../../interface/quizType";
 import { useSelector } from "react-redux";
 import * as api from "../../api/quizApi";
+import { useNavigate } from "react-router";
 
 export const CreateQuiz = () => {
+  const navigate = useNavigate()
   const { activeUser } = useSelector((state: any) => state.modal);
   const [counter, setCounter] = useState(2); //ful-hack
   const [quizCardList, setQuizCardList] = useState<number[]>([1]);
@@ -76,13 +78,17 @@ export const CreateQuiz = () => {
         currentErr.push("error");
       }
     }
+    if (quiz.questions.length < 2) {
+      setQueztionsError(true);
+      currentErr.push("error");
+    }
     if (!currentErr.length) {
       sendQuiz();
     }
   };
   const sendQuiz = () => {
-    console.log("sending quiz :)");
     api.postQuiz(activeUser._id, quiz);
+    navigate('/profile')
   };
 
   return (
