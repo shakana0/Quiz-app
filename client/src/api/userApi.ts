@@ -1,8 +1,5 @@
 import axios from "axios";
 axios.defaults.baseURL = "https://quiz-app-backend-heroku.herokuapp.com";
-axios.defaults.headers.common = {
-  "Content-Type": "application/json"
-}
 
 export const postUser = async (user: object) => {
   try {
