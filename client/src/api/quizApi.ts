@@ -6,6 +6,7 @@ axios.defaults.baseURL = "https://quiz-app-backend-heroku.herokuapp.com";
 
 
 export const postQuiz = async (userId: string, quiz: object) => {
+  console.log(quiz, 'kmr från api :)')
   try {
     const postedQuiz = await axios.post(`/user/${userId}/quizes`, quiz);
     return postedQuiz;
@@ -19,7 +20,6 @@ export const getAllQuizes = async () => {
     const response = await axios.get("/quiz");
     return response;
   } catch (error: any) {
-    console.log("funktionen körs iaf :(");
     return error.response;
   }
 };

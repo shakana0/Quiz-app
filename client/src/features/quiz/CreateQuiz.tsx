@@ -82,7 +82,6 @@ export const CreateQuiz = () => {
   };
   const sendQuiz = () => {
     console.log("sending quiz :)");
-    console.log(activeUser._id);
     api.postQuiz(activeUser._id, quiz);
   };
 

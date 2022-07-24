@@ -132,7 +132,7 @@ export const Modal = () => {
     ) {
       newErr.password =
         "Your password needs to be between 8 and 15 characters long";
-    } 
+    }
     // else if (newErr.password === ""){}
     else {
       setIsCorrect((current) => {
@@ -174,20 +174,17 @@ export const Modal = () => {
 
   const handleLogIn = () => {
     //checks if user does exist
-    if (
-      allUsers.find(
-        (user) =>
-          user.emailAdress === logInCredentials.emailAdress &&
-          user.password === logInCredentials.password
-      ) ||
-      allUsers.find(
-        (user) =>
-          user.userName === logInCredentials.userName &&
-          user.password === logInCredentials.password
-      )
-    ) {
+    let activeUser: any = [];
+    activeUser = allUsers.filter(
+      (user) =>
+        (user.emailAdress === logInCredentials.emailAdress &&
+          user.password === logInCredentials.password) ||
+        (user.userName === logInCredentials.userName &&
+          user.password === logInCredentials.password)
+    );
+    if (activeUser.length) {
       dispatch(setLogInSuccess(true));
-      dispatch(setActiveUser(logInCredentials));
+      dispatch(setActiveUser(activeUser));
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
       navigate("/");
     } else {

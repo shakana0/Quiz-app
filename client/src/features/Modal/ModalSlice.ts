@@ -8,7 +8,7 @@ interface ModalType {
   userList: Array<credentialsType>;
   activeForm: activeFormType;
   logInSuccess: boolean;
-  activeUser: credentialsType;
+  activeUser: object;
 }
 
 const initialState: ModalType = {
@@ -17,11 +17,7 @@ const initialState: ModalType = {
   userList: [],
   activeForm: { logIn: false, signUp: false },
   logInSuccess: false,
-  activeUser: {
-    emailAdress: "",
-    userName: "",
-    password: "",
-  },
+  activeUser: {},
 };
 
 //fetching all uesers
@@ -48,22 +44,22 @@ const ModalSlice = createSlice({
     //skapa useeffest eller ngt som hämtar logInSuccess värdet från localStorage för varje gång applikationen rendreras om
     setLogInSuccess: (state, { payload }) => {
       state.logInSuccess = payload;
-      console.log(state.logInSuccess);
     },
     setActiveUser: (state, { payload }) => {
-      state.activeUser.emailAdress = payload.emailAdress;
-      state.activeUser.userName = payload.userName;
-      state.activeUser.password = payload.password;
+      state.activeUser = payload[0]
     },
   },
   extraReducers: {
     [fetchUsers.fulfilled]: (state, { payload }) => {
       state.userList = payload;
-      // console.log(state.userList)
     },
   },
 });
 
-export const { toggleModalState, setActiveForm, setLogInSuccess, setActiveUser } =
-  ModalSlice.actions;
+export const {
+  toggleModalState,
+  setActiveForm,
+  setLogInSuccess,
+  setActiveUser,
+} = ModalSlice.actions;
 export default ModalSlice.reducer;
