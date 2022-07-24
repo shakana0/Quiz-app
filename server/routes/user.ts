@@ -4,6 +4,7 @@ import {
   getAllUsers,
   getSingleUser,
   deleteUser,
+  postQuiz,
 } from "../db/usersCrud";
 const router = express.Router();
 
@@ -26,6 +27,13 @@ router.get("/:id", async (req: Request, res: Response) => {
 router.delete("/:id", async (req: Request, res: Response) => {
   const deletedUser = await deleteUser(req.params.id);
   res.json(deletedUser);
+});
+
+//posta quiz
+router.post("/:id/quizes", async (req: Request, res: Response) => {
+  const postedQuiz = await postQuiz(req.params.id, req.body.quizes);
+  console.log(req.body);
+  res.status(201).json(postedQuiz);
 });
 
 export default router;

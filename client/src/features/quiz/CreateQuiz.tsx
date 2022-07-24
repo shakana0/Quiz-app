@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { CreateQuizStyling } from "../../components/styles/CreateQuiz.styled";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import { AuthBtn } from "../buttons/AuthBtn";
 import { QuizType } from "../../interface/quizType";
+import { useSelector } from "react-redux";
+import * as api from "../../api/quizApi";
 
 export const CreateQuiz = () => {
+  const { activeUser } = useSelector((state: any) => state.modal);
   const [counter, setCounter] = useState(2); //ful-hack
   const [quizCardList, setQuizCardList] = useState<number[]>([1]);
   const initialQuestionsState = {
@@ -13,12 +16,14 @@ export const CreateQuiz = () => {
     term: "",
     definition: "",
   };
-  const initialQuizState: any = {
+  const initialQuizState: QuizType = {
     titel: "",
     description: "",
     questions: [],
   };
-  const [currentQuestions, setQuestions] = useState<any[]>([initialQuestionsState]);
+  const [currentQuestions, setQuestions] = useState<any[]>([
+    initialQuestionsState,
+  ]);
   const [quiz, setQuiz] = useState(initialQuizState);
 
   const deleteCard = (currentCardNum: number) => {
@@ -36,48 +41,51 @@ export const CreateQuiz = () => {
   };
   const [quizErrors, setQuizErrors] = useState(initialQuizState);
   const [questionsError, setQueztionsError] = useState(false);
-
   useEffect(() => {
     setQuiz({ ...quiz, questions: [...currentQuestions] });
-  }, [quiz]);
+  }, [counter]); //using counter as dependency because quiz is an object but
+  //the changes which we wish to follow are the same in both counter and quiz thefore we can use counter.
 
   const validateForm = () => {
-    console.log(quiz, "this is quiz");
     setQuizErrors(initialQuizState);
     setQueztionsError(false);
-    //validate quiz state
+    let currentErr = [];
 
+    //validate quiz state
     if (quiz.titel === "") {
-      console.log("titel är tom :(");
-      setQuizErrors((current: any) => {
+      setQuizErrors((prev: any) => {
         return {
-          ...current,
+          ...prev,
           titel: "Titel can not be empty",
         };
       });
-    } else {
-      console.log("den är inte tom längre :)");
+      currentErr.push("error");
     }
     if (quiz.description === "") {
-      console.log("description är tom:(");
-      setQuizErrors((current: any) => {
+      setQuizErrors((prev: any) => {
         return {
-          ...current,
+          ...prev,
           description: "Description can not be empty",
         };
       });
+      currentErr.push("error");
     }
-
-    // console.log(currentQuestions, 'heres the quiestions')
     for (let question of quiz.questions) {
       if (question.term === "" || question.definition === "") {
         setQueztionsError(true);
-        console.log("vi har tomma strängar i questions");
+        currentErr.push("error");
       }
     }
+    if (!currentErr.length) {
+      sendQuiz();
+    }
+  };
+  const sendQuiz = () => {
+    console.log("sending quiz :)");
+    console.log(activeUser._id);
+    api.postQuiz(activeUser._id, quiz);
   };
 
-  //  console.log(quiz, "this is quiz");
   return (
     <CreateQuizStyling>
       <form

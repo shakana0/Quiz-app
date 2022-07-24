@@ -1,4 +1,6 @@
 import UserModel, { credentialsType } from "./models/user";
+import {QuizType} from "./models/quizes";
+
 
 export const createUser = async (credentials: credentialsType) => {
   const newUser = new UserModel(credentials);
@@ -22,4 +24,15 @@ export const getSingleUser = async (userId: string) => {
 export const deleteUser = async (userId: string) => {
   const singleUser = await UserModel.findByIdAndDelete({ _id: userId });
   return singleUser;
+};
+
+export const postQuiz = async (userId: String, quiz: QuizType) => {
+  const newQuiz = await UserModel.findById(userId);
+  if (!newQuiz) {
+    throw "404";
+  }else{
+    newQuiz.quizes.push(quiz);
+    await newQuiz.save();
+    return newQuiz;
+  }
 };

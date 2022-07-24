@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ProfileViewStyling } from "../../components/styles/Profile.styled";
 import { useDispatch } from "react-redux";
-import * as api from "../../api/index";
-import { QuizType } from "../../interface/quizType";
+import * as api from "../../api/quizApi";
 import { setLogInSuccess } from "../Modal/ModalSlice";
 import { useNavigate } from "react-router-dom";
 import { AuthBtn } from "../buttons/AuthBtn";

@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import StarsInSky from "../../assets/img/stars-in-the-sky.jpg";
+// import StarsInSky from "../../assets/img/pink-sky.jpg";
+
 
 export const HomeStyling = styled.div`
-  /* margin: 0 6rem 0 8rem; */
   background-color: #d4acfc;
-  /* width: 100vw; */
+  /* background-color: #F0DBE2; */
+
 
   .hero-img {
     background-image: url(${StarsInSky});
