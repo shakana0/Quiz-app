@@ -27,12 +27,14 @@ export const deleteUser = async (userId: string) => {
 };
 
 export const postQuiz = async (userId: String, quiz: QuizType) => {
+  console.log(userId, quiz, 'från crud')
   const newQuiz = await UserModel.findById(userId);
   if (!newQuiz) {
     throw "404";
   }else{
     newQuiz.quizes.push(quiz);
     await newQuiz.save();
+    console.log(userId, quiz, 'från crud')
     return newQuiz;
   }
 };
