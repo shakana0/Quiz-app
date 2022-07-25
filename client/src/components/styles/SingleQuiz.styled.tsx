@@ -99,6 +99,22 @@ export const SingleQuizViewStyling = styled.div`
           border: none;
         }
       }
+      .compleeted{
+        width: 100%;
+        height: 300px;
+        background-color: #49d44986;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+        
+        .emoji-icon{
+          fill: white;
+          font-size: 5rem;
+          margin-bottom: 2rem;
+        }
+      }
     }
   }
 `;

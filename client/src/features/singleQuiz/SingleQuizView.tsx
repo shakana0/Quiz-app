@@ -5,6 +5,7 @@ import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import ReactCardFlip from "react-card-flip";
+import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 
 export const SingleQuizView = () => {
   const navigate = useNavigate();
@@ -25,22 +26,36 @@ export const SingleQuizView = () => {
   };
 
   const renderCards = () => {
+    console.log(currentQuiz.questions.length - 1 + 1);
     if (currentQuiz.questions != null) {
-      for (let question of currentQuiz.questions) {
-        if (question.id === page) {
-          return (
-            <div className="card-container">
-              <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
-                <div className="front" onClick={handleClick}>
-                  <h2>{question.term}</h2>
-                </div>
-                <div className="back" onClick={handleClick}>
-                  <p>{question.definition}</p>
-                </div>
-              </ReactCardFlip>
-            </div>
-          );
+      if (page > 1 || page <= currentQuiz.questions.length - 1) {
+        for (let question of currentQuiz.questions) {
+          if (question.id === page) {
+            return (
+              <div className="card-container">
+                <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
+                  <div className="front" onClick={handleClick}>
+                    <h2>{question.term}</h2>
+                  </div>
+                  <div className="back" onClick={handleClick}>
+                    <p>{question.definition}</p>
+                  </div>
+                </ReactCardFlip>
+              </div>
+            );
+          }
         }
+      }
+      if (page > currentQuiz.questions.length - 1) {
+        return (
+          <article className="compleeted">
+            <EmojiEmotionsIcon className="emoji-icon" />
+            <h2>
+              Good Job! You've compleeted{" "}
+              {currentQuiz.questions && currentQuiz.questions.length} terms.
+            </h2>
+          </article>
+        );
       }
     }
   };
@@ -81,7 +96,10 @@ export const SingleQuizView = () => {
             </button>
             <button
               onClick={() => {
-                if (page <= currentQuiz.questions.length - 1) {
+                if (
+                  page <= currentQuiz.questions.length - 1 ||
+                  page <= currentQuiz.questions.length - 1 + 1
+                ) {
                   setPage((prev: number) => prev + 1);
                 }
                 setIsflipped(false);
@@ -90,6 +108,13 @@ export const SingleQuizView = () => {
               next
             </button>
           </div>
+          {/* <article className="compleeted">
+            <EmojiEmotionsIcon className="emoji-icon" />
+            <h2>
+              Good Job! You've compleeted{" "}
+              {currentQuiz.questions && currentQuiz.questions.length} terms.
+            </h2>
+          </article> */}
         </div>
       </section>
       <img
