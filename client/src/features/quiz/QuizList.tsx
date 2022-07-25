@@ -14,7 +14,7 @@ export const QuizList = () => {
     <QuizListStyling>
       {allQuizes.map((quiz: any, index) => (
         //ändra :id till ett rikitgt id som generaras för varje quiz ***********
-        <Link to={`/single-quiz/${quiz.titel}`} key={index}>
+        <Link to={`/single-quiz/${quiz.id}`} key={index}>
           <QuizCard quiz={quiz} />
         </Link>
       ))}

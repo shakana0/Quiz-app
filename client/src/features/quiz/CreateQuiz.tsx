@@ -7,9 +7,14 @@ import { QuizType } from "../../interface/quizType";
 import { useSelector } from "react-redux";
 import * as api from "../../api/quizApi";
 import { useNavigate } from "react-router";
+const { v4: uuidv4 } = require("uuid");
+//uuidv4();
 
 export const CreateQuiz = () => {
-  const navigate = useNavigate()
+  //   let testId = uuidv4();
+  // console.log(testId, ':)')
+
+  const navigate = useNavigate();
   const { activeUser } = useSelector((state: any) => state.modal);
   const [counter, setCounter] = useState(2); //ful-hack
   const [quizCardList, setQuizCardList] = useState<number[]>([1]);
@@ -19,6 +24,7 @@ export const CreateQuiz = () => {
     definition: "",
   };
   const initialQuizState: QuizType = {
+    id: uuidv4(),
     titel: "",
     description: "",
     questions: [],
@@ -30,7 +36,7 @@ export const CreateQuiz = () => {
 
   const deleteCard = (currentCardNum: number) => {
     let updatedCardList = quizCardList.filter(
-      (cardNum) => cardNum != currentCardNum
+      (cardNum) => cardNum !== currentCardNum
     );
     let updatedQuestions = currentQuestions.filter((question) =>
       updatedCardList.find((cardNum) => cardNum === question.id)
@@ -72,6 +78,7 @@ export const CreateQuiz = () => {
       });
       currentErr.push("error");
     }
+
     for (let question of quiz.questions) {
       if (question.term === "" || question.definition === "") {
         setQueztionsError(true);
@@ -88,7 +95,7 @@ export const CreateQuiz = () => {
   };
   const sendQuiz = () => {
     api.postQuiz(activeUser._id, quiz);
-    navigate('/profile')
+    navigate("/profile");
   };
 
   return (
