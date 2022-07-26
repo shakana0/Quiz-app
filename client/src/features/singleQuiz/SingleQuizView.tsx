@@ -5,7 +5,9 @@ import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { setCurrentQuiz } from "./QuizSlice";
-import { FlashCards } from "./FlashCards";
+import { FlashCards } from "./games/FlashCards";
+import { Write } from "./games/Write";
+
 
 export const SingleQuizView = () => {
   const disptach = useDispatch();
@@ -43,7 +45,8 @@ export const SingleQuizView = () => {
           <button>Match</button>
           <button>Test</button>
         </div>
-        <FlashCards />
+        {/* <FlashCards /> */}
+        <Write/>
       </section>
       <img
         src={require("../../assets/img/astronaut-going-up.png")}

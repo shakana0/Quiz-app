@@ -156,7 +156,6 @@ export const Modal = () => {
   };
 
   const sendCredentials = () => {
-    console.log("you have made it :)");
     //api.postUser(credentials);
     dispatch(setLogInSuccess(true));
     dispatch(toggleModalState({ showModal: false, modalType: "" }));

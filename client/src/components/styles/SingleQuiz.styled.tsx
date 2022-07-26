@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 export const SingleQuizViewStyling = styled.div`
   background-color: #9dc5ff;
-    
-    padding-top: 2rem;
+
+  padding-top: 2rem;
 
   .back-btn {
     background-color: transparent;
@@ -58,11 +58,12 @@ export const SingleQuizViewStyling = styled.div`
         }
       }
     }
-    .quiz-cintainer {
+
+    /* FlashCards */
+    .quiz-container {
       display: flex;
       flex-direction: column;
       width: 70%;
-
       .card-container {
         width: 100%;
       }
@@ -95,12 +96,12 @@ export const SingleQuizViewStyling = styled.div`
 
         button {
           margin: 0 1rem;
-          padding: .5rem 1.8rem;
+          padding: 0.5rem 1.8rem;
           background-color: orange;
           border: none;
         }
       }
-      .compleeted{
+      .compleeted {
         width: 100%;
         height: 300px;
         background-color: #47c74785;
@@ -109,11 +110,66 @@ export const SingleQuizViewStyling = styled.div`
         align-items: center;
         justify-content: center;
         border-radius: 20px;
-        
-        .emoji-icon{
+
+        .emoji-icon {
           fill: white;
           font-size: 5rem;
           margin-bottom: 2rem;
+        }
+      }
+    }
+
+    /* Write */
+    .write-container {
+      width: 70%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      padding: 1rem;
+      border: 4px solid #7a70b7;
+      border-radius: 20px;
+      background-color: #342882;
+      .points {
+        align-self: flex-end;
+        margin: 0 1rem 1rem 0;
+        font-size: 1.5rem;
+      }
+      section {
+        width: 95%;
+        border-bottom: 3px solid white;
+        padding-bottom: 1rem;
+        p {
+          font-size: 1.2rem;
+          line-height: 32px;
+        }
+      }
+      div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 95%;
+        height: 50%;
+        input {
+          padding: 0.3rem 1rem;
+          width: 70%;
+          height: 50%;
+          align-self: flex-end;
+          background-color: transparent;
+          font-size: 1.5rem;
+          border: none;
+          border-bottom: 3px solid white;
+          &:focus {
+            outline: none;
+          }
+        }
+        button {
+          padding: 0.8rem 2rem;
+          border: 3px solid #71a971;
+          border-radius: 10px;
+          align-self: flex-end;
+          background-color: #319631;
+          font-size: 1.3rem;
         }
       }
     }

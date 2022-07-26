@@ -45,7 +45,7 @@ export const FlashCards = () => {
   };
 
   return (
-    <div className="quiz-cintainer">
+    <div className="quiz-container">
       <>
         {renderCards()}
         <div className="pagination-btns">
