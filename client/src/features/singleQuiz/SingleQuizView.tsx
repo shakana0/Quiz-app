@@ -2,63 +2,25 @@ import React, { useEffect, useState } from "react";
 import { SingleQuizViewStyling } from "../../components/styles/SingleQuiz.styled";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import ReactCardFlip from "react-card-flip";
-import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
+import { setCurrentQuiz } from "./QuizSlice";
+import { FlashCards } from "./FlashCards";
 
 export const SingleQuizView = () => {
+  const disptach = useDispatch();
   const navigate = useNavigate();
+  const { currentQuiz } = useSelector((state: any) => state.quiz);
   const { activeUser } = useSelector((state: any) => state.modal);
-  const [currentQuiz, setCurrentQuiz] = useState<any>({});
   const { id }: any = useParams();
-  const [isFlipped, setIsflipped] = useState(false);
-  const [page, setPage] = useState(1);
 
   useEffect(() => {
     let quiz: any = {};
-    quiz = activeUser.quizes.filter((quiz: any) => quiz.id === id);
-    setCurrentQuiz(quiz[0]);
-  }, [id]);
-
-  const handleClick = () => {
-    setIsflipped(!isFlipped);
-  };
-
-  const renderCards = () => {
-    console.log(currentQuiz.questions.length - 1 + 1);
-    if (currentQuiz.questions != null) {
-      if (page > 1 || page <= currentQuiz.questions.length - 1) {
-        for (let question of currentQuiz.questions) {
-          if (question.id === page) {
-            return (
-              <div className="card-container">
-                <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
-                  <div className="front" onClick={handleClick}>
-                    <h2>{question.term}</h2>
-                  </div>
-                  <div className="back" onClick={handleClick}>
-                    <p>{question.definition}</p>
-                  </div>
-                </ReactCardFlip>
-              </div>
-            );
-          }
-        }
-      }
-      if (page > currentQuiz.questions.length - 1) {
-        return (
-          <article className="compleeted">
-            <EmojiEmotionsIcon className="emoji-icon" />
-            <h2>
-              Good Job! You've compleeted{" "}
-              {currentQuiz.questions && currentQuiz.questions.length} terms.
-            </h2>
-          </article>
-        );
-      }
+    if (activeUser.quizes != null) {
+      quiz = activeUser.quizes.filter((quiz: any) => quiz.id === id);
+      disptach(setCurrentQuiz(quiz[0]));
     }
-  };
+  }, []);
 
   return (
     <SingleQuizViewStyling>
@@ -81,41 +43,7 @@ export const SingleQuizView = () => {
           <button>Match</button>
           <button>Test</button>
         </div>
-        <div className="quiz-cintainer">
-          {renderCards()}
-          <div className="pagination-btns">
-            <button
-              onClick={() => {
-                if (page > 1) {
-                  setPage((prev: number) => prev - 1);
-                }
-                setIsflipped(false);
-              }}
-            >
-              back
-            </button>
-            <button
-              onClick={() => {
-                if (
-                  page <= currentQuiz.questions.length - 1 ||
-                  page <= currentQuiz.questions.length - 1 + 1
-                ) {
-                  setPage((prev: number) => prev + 1);
-                }
-                setIsflipped(false);
-              }}
-            >
-              next
-            </button>
-          </div>
-          {/* <article className="compleeted">
-            <EmojiEmotionsIcon className="emoji-icon" />
-            <h2>
-              Good Job! You've compleeted{" "}
-              {currentQuiz.questions && currentQuiz.questions.length} terms.
-            </h2>
-          </article> */}
-        </div>
+        <FlashCards />
       </section>
       <img
         src={require("../../assets/img/astronaut-going-up.png")}

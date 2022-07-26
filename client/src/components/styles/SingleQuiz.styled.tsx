@@ -3,7 +3,8 @@ import styled from "styled-components";
 
 export const SingleQuizViewStyling = styled.div`
   background-color: #9dc5ff;
-  padding-top: 2rem;
+    
+    padding-top: 2rem;
 
   .back-btn {
     background-color: transparent;
@@ -102,7 +103,7 @@ export const SingleQuizViewStyling = styled.div`
       .compleeted{
         width: 100%;
         height: 300px;
-        background-color: #49d44986;
+        background-color: #47c74785;
         display: flex;
         flex-direction: column;
         align-items: center;
