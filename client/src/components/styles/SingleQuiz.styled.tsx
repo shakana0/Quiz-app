@@ -101,35 +101,53 @@ export const SingleQuizViewStyling = styled.div`
           border: none;
         }
       }
-      .compleeted {
-        width: 100%;
-        height: 300px;
-        background-color: #47c74785;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        border-radius: 20px;
+    }
 
-        .emoji-icon {
-          fill: white;
-          font-size: 5rem;
-          margin-bottom: 2rem;
-        }
+    .compleeted,
+    .wrong {
+      width: 100%;
+      height: 300px;
+      background-color: #47c74785;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 20px;
+
+      .smiling-emoji,
+      .angry-emoji {
+        font-size: 5rem;
+      }
+    }
+    .wrong {
+      background-color: #ff0000c1;
+      button {
+        padding: 0.8rem 2rem;
+        border: 3px solid #71a971;
+        border-radius: 10px;
+        background-color: #319631;
+        font-size: 0.8rem;
+        margin-top: 2rem;
       }
     }
 
     /* Write */
     .write-container {
       width: 70%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
-      padding: 1rem;
       border: 4px solid #7a70b7;
       border-radius: 20px;
       background-color: #342882;
+      .wrapper {
+        box-sizing: border-box;
+        width: 100%;
+        height: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        padding: 1rem;
+        /* border: 2px solid white; */
+      }
       .points {
         align-self: flex-end;
         margin: 0 1rem 1rem 0;

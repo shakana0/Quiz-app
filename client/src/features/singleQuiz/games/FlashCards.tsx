@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ReactCardFlip from "react-card-flip";
-import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import { useSelector } from "react-redux";
 
 export const FlashCards = () => {
@@ -33,7 +32,7 @@ export const FlashCards = () => {
       if (page > currentQuiz.questions.length - 1) {
         return (
           <article className="compleeted">
-            <EmojiEmotionsIcon className="emoji-icon" />
+            <span className="smiling-emoji">😊</span>
             <h2>
               Good Job! You've compleeted{" "}
               {currentQuiz.questions && currentQuiz.questions.length} terms.

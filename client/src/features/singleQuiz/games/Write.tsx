@@ -7,54 +7,76 @@ export const Write = () => {
   const [guessedTerm, setGuessedTerm] = useState("");
   const [points, setPoints] = useState(0);
   const [index, setIndex] = useState(1);
+  const [wrong, setWrong] = useState(false);
+  let quiz: any = [];
 
   const renderDefinition = () => {
     if (currentQuiz.questions.length) {
-      let quiz = [];
       quiz = currentQuiz.questions.filter(
         (question: any) => question.id === index
       );
-      return (
-        <section>
-          <p>{quiz[0].definition}</p>
-        </section>
-      );
+      if (wrong === true) {
+        return (
+          <article className="wrong">
+            <span className="angry-emoji">😡</span>
+            <h2>Wrong!</h2>
+            <button
+              onClick={() => {
+                setWrong(false);
+              }}
+            >
+              Continue
+            </button>
+          </article>
+        );
+      }
+      if (index <= currentQuiz.questions.length - 1 + 1 && wrong === false) {
+        return (
+          <div className="wrapper">
+            <p className="points">{points}</p>
+            <section>
+              <p>{quiz[0].definition}</p>
+            </section>
+            <div>
+              <input
+                ref={ref}
+                type="text"
+                onChange={(event) => {
+                  setGuessedTerm(event?.target.value);
+                }}
+              />
+              <button onClick={checkAnwser}>Answer</button>
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <article className="compleeted">
+            <span className="smiling-emoji">😊</span>
+            <h2>
+              Good Job! You've compleeted {points}/
+              {currentQuiz.questions && currentQuiz.questions.length} terms.
+            </h2>
+          </article>
+        );
+      }
     }
   };
   const checkAnwser = () => {
-    if (
-      currentQuiz.questions.find(
-        (term: any) => term.term.toLowerCase() === guessedTerm
-        && index < currentQuiz.questions.length
-      )
-    ) {
-      console.log("rätt :))");
-      setPoints((prev) => prev + 1);
+    if (guessedTerm !== "") {
+      if (quiz[0].term.toLowerCase() === guessedTerm) {
+        setPoints((prev) => prev + 1);
+        setGuessedTerm("");
+      } else {
+        setWrong(true);
+        console.log("feeel :(");
+      }
       setIndex((prev) => prev + 1);
       if (ref.current != null) {
         ref.current.value = "";
       }
       renderDefinition();
-    } else {
-      console.log("feeel :(");
     }
   };
-  return (
-    <div className="write-container">
-      <>
-        <p className="points">{points}</p>
-        {renderDefinition()}
-        <div>
-          <input
-            ref={ref}
-            type="text"
-            onChange={(event) => {
-              setGuessedTerm(event?.target.value);
-            }}
-          />
-          <button onClick={checkAnwser}>Answer</button>
-        </div>
-      </>
-    </div>
-  );
+  return <div className="write-container">{renderDefinition()}</div>;
 };

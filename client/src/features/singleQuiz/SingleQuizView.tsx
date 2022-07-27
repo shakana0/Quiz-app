@@ -15,6 +15,7 @@ export const SingleQuizView = () => {
   const { currentQuiz } = useSelector((state: any) => state.quiz);
   const { activeUser } = useSelector((state: any) => state.modal);
   const { id }: any = useParams();
+  const [currentGame, setCurrentGame] = useState('')
 
   useEffect(() => {
     let quiz: any = {};
@@ -23,6 +24,24 @@ export const SingleQuizView = () => {
       disptach(setCurrentQuiz(quiz[0]));
     }
   }, []);
+
+  const renderQuiz = () =>{
+    if(currentGame === 'FlashCards'){
+      return(
+        <FlashCards/>
+      )
+    }
+    if(currentGame === 'Write'){
+      return(
+        <Write/>
+      )
+    }
+    else{
+      return(
+        <FlashCards/>
+      )
+    }
+  }
 
   return (
     <SingleQuizViewStyling>
@@ -40,13 +59,20 @@ export const SingleQuizView = () => {
       <section className="game-board">
         <div className="quiz-btns">
           <p>Pick a study mode!</p>
-          <button>Flashcards</button>
-          <button>Write</button>
-          <button>Match</button>
-          <button>Test</button>
+          <button onClick={(() =>{
+            setCurrentGame('Flashcards')
+          })}>Flashcards</button>
+          <button onClick={(() =>{
+            setCurrentGame('Write')
+          })}>Write</button>
+          <button onClick={(() =>{
+            setCurrentGame('Match')
+          })}>Match</button>
+          <button onClick={(() =>{
+            setCurrentGame('Test')
+          })}>Test</button>
         </div>
-        {/* <FlashCards /> */}
-        <Write/>
+        {renderQuiz()}
       </section>
       <img
         src={require("../../assets/img/astronaut-going-up.png")}
