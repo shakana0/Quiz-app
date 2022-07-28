@@ -54,8 +54,8 @@ export const Write = () => {
           <article className="compleeted">
             <span className="smiling-emoji">😊</span>
             <h2>
-              Good Job! You've compleeted {points}/
-              {currentQuiz.questions && currentQuiz.questions.length} terms.
+              Good Job! You got {points}/
+              {currentQuiz.questions && currentQuiz.questions.length} terms right.
             </h2>
           </article>
         );
