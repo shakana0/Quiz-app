@@ -1,7 +1,7 @@
- interface QuestionType {
+ export interface QuestionType {
   id: number,
   term: string;
-  definition: string;
+  definition?: string;
 }
 
 export interface QuizType {

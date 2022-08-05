@@ -106,7 +106,8 @@ export const SingleQuizViewStyling = styled.div`
     .compleeted,
     .wrong {
       width: 100%;
-      height: 300px;
+      /* height: 300px; */
+      height: 100%;
       background-color: #47c74785;
       display: flex;
       flex-direction: column;
@@ -188,6 +189,54 @@ export const SingleQuizViewStyling = styled.div`
           align-self: flex-end;
           background-color: #319631;
           font-size: 1.3rem;
+        }
+      }
+    }
+
+    /* Match */
+    .match-container {
+      width: 70%;
+      height: 400px;
+      border: 4px solid #675f9a;
+      border-radius: 20px;
+      background-color: #7a6cd6;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .definition {
+        width: 100%;
+        height: 35%;
+        padding: 1rem 2rem;
+        box-sizing: border-box;
+        p {
+          line-height: 32px;
+        }
+      }
+      .alternatives {
+        padding-bottom: 0.5rem;
+
+        p {
+          padding-left: 2rem;
+        }
+        .btns-wrapper {
+          display: flex;
+          flex-wrap: wrap;
+          padding: 0 1rem;
+          button {
+            padding: .8rem 0;
+            background-color: transparent;
+            border: 2px solid orange;
+            color: orange;
+            border-radius: 10px;
+            margin: 1rem;
+            width: 45%;
+            font-size: 1.1rem;
+            &:hover {
+              background-color: #eba74260;
+            }
+          }
         }
       }
     }

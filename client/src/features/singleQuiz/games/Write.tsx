@@ -69,7 +69,6 @@ export const Write = () => {
         setGuessedTerm("");
       } else {
         setWrong(true);
-        console.log("feeel :(");
       }
       setIndex((prev) => prev + 1);
       if (ref.current != null) {

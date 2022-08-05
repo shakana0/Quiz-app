@@ -7,6 +7,7 @@ import { useParams } from "react-router";
 import { setCurrentQuiz } from "./QuizSlice";
 import { FlashCards } from "./games/FlashCards";
 import { Write } from "./games/Write";
+import { Match } from "./games/Match";
 
 
 export const SingleQuizView = () => {
@@ -15,7 +16,7 @@ export const SingleQuizView = () => {
   const { currentQuiz } = useSelector((state: any) => state.quiz);
   const { activeUser } = useSelector((state: any) => state.modal);
   const { id }: any = useParams();
-  const [currentGame, setCurrentGame] = useState('')
+  const [currentGame, setCurrentGame] = useState("");
 
   useEffect(() => {
     let quiz: any = {};
@@ -25,23 +26,18 @@ export const SingleQuizView = () => {
     }
   }, []);
 
-  const renderQuiz = () =>{
-    if(currentGame === 'FlashCards'){
-      return(
-        <FlashCards/>
-      )
+  const renderQuiz = () => {
+    if (currentGame === "FlashCards") {
+      return <FlashCards />;
     }
-    if(currentGame === 'Write'){
-      return(
-        <Write/>
-      )
+    if (currentGame === "Write") {
+      return <Write />;
+    }if (currentGame === "Match") {
+      return <Match />;
+    }else {
+      return <FlashCards />;
     }
-    else{
-      return(
-        <FlashCards/>
-      )
-    }
-  }
+  };
 
   return (
     <SingleQuizViewStyling>
@@ -59,18 +55,34 @@ export const SingleQuizView = () => {
       <section className="game-board">
         <div className="quiz-btns">
           <p>Pick a study mode!</p>
-          <button onClick={(() =>{
-            setCurrentGame('Flashcards')
-          })}>Flashcards</button>
-          <button onClick={(() =>{
-            setCurrentGame('Write')
-          })}>Write</button>
-          <button onClick={(() =>{
-            setCurrentGame('Match')
-          })}>Match</button>
-          <button onClick={(() =>{
-            setCurrentGame('Test')
-          })}>Test</button>
+          <button
+            onClick={() => {
+              setCurrentGame("Flashcards");
+            }}
+          >
+            Flashcards
+          </button>
+          <button
+            onClick={() => {
+              setCurrentGame("Write");
+            }}
+          >
+            Write
+          </button>
+          <button
+            onClick={() => {
+              setCurrentGame("Match");
+            }}
+          >
+            Match
+          </button>
+          <button
+            onClick={() => {
+              setCurrentGame("Test");
+            }}
+          >
+            Test
+          </button>
         </div>
         {renderQuiz()}
       </section>
