@@ -76,13 +76,6 @@ export const SingleQuizView = () => {
           >
             Match
           </button>
-          <button
-            onClick={() => {
-              setCurrentGame("Test");
-            }}
-          >
-            Test
-          </button>
         </div>
         {renderQuiz()}
       </section>
