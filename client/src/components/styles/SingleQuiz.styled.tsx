@@ -2,7 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 export const SingleQuizViewStyling = styled.div`
-  background-color: #9dc5ff;
+  /* background-color: #9dc5ff; */
+  /* background-color: #aea8f7; */
+  background-color: #96adde;
 
   padding-top: 2rem;
 
@@ -27,6 +29,7 @@ export const SingleQuizViewStyling = styled.div`
   .description {
     font-size: 1.5rem;
     color: orange;
+    -webkit-text-stroke: 1px #835604;
     margin: 1rem 0 0 10%;
   }
   .game-board {
@@ -48,10 +51,12 @@ export const SingleQuizViewStyling = styled.div`
         background-color: transparent;
         border: 2px solid white;
         border-radius: 4px;
-        color: #ef9207;
+        color: orange;
+        -webkit-text-stroke: 1px #835604;
         width: 150px;
         padding: 0.8rem 0.5rem;
-        margin: 0.5rem 0;
+        margin: 1rem 0;
+        font-size: 1.1rem;
 
         &:hover {
           background-color: #ffa6006b;
@@ -83,9 +88,12 @@ export const SingleQuizViewStyling = styled.div`
       }
       .front {
         background-color: #ffa600cb;
+        border: 4px solid #cb8501da;
       }
       .back {
         background-color: #82a8e1;
+        border: 4px solid #7486ac;
+
       }
 
       .pagination-btns {
@@ -98,7 +106,12 @@ export const SingleQuizViewStyling = styled.div`
           margin: 0 1rem;
           padding: 0.5rem 1.8rem;
           background-color: orange;
+          border-radius: 5px;
           border: none;
+
+          &:hover {
+            background-color: #db9108c9;
+          }
         }
       }
     }
@@ -109,11 +122,13 @@ export const SingleQuizViewStyling = styled.div`
       /* height: 300px; */
       height: 100%;
       background-color: #47c74785;
+      border: 4px solid #71a971;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       border-radius: 20px;
+      box-sizing: border-box;
 
       .smiling-emoji,
       .angry-emoji {
@@ -147,7 +162,6 @@ export const SingleQuizViewStyling = styled.div`
         justify-content: space-around;
         align-items: center;
         padding: 1rem;
-        /* border: 2px solid white; */
       }
       .points {
         align-self: flex-end;
@@ -183,12 +197,12 @@ export const SingleQuizViewStyling = styled.div`
           }
         }
         button {
-          padding: 0.8rem 2rem;
+          padding: 0.5rem 1.5rem;
           border: 3px solid #71a971;
           border-radius: 10px;
           align-self: flex-end;
           background-color: #319631;
-          font-size: 1.3rem;
+          font-size: 1.2rem;
         }
       }
     }
@@ -225,7 +239,7 @@ export const SingleQuizViewStyling = styled.div`
           flex-wrap: wrap;
           padding: 0 1rem;
           button {
-            padding: .8rem 0;
+            padding: 0.8rem 0;
             background-color: transparent;
             border: 2px solid orange;
             color: orange;

@@ -5,6 +5,7 @@ export const ModalStyling = styled.article`
   width: 100vw;
   height: 100vh;
   background-color: #e9c2f8;
+  /* background-color: #d4acfc; */
   display: flex;
   justify-content: center;
   position: fixed;
@@ -52,14 +53,6 @@ export const ModalStyling = styled.article`
       display: flex;
       align-items: center;
       flex-direction: column;
-
-      /* button:focus{
-        text-decoration: underline;
-        text-decoration-color: orange;
-        text-decoration-thickness: 3px;
-        color: #7f0186a8;
-      } */
-
       .isActive {
         text-decoration: underline;
         text-decoration-color: orange;

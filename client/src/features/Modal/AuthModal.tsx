@@ -9,12 +9,13 @@ import { AuthBtn } from "../buttons/AuthBtn";
 import {
   toggleModalState,
   setActiveForm,
-  setLogInSuccess,
-  setActiveUser,
+  // setLogInSuccess,
+  // setActiveUser,
 } from "./ModalSlice";
+import { setLogInSuccess, setActiveUser, fetchUsers } from "./AuthSlice";
 import { credentialsType } from "../../interface/userType";
 import * as api from "../../api/userApi";
-import { fetchUsers } from "./ModalSlice";
+// import { fetchUsers } from "./ModalSlice";
 import { useNavigate } from "react-router-dom";
 
 export const Modal = () => {
@@ -183,6 +184,7 @@ export const Modal = () => {
     );
     if (activeUser.length) {
       dispatch(setLogInSuccess(true));
+      window.localStorage.setItem("isLoggedIn", "true");
       dispatch(setActiveUser(activeUser));
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
       navigate("/");
@@ -190,7 +192,7 @@ export const Modal = () => {
       setErrors((current) => {
         return {
           ...current,
-          emailAdress: "Email adress or user name does not exit",
+          emailAdress: "Email adress or user name does not exist",
           userName: "",
           password: "Wrong password",
         };

@@ -7,15 +7,11 @@ export const HomeStyling = styled.div`
   background-color: #d4acfc;
   /* background-color: #F0DBE2; */
 
-
   .hero-img {
     background-image: url(${StarsInSky});
     background-position: center;
     background-size: cover;
     height: 75vh;
-    /* width: 100%; */
-
-    /* width: 100vw; */
     display: flex;
     flex-direction: column;
     margin-bottom: 2rem;
@@ -50,7 +46,7 @@ export const HomeStyling = styled.div`
     align-items: center;
     flex-direction: column;
 
-    h1 {
+    .recent-header {
       font-size: 2rem;
       align-self: flex-start;
       margin: 0 0 2rem 9rem;

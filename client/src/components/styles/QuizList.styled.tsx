@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 export const QuizListStyling = styled.div`
-  margin: 0 auto;
+  margin: 1rem auto;
   padding: 1rem;
   border: 2px solid white;
   height: 400px;
@@ -12,7 +12,14 @@ export const QuizListStyling = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
   overflow-y: auto;
+
+  .no-quizes-header{
+    color: orange;
+    -webkit-text-stroke: 1px #c702a9ea;
+    font-size: 2.5rem;
+  }
 
   ::-webkit-scrollbar {
       background-color: transparent;

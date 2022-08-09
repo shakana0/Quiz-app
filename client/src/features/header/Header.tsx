@@ -12,7 +12,7 @@ import { toggleModalState, setActiveForm } from "../Modal/ModalSlice";
 export const Header = () => {
   const dispatch = useDispatch();
   const { showModal } = useSelector((state: any) => state.modal);
-  const { logInSuccess } = useSelector((state: any) => state.modal);
+  const { logInSuccess } = useSelector((state: any) => state.auth);
 
   const RenderModal = () => {
     if (showModal) {

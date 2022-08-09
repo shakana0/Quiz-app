@@ -1,7 +1,7 @@
 import React from "react";
 import { ProfileViewStyling } from "../../components/styles/Profile.styled";
 import { useDispatch } from "react-redux";
-import { setLogInSuccess } from "../Modal/ModalSlice";
+import { setLogInSuccess } from "../Modal/AuthSlice";
 import { AuthBtn } from "../buttons/AuthBtn";
 import { useSelector } from "react-redux";
 import { QuizList } from "../quiz/QuizList"
@@ -10,7 +10,7 @@ import { useNavigate } from "react-router";
 export const ProfileView = () => {
   const navigate = useNavigate();
   const disptach = useDispatch();
-  const { activeUser } = useSelector((state: any) => state.modal);
+  const { activeUser } = useSelector((state: any) => state.auth);
   return (
     <ProfileViewStyling>
       <section className="profile">

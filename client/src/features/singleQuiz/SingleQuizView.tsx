@@ -14,7 +14,7 @@ export const SingleQuizView = () => {
   const disptach = useDispatch();
   const navigate = useNavigate();
   const { currentQuiz } = useSelector((state: any) => state.quiz);
-  const { activeUser } = useSelector((state: any) => state.modal);
+  const { activeUser } = useSelector((state: any) => state.auth);
   const { id }: any = useParams();
   const [currentGame, setCurrentGame] = useState("");
 

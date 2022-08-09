@@ -5,19 +5,36 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export const QuizList = () => {
-  const { activeUser } = useSelector((state: any) => state.modal);
+  const { activeUser } = useSelector((state: any) => state.auth);
   const [allQuizes, setAllQuizes] = useState([]);
   useEffect(() => {
     setAllQuizes(activeUser.quizes);
   }, []);
-  return (
-    <QuizListStyling>
-      {allQuizes.map((quiz: any, index) => (
-        //ändra :id till ett rikitgt id som generaras för varje quiz ***********
+  const renderList = () => {
+    if (!allQuizes.length) {
+      return(
+        <h1 className="no-quizes-header">You don't have any quizes yet</h1>
+      )
+    }else{
+      return(
+        <>
+         {allQuizes.map((quiz: any, index) => (
         <Link to={`/single-quiz/${quiz.id}`} key={index}>
           <QuizCard quiz={quiz} />
         </Link>
       ))}
+      </>
+      )
+    }
+  };
+  return (
+    <QuizListStyling>
+      {/* {allQuizes.map((quiz: any, index) => (
+        <Link to={`/single-quiz/${quiz.id}`} key={index}>
+          <QuizCard quiz={quiz} />
+        </Link>
+      ))} */}
+      {  renderList()}
     </QuizListStyling>
   );
 };

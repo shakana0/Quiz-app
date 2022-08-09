@@ -12,7 +12,7 @@ import { SingleQuizView } from "./features/singleQuiz/SingleQuizView";
 import { CreateQuiz } from "./features/quiz/CreateQuiz";
 
 const App = () => {
-  const { logInSuccess } = useSelector((state: any) => state.modal);
+  const { logInSuccess } = useSelector((state: any) => state.auth);
   return (
     // <ThemeProvider theme={Theme}>
     <>

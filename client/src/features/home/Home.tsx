@@ -17,7 +17,7 @@ export const Home = () => {
       />
       </div>
       <section>
-        <h1>Recent</h1>
+        <h1 className="recent-header">Recent</h1>
         <QuizList/>
       </section>
     
