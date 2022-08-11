@@ -8,33 +8,35 @@ export const QuizList = () => {
   const { activeUser } = useSelector((state: any) => state.auth);
   const [allQuizes, setAllQuizes] = useState([]);
   useEffect(() => {
-    setAllQuizes(activeUser.quizes);
+    if (activeUser !== null) {
+      setAllQuizes(activeUser.quizes);
+    }
   }, []);
   const renderList = () => {
-    if (!allQuizes.length) {
-      return(
-        <h1 className="no-quizes-header">You don't have any quizes yet</h1>
-      )
-    }else{
-      return(
-        <>
-         {allQuizes.map((quiz: any, index) => (
-        <Link to={`/single-quiz/${quiz.id}`} key={index}>
-          <QuizCard quiz={quiz} />
-        </Link>
-      ))}
-      </>
-      )
-    }
+    // if (allQuizes.length) {
+    //   if (!allQuizes.length) {
+    //     return (
+    //       <h1 className="no-quizes-header">You don't have any quizes yet</h1>
+    //     );
+    //   } else {
+    //     return (
+    //       <>
+    //         {allQuizes.map((quiz: any, index) => (
+    //           <Link to={`/single-quiz/${quiz.id}`} key={index}>
+    //             <QuizCard quiz={quiz} />
+    //           </Link>
+    //         ))}
+    //       </>
+    //     );
+    //   }
+    // }
+    return(
+      <h1>Hej</h1>
+    )
   };
   return (
     <QuizListStyling>
-      {/* {allQuizes.map((quiz: any, index) => (
-        <Link to={`/single-quiz/${quiz.id}`} key={index}>
-          <QuizCard quiz={quiz} />
-        </Link>
-      ))} */}
-      {  renderList()}
+      {renderList()}
     </QuizListStyling>
   );
 };

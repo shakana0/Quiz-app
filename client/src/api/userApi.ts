@@ -19,6 +19,7 @@ export const loginUser = async (logInCredentials: object) => {
   console.log(logInCredentials, 'from api :)')
   try {
     const loggedInUser = await axios.get("/user/login", logInCredentials);
+    console.log(loggedInUser)
     return loggedInUser;
   } catch (error: any) {
     return error.response;

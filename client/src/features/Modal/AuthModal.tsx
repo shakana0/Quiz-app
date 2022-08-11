@@ -188,10 +188,11 @@ export const Modal = () => {
     // );
 
 
-    api.loginUser(logInCredentials)
-    const res = await dispatch(fetchLoggedInUser());
+    // api.loginUser(logInCredentials)
+    const res = await dispatch(fetchLoggedInUser(logInCredentials));
 
-    if (activeUser.length) {
+    if (activeUser) {
+      console.log(activeUser)
       dispatch(setLogInSuccess(true));
       window.localStorage.setItem("isLoggedIn", "true");
       // dispatch(setActiveUser(activeUser));

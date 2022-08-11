@@ -21,8 +21,8 @@ export const getAllUsers = async () => {
 //   return singleUser;
 // };
 
-export const getSingleUser = async (user: credentialsType) => {
-  const singleUser = await UserModel.find({
+export const logInUser = async (user: credentialsType) => {
+  const loggedInUser = await UserModel.find({
     $or: [
       {
         userName: user.userName,
@@ -34,7 +34,7 @@ export const getSingleUser = async (user: credentialsType) => {
       },
     ],
   });
-  return singleUser;
+  return loggedInUser;
 };
 
 export const deleteUser = async (userId: string) => {

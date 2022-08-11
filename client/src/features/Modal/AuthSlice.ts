@@ -17,9 +17,10 @@ const initialState: UserAuthType = {
 
 //fetching loggedIn user
 export const fetchLoggedInUser: any = createAsyncThunk(
-  "user/fetchLoggedInUser",
-  async () => {
-    const response = await api.getAllUsers();
+  "user/fetchLoggedInUser", 
+  async (cred: object) => {
+    console.log(cred, 'vaad')
+    const response = await api.loginUser(cred);
     return response.data;
   }
 )
