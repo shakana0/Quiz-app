@@ -1,11 +1,15 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import {
+  combineReducers,
+  configureStore,
+  AnyAction,
+  Reducer,
+} from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import authReducer from "../features/Modal/AuthSlice"
+import authReducer from "../features/Modal/AuthSlice";
 import modalReducer from "../features/Modal/ModalSlice";
 import quizReducer from "../features/singleQuiz/QuizSlice";
-import thunk from 'redux-thunk';
-
+import thunk from "redux-thunk";
 
 // const rootReducer = combineReducers({
 //   modal: modalReducer,
@@ -13,37 +17,56 @@ import thunk from 'redux-thunk';
 //   auth: authReducer
 // });
 
-const rootReducer = combineReducers({
+// type RootState = ReturnType<typeof rootReducer>;
+
+// export const logOut = () => {
+//   type: 'RESET'
+// }
+
+const appReducer = combineReducers({
   modal: modalReducer,
   quiz: quizReducer,
-  auth: authReducer
+  auth: authReducer,
 });
 
-// const rootReducer = (state:  ReturnType<typeof appReducer>, action: any) => {
-//   if (action.type === 'LOG_OUT') {
-//     storage.removeItem('persist:root')
-//     return appReducer(undefined, action)
+// export const rootReducer: Reducer = (
+//   state: ReturnType<typeof appReducer>,
+//   action: AnyAction
+// ) => {
+//   console.log(action.type);
+//   if (action.type === "RESET_APP") {
+//     storage.removeItem("persist:root");
+//     // persistor.pause();
+//     // persistor.flush().then(() => {
+//     //   return persistor.purge();
+//     // });
+//     console.log("helo from root reducer");
+//     // state = {} as RootState;
+//     state = {} as RootState;
 //   }
-
-//   return appReducer(state, action)
-// }
+//   return appReducer(state, action);
+// };
 
 const persistConfig = {
   key: "persist-key",
   storage,
-  // whiteList: ['activeUser']
+  whitelist: ["auth"],
 };
 
- const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(persistConfig, appReducer);
 
- export const store = configureStore({
+export const store = configureStore({
   reducer: persistedReducer,
-  middleware: [thunk]
-})
+  middleware: [thunk],
+});
 
-// export const persistedStore = persistStore(store)
-export const persistor = persistStore(store)
+export const persistor = persistStore(store);
+// persistor.pause();
+// persistor.flush().then(() => {
+//   return persistor.purge();
+// });
 
+// export default rootReducer;
 
 // export default configureStore({
 //   reducer: {
@@ -51,5 +74,3 @@ export const persistor = persistStore(store)
 //     quiz: quizReducer,
 //   },
 // });
-
-

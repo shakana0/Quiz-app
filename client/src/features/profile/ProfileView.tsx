@@ -4,8 +4,9 @@ import { useDispatch } from "react-redux";
 import { setLogInSuccess } from "../Modal/AuthSlice";
 import { AuthBtn } from "../buttons/AuthBtn";
 import { useSelector } from "react-redux";
-import { QuizList } from "../quiz/QuizList"
+import { QuizList } from "../quiz/QuizList";
 import { useNavigate } from "react-router";
+// import { persistor, rootReducer } from "../../store/store";
 
 export const ProfileView = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ export const ProfileView = () => {
           className="log-out-btn"
           onClick={() => {
             disptach(setLogInSuccess(false));
+            // disptach(rootReducer({}, {type: 'RESET_APP'}));
             navigate("/");
           }}
         >
@@ -37,15 +39,15 @@ export const ProfileView = () => {
           />
         </section>
       </section>
-      <QuizList/>
+      <QuizList />
       <AuthBtn
         className="create-btn"
         variant="tertiary"
         isFullWidth={true}
         btnText="Create"
-        onClick={(() =>{
-          navigate('/create-quiz')
-        })}
+        onClick={() => {
+          navigate("/create-quiz");
+        }}
       />
     </ProfileViewStyling>
   );

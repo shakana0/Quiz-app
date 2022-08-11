@@ -8,8 +8,8 @@ dotenv.config();
 const app = express();
 app.use(json());
 
-//för aktivera alla CORS-förfrågningar
-app.use(cors())
+
+app.use(cors())//för aktivera alla CORS-förfrågningar
 app.use("/quiz", quizRouter);
 app.use("/user", userRouter);
 import { connect } from "mongoose";

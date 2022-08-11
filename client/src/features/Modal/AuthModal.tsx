@@ -12,7 +12,7 @@ import {
   // setLogInSuccess,
   // setActiveUser,
 } from "./ModalSlice";
-import { setLogInSuccess, setActiveUser, fetchUsers } from "./AuthSlice";
+import { setLogInSuccess, fetchLoggedInUser } from "./AuthSlice";
 import { credentialsType } from "../../interface/userType";
 import * as api from "../../api/userApi";
 // import { fetchUsers } from "./ModalSlice";
@@ -30,6 +30,8 @@ export const Modal = () => {
   const ref = useRef<HTMLFormElement>(null);
   const { modalType } = useSelector((state: any) => state.modal);
   const { activeForm } = useSelector((state: any) => state.modal);
+  const { activeUser } = useSelector((state: any) => state.auth);
+
   //decreing state varibles
   const [credentials, setCredentials] = useState<credentialsType>(
     initialCredentialsState
@@ -46,6 +48,8 @@ export const Modal = () => {
     password: false,
   });
   // const [repeatPassword, setRepeatPassword] = useState(false);
+
+
   const resetForm = () => {
     //clears all input fields in form
     if (ref.current != null) {
@@ -157,35 +161,40 @@ export const Modal = () => {
   };
 
   const sendCredentials = () => {
-    //api.postUser(credentials);
+    //api.registerUser(credentials);
     dispatch(setLogInSuccess(true));
     dispatch(toggleModalState({ showModal: false, modalType: "" }));
     navigate("/");
   };
 
-  const [allUsers, setAllUsers] = useState<credentialsType[]>([]);
-  useEffect(() => {
-    const loadUsers = async () => {
-      const res = await dispatch(fetchUsers());
-      setAllUsers(res.payload);
-    };
-    loadUsers();
-  }, []);
+  // const [allUsers, setAllUsers] = useState<credentialsType[]>([]);
+  // useEffect(() => {
+  //   const loadUsers = async () => {
+  //     const res = await dispatch(fetchUsers());
+  //     setAllUsers(res.payload);
+  //   };
+  //   loadUsers();
+  // }, []);
 
-  const handleLogIn = () => {
+  const handleLogIn = async () => {
     //checks if user does exist
-    let activeUser: any = [];
-    activeUser = allUsers.filter(
-      (user) =>
-        (user.emailAdress === logInCredentials.emailAdress &&
-          user.password === logInCredentials.password) ||
-        (user.userName === logInCredentials.userName &&
-          user.password === logInCredentials.password)
-    );
+    // let activeUser: any = [];
+    // activeUser = allUsers.filter(
+    //   (user) =>
+    //     (user.emailAdress === logInCredentials.emailAdress &&
+    //       user.password === logInCredentials.password) ||
+    //     (user.userName === logInCredentials.userName &&
+    //       user.password === logInCredentials.password)
+    // );
+
+
+    api.loginUser(logInCredentials)
+    const res = await dispatch(fetchLoggedInUser());
+
     if (activeUser.length) {
       dispatch(setLogInSuccess(true));
       window.localStorage.setItem("isLoggedIn", "true");
-      dispatch(setActiveUser(activeUser));
+      // dispatch(setActiveUser(activeUser));
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
       navigate("/");
     } else {
