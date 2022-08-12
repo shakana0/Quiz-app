@@ -8,7 +8,7 @@ export const QuizList = () => {
   const { activeUser } = useSelector((state: any) => state.auth);
   const [allQuizes, setAllQuizes] = useState([]);
   useEffect(() => {
-    if (activeUser !== null) {
+    if (activeUser.length) {
       setAllQuizes(activeUser.quizes);
     }
   }, []);

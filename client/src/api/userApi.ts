@@ -1,7 +1,7 @@
 import axios from "axios";
 axios.defaults.baseURL = "https://quiz-app-backend-heroku.herokuapp.com";
 // axios.defaults.headers.common = {
-//   "Context-Type": "application/json",
+//   "Content-Type": "application/json",
 //   withCredentials: true,
 // };
 // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -16,16 +16,21 @@ export const registerUser = async (user: object) => {
 };
 
 export const loginUser = async (logInCredentials: object) => {
-  console.log(logInCredentials, 'from api :)')
+  // console.log(logInCredentials, "from api :)");
   try {
-    const loggedInUser = await axios.get("/user/login", logInCredentials);
-    console.log(loggedInUser)
+    const loggedInUser = await axios.post("/user/login", logInCredentials, {
+      headers: {
+        "Content-Type": "application/json",
+        withCredentials: true,
+      },
+    });
+    console.log(loggedInUser, "hej");
     return loggedInUser;
   } catch (error: any) {
     return error.response;
   }
 };
-
+// loginUser();
 export const getAllUsers = async () => {
   try {
     const allUsers = await axios.get("/user");

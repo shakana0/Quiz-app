@@ -18,9 +18,9 @@ const initialState: UserAuthType = {
 //fetching loggedIn user
 export const fetchLoggedInUser: any = createAsyncThunk(
   "user/fetchLoggedInUser", 
-  async (cred: object) => {
-    console.log(cred, 'vaad')
-    const response = await api.loginUser(cred);
+  async (logInCredentials: object) => {
+    // console.log(cred, 'vaad')
+    const response = await api.loginUser(logInCredentials);
     return response.data;
   }
 )
@@ -46,7 +46,10 @@ const AuthSlice = createSlice({
   extraReducers: {
     [fetchLoggedInUser.fulfilled]: (state, { payload }) => {
       console.log(payload)
-      state.activeUser = payload;
+      if(payload.length){
+        console.log('den är inte tom')
+        state.activeUser = payload[0];
+      }
       console.log(state.activeUser)
     },
   },

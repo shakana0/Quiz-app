@@ -11,7 +11,7 @@ app.use(json());
 
 app.use(cors())//för aktivera alla CORS-förfrågningar
 app.use("/quiz", quizRouter);
-app.use("/user", userRouter);
+app.use("/user", userRouter); //enda som används
 import { connect } from "mongoose";
 //"quiz-db" är namnet på docker-containern / databasen
 // connect("mongodb://localhost:27017/quiz-db");

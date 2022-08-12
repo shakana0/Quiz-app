@@ -31,7 +31,7 @@ export const Modal = () => {
   const { modalType } = useSelector((state: any) => state.modal);
   const { activeForm } = useSelector((state: any) => state.modal);
   const { activeUser } = useSelector((state: any) => state.auth);
-
+  
   //decreing state varibles
   const [credentials, setCredentials] = useState<credentialsType>(
     initialCredentialsState
@@ -191,8 +191,8 @@ export const Modal = () => {
     // api.loginUser(logInCredentials)
     const res = await dispatch(fetchLoggedInUser(logInCredentials));
 
-    if (activeUser) {
-      console.log(activeUser)
+    if (Object.keys(activeUser).length !== 0) {
+      console.log(activeUser, 'den loggar in ändå :(((')
       dispatch(setLogInSuccess(true));
       window.localStorage.setItem("isLoggedIn", "true");
       // dispatch(setActiveUser(activeUser));

@@ -6,7 +6,7 @@ import { AuthBtn } from "../buttons/AuthBtn";
 import { useSelector } from "react-redux";
 import { QuizList } from "../quiz/QuizList";
 import { useNavigate } from "react-router";
-// import { persistor, rootReducer } from "../../store/store";
+import { persistor } from "../../store/store";
 
 export const ProfileView = () => {
   const navigate = useNavigate();
@@ -19,6 +19,10 @@ export const ProfileView = () => {
           className="log-out-btn"
           onClick={() => {
             disptach(setLogInSuccess(false));
+            persistor.pause();
+            persistor.flush().then(() => {
+              return persistor.purge();
+            });
             // disptach(rootReducer({}, {type: 'RESET_APP'}));
             navigate("/");
           }}

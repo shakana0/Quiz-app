@@ -34,7 +34,7 @@ export const logInUser = async (user: credentialsType) => {
       },
     ],
   });
-  return loggedInUser;
+  return loggedInUser; 
 };
 
 export const deleteUser = async (userId: string) => {
