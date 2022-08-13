@@ -19,15 +19,6 @@ import thunk from "redux-thunk";
 
 // type RootState = ReturnType<typeof rootReducer>;
 
-// export const logOut = () => {
-//   type: 'RESET'
-// }
-
-const appReducer = combineReducers({
-  modal: modalReducer,
-  quiz: quizReducer,
-  auth: authReducer,
-});
 
 // export const rootReducer: Reducer = (
 //   state: ReturnType<typeof appReducer>,
@@ -47,30 +38,40 @@ const appReducer = combineReducers({
 //   return appReducer(state, action);
 // };
 
-const persistConfig = {
-  key: "persist-key",
-  storage,
-  whitelist: ["auth"],
-};
+/*******/
 
-const persistedReducer = persistReducer(persistConfig, appReducer);
+// const appReducer = combineReducers({
+//   modal: modalReducer,
+//   quiz: quizReducer,
+//   auth: authReducer,
+// });
 
-export const store = configureStore({
-  reducer: persistedReducer,
-  middleware: [thunk],
-});
+// const persistConfig = {
+//   key: "persist-key",
+//   storage,
+//   whitelist: ["auth"],
+// };
 
-export const persistor = persistStore(store);
+// const persistedReducer = persistReducer(persistConfig, appReducer);
+
+// export const store = configureStore({
+//   reducer: persistedReducer,
+//   middleware: [thunk],
+// });
+
+// export const persistor = persistStore(store);
 // persistor.pause();
 // persistor.flush().then(() => {
 //   return persistor.purge();
 // });
 
-// export default rootReducer;
+/************ */
 
-// export default configureStore({
-//   reducer: {
-//     modal: modalReducer, //modal är namnet som användes i useSelector för att komma åt state => state.modal
-//     quiz: quizReducer,
-//   },
-// });
+
+export default configureStore({
+  reducer: {
+    modal: modalReducer, //modal är namnet som användes i useSelector för att komma åt state => state.modal
+    quiz: quizReducer,
+    auth: authReducer
+  },
+});

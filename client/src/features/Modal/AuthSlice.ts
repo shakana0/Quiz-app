@@ -1,7 +1,6 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { credentialsType } from "../../interface/userType";
 import * as api from "../../api/userApi";
-
 
 interface UserAuthType {
   userList: Array<credentialsType>;
@@ -19,29 +18,20 @@ const initialState: UserAuthType = {
 export const fetchLoggedInUser: any = createAsyncThunk(
   "user/fetchLoggedInUser", 
   async (logInCredentials: object) => {
-    // console.log(cred, 'vaad')
     const response = await api.loginUser(logInCredentials);
     return response.data;
   }
 )
-// export const fetchUsers: any = createAsyncThunk(
-//   "users/fetchUsers",
-//   async () => {
-//     const response = await api.getAllUsers();
-//     return response.data;
-//   }
-// );
-
 const AuthSlice = createSlice({
   name: "AuthState",
   initialState,
   reducers: {
     setLogInSuccess: (state, { payload }) => {
+      if(payload === false){
+        state.activeUser = {}
+      }
       state.logInSuccess = payload;
-    },
-    // setActiveUser: (state, { payload }) => {
-    //   state.activeUser = payload[0]
-    // },
+    }
   },
   extraReducers: {
     [fetchLoggedInUser.fulfilled]: (state, { payload }) => {

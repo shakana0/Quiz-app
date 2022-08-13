@@ -6,17 +6,11 @@ import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import { AuthBtn } from "../buttons/AuthBtn";
-import {
-  toggleModalState,
-  setActiveForm,
-  // setLogInSuccess,
-  // setActiveUser,
-} from "./ModalSlice";
+import { toggleModalState, setActiveForm } from "./ModalSlice";
 import { setLogInSuccess, fetchLoggedInUser } from "./AuthSlice";
 import { credentialsType } from "../../interface/userType";
-import * as api from "../../api/userApi";
-// import { fetchUsers } from "./ModalSlice";
 import { useNavigate } from "react-router-dom";
+import * as api from "../../api/userApi";
 
 export const Modal = () => {
   const initialCredentialsState = {
@@ -31,7 +25,7 @@ export const Modal = () => {
   const { modalType } = useSelector((state: any) => state.modal);
   const { activeForm } = useSelector((state: any) => state.modal);
   const { activeUser } = useSelector((state: any) => state.auth);
-  
+
   //decreing state varibles
   const [credentials, setCredentials] = useState<credentialsType>(
     initialCredentialsState
@@ -47,8 +41,6 @@ export const Modal = () => {
     userName: false,
     password: false,
   });
-  // const [repeatPassword, setRepeatPassword] = useState(false);
-
 
   const resetForm = () => {
     //clears all input fields in form
@@ -137,9 +129,7 @@ export const Modal = () => {
     ) {
       newErr.password =
         "Your password needs to be between 8 and 15 characters long";
-    }
-    // else if (newErr.password === ""){}
-    else {
+    } else {
       setIsCorrect((current) => {
         return {
           ...current,
@@ -167,35 +157,19 @@ export const Modal = () => {
     navigate("/");
   };
 
-  // const [allUsers, setAllUsers] = useState<credentialsType[]>([]);
-  // useEffect(() => {
-  //   const loadUsers = async () => {
-  //     const res = await dispatch(fetchUsers());
-  //     setAllUsers(res.payload);
-  //   };
-  //   loadUsers();
-  // }, []);
-
+  //LÄGG TILL I EN EGEN MAPP *Controllers/authController*
+  //alla error varibler kan läggas antingen en egen error slice, eller useRef
   const handleLogIn = async () => {
-    //checks if user does exist
-    // let activeUser: any = [];
-    // activeUser = allUsers.filter(
-    //   (user) =>
-    //     (user.emailAdress === logInCredentials.emailAdress &&
-    //       user.password === logInCredentials.password) ||
-    //     (user.userName === logInCredentials.userName &&
-    //       user.password === logInCredentials.password)
-    // );
-
-
-    // api.loginUser(logInCredentials)
-    const res = await dispatch(fetchLoggedInUser(logInCredentials));
+    if(logInCredentials.password !== ''){
+      console.log()
+      console.log(logInCredentials)
+      await dispatch(fetchLoggedInUser(logInCredentials));
+    }
+    console.log(Object.keys(activeUser).length !== 0);
 
     if (Object.keys(activeUser).length !== 0) {
-      console.log(activeUser, 'den loggar in ändå :(((')
       dispatch(setLogInSuccess(true));
       window.localStorage.setItem("isLoggedIn", "true");
-      // dispatch(setActiveUser(activeUser));
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
       navigate("/");
     } else {
@@ -326,19 +300,6 @@ export const Modal = () => {
             />
           </div>
           <p className="error">{errors.password}</p>
-          {/* <div className={repeatPassword ? "hide" : "input-box"}>
-            <input
-              type="password"
-              placeholder="repeat password..."
-              onChange={(event) =>
-               
-              }
-            />
-            <CheckRoundedIcon
-              className={isCorrect.password ? "check-icon" : "hide"}
-            />
-          </div> */}
-
           <AuthBtn
             variant="secondary"
             isFullWidth={true}

@@ -15,7 +15,7 @@ export const CreateQuiz = () => {
   // console.log(testId, ':)')
 
   const navigate = useNavigate();
-  const { activeUser } = useSelector((state: any) => state.modal);
+  const { activeUser } = useSelector((state: any) => state.auth);
   const [counter, setCounter] = useState(2); //ful-hack
   const [quizCardList, setQuizCardList] = useState<number[]>([1]);
   const initialQuestionsState = {
