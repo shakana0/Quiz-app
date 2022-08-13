@@ -10,7 +10,7 @@ const LaoutStyling = styled.div`
   }
 
   footer {
-    padding: 1.5rem 0;
+    padding: 2rem 0;
     background-color: #342882;
   }
 `;
@@ -23,7 +23,7 @@ export const Layout = ({ children }: childrenProps) => {
     <LaoutStyling>
       <Header />
       <main>{children}</main>
-      <footer>Hi I'm footer</footer>
+      <footer></footer>
     </LaoutStyling>
   );
 };

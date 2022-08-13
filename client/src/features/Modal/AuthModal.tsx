@@ -151,7 +151,7 @@ export const Modal = () => {
   };
 
   const sendCredentials = () => {
-    //api.registerUser(credentials);
+    api.registerUser(credentials);
     dispatch(setLogInSuccess(true));
     dispatch(toggleModalState({ showModal: false, modalType: "" }));
     navigate("/");
@@ -161,8 +161,6 @@ export const Modal = () => {
   //alla error varibler kan läggas antingen en egen error slice, eller useRef
   const handleLogIn = async () => {
     if(logInCredentials.password !== ''){
-      console.log()
-      console.log(logInCredentials)
       await dispatch(fetchLoggedInUser(logInCredentials));
     }
     console.log(Object.keys(activeUser).length !== 0);

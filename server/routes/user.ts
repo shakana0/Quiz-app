@@ -5,13 +5,48 @@ import {
   logInUser,
   deleteUser,
   postQuiz,
+  checkIfUserExists,
 } from "../db/usersCrud";
 const router = express.Router();
+const bcrypt = require("bcrypt");
 
 //register user
 router.post("/", async (req: Request, res: Response) => {
-  const createdUser = await createUser(req.body);
-  res.status(201).json(createdUser);
+  const { emailAdress, userName, password } = req.body;
+  // console.log(req.body, 'här är req bodyy')
+  if (!emailAdress || !userName || !password) {
+    return res
+      .status(400)
+      .json({ msg: "User name, email and password are required" });
+  }
+  //checking for dubblicate email or username in db
+  const dubblicate = await checkIfUserExists(req.body);
+  if (Object.keys(dubblicate).length !== 0) {
+    //status 409 === conflict
+    res.status(409).json({ Msg: "Email or user name already exits" });
+  } else {
+    try {
+      //exrypt the password
+      const hashedPwD = await bcrypt.hash(password, 10);
+      //store new user in db
+      const newUser = {
+        emailAdress: emailAdress,
+        userName: userName,
+        password: hashedPwD,
+        quizes: [],
+      };
+      const createdUser = await createUser(newUser);
+      res.status(201).json(createdUser);
+    } catch (err: any) {
+      res.status(500).json({ msg: err.message });
+    }
+  }
+
+  //DEN HÄR DELEN FUNKAR AT LEAst
+  // const createdUser = await createUser(req.body);
+  // res.status(201).json(createdUser);
+
+  // res.status(201).json(req.body);
 });
 
 router.get("/", async (req: Request, res: Response) => {
@@ -20,9 +55,33 @@ router.get("/", async (req: Request, res: Response) => {
 });
 
 router.post("/login", async (req: Request, res: Response) => {
-  const user = await logInUser(req.body);
-  res.status(201).json(user);
-  console.log(req.body, 'this is req body :)')
+  const { emailAdress, userName, password } = req.body;
+  // console.log(req.body, 'här är req bodyy')
+  if (!emailAdress || !userName || !password) {
+    return res
+      .status(400)
+      .json({ msg: "User name, email and password are required" });
+  }
+  const foundUser = await logInUser(req.body);
+  console.log(foundUser, 'foundUser')
+  if (Object.keys(foundUser).length === 0) {
+    console.log(Object.keys(foundUser).length !== 0, typeof foundUser)
+    //status 409 === conflict
+    res.status(401).json({ msg: "Unauthorized" });
+  }
+  //camparing password
+  const match = await bcrypt.compare(password, foundUser[0].password);
+  if (match) {
+    //create JWT
+    res.json({ Msg: "Success" });
+  } else {
+    res.sendStatus(401);
+  }
+
+  //DEN HÄR DELEN FUNKAR AT LEAst
+  // const user = await logInUser(req.body);
+  // res.status(201).json(user);
+  // console.log(req.body, "this is req body :)");
 });
 
 router.delete("/:id", async (req: Request, res: Response) => {
@@ -33,7 +92,7 @@ router.delete("/:id", async (req: Request, res: Response) => {
 //posta quiz
 router.post("/:id/quizes", async (req: Request, res: Response) => {
   const postedQuiz = await postQuiz(req.params.id, req.body);
-  console.log(req.body.quizes, 'reqbody')
+  console.log(req.body.quizes, "reqbody");
   res.status(201).json(postedQuiz);
 });
 

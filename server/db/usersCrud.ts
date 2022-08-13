@@ -15,20 +15,34 @@ export const getAllUsers = async () => {
   return allUsers;
 };
 
+export const checkIfUserExists = async (user: credentialsType) => {
+  const res = await UserModel.find({
+    $or: [
+      {
+        userName: user.userName,
+      },
+      {
+        emailAdress: user.emailAdress,
+      },
+    ],
+  });
+  return res;
+};
+
 export const logInUser = async (user: credentialsType) => {
+  // console.log(user, 'from crud')
   const loggedInUser = await UserModel.find({
     $or: [
       {
         userName: user.userName,
-        password: user.password,
       },
       {
         emailAdress: user.emailAdress,
-        password: user.password,
-      },
+      }
     ],
   });
-  return loggedInUser; 
+  // console.log(loggedInUser, 'res from crud')
+  return loggedInUser;
 };
 
 export const deleteUser = async (userId: string) => {

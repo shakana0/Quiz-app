@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 export const QuizListStyling = styled.div`
-  margin: 1rem auto;
+  margin: 1rem auto 2rem auto;
   padding: 1rem;
   border: 2px solid white;
   height: 400px;
