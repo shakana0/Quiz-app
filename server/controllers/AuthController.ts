@@ -1,54 +1,66 @@
-// import { credentialsType } from "../db/models/user";
-import { checkIfUserExists, createUser } from "../db/usersCrud";
-// const UsersDB = {
-//   users: require("../db/models/user"),
-//   setUsers: function (data: credentialsType) {
-//     this.users = data;
-//   },
-// };
+import { Request, Response } from "express";
+const User = require("../db/models/auth");
 
-// const fsPromises = require("fs").promises;
-// const path = require("path");
-const bcrypt = require("bcrypt");
+interface errMsg {
+  properties: {
+    message?: string;
+    type?: string;
+    validator?: void;
+    path?: string;
+    value?: string;
+  };
+}
 
-// type RequestInfo = Request | string;
-// interface Request extends Body {
-//   // No definition for `body` here
-//   // ...
-// }
-// interface Body {
-//   readonly body: ReadableStream<Uint8Array> | null;
-//   // ...
-// }
-// body: 'string' as unknown as ReadableStream<Uint8Array>
-
-// (req: Request, res: Response) FUNKAR INTE
-export const handleNewUserRegisteration = async (req: any, res: any) => {
-  //destructuring from req.body
-  const { emailAdress, userName, password } = req.body;
-  if (!emailAdress || !userName || !password) {
-    return res
-      .status(400)
-      .json({ msg: "user name or email and password are required" });
+//Handle errors
+const handleErrors = (err: any) => {
+  console.log(err.code, err.message)
+  // : { [key: string]: any } == type annotation
+  let errors: { [key: string]: any }  = { emailAdress: "", userName: "", password: "" };
+  if(err.code === 11000 && err.message.includes('emailAdress')){
+    errors.emailAdress = 'Email already exits'
+    return errors
   }
-
-  //checking for dubblicate email or username in db
-    const dubblicate = await checkIfUserExists(req.body);
-    if (dubblicate) {
-      //status 409 === conflict
-      return res.sendStatus(409);
-    }
-    try {
-        //exrypt the password
-        const hashedPwD = await bcrypt.hash(password, 10)
-        //store new user in db
-        const newUser = {"emailAdress": emailAdress, "userName": userName, "password": hashedPwD, "quizes": []}
-        createUser(newUser)
-
-    } catch (err: any) {
-      res.status(500).json({ msg: err.message });
-    }
-
+  if(err.code === 11000 && err.message.includes('userName')){
+    console.log('hej')
+    errors.userName = 'User name already exits'
+    return errors
+  }
+  if (err.message.includes("user validation failed")) {
+    Object.values(err.errors).forEach(({ properties }: any) => {
+      //populate object using brackets js
+      errors[properties.path] = properties.message;
+    });
+  }
+  return errors;
 };
 
-module.exports = handleNewUserRegisteration
+module.exports.signup_get = (req: Request, res: Response) => {
+  res.status(201).json({ msg: "here's get sign up" });
+};
+
+module.exports.login_get = (req: Request, res: Response) => {
+  res.status(201).json({ msg: "here's get login in" });
+};
+
+module.exports.signup_post = async (req: Request, res: Response) => {
+  const { emailAdress, userName, password } = req.body;
+  try {
+    //creating an intance and saving to db
+    const createdUser = await User.create({ emailAdress, userName, password });
+    res.status(201).json(createdUser);
+  } catch (err: any) {
+    const errors = handleErrors(err);
+    // res.status(400).send(err.status);
+    res.status(400).json({errors});
+
+  }
+
+  // console.log(userName, password)
+  // res.send(`New sign up ${JSON.stringify(req.body)}`)
+};
+
+module.exports.login_post = async (req: Request, res: Response) => {
+  const { emailAdress, userName, password } = req.body;
+
+  res.send("user is logged in");
+};

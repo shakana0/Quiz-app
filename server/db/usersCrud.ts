@@ -1,5 +1,7 @@
 import UserModel, { credentialsType } from "./models/user";
 import { QuizType } from "./models/quizes";
+// import verifyJWT  from "../middleware/VerifyJWT"
+const verifyJWT = require("../middleware/VerifyJWT");
 
 export const createUser = async (credentials: credentialsType) => {
   const newUser = new UserModel(credentials);
@@ -38,11 +40,27 @@ export const logInUser = async (user: credentialsType) => {
       },
       {
         emailAdress: user.emailAdress,
-      }
+      },
     ],
+    verifyJWT,
   });
+
   // console.log(loggedInUser, 'res from crud')
   return loggedInUser;
+};
+
+export const updateUser = async (user: any) => {
+  // console.log(user., "coming from usercrud");
+  const updatedUser = await UserModel.updateOne(
+    { userName: user._doc.userName },
+    {
+      $set: {
+        refreshToken: user.refreshToken,
+      },
+    }
+  );
+  console.log("herers updated user", updatedUser);
+  return updatedUser;
 };
 
 export const deleteUser = async (userId: string) => {

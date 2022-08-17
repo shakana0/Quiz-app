@@ -2,14 +2,16 @@ import express, { Request, Response, json } from "express";
 import userRouter from "./routes/user"
 import dotenv from "dotenv";
 import cors from "cors"
-
+const authRoutes = require('./routes/auth')
 dotenv.config();
-const app = express();
+const app = express(); //middleware => takes any request json data passess it into js object
 app.use(json());
 
 
-app.use(cors())//för aktivera alla CORS-förfrågningar
+app.use(cors())//för att aktivera alla CORS-förfrågningar
 app.use("/user", userRouter); //enda som används
+app.use(authRoutes)
+
 import { connect } from "mongoose";
 //"quiz-db" är namnet på docker-containern / databasen
 // connect("mongodb://localhost:27017/quiz-db");

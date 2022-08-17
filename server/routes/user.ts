@@ -6,9 +6,14 @@ import {
   deleteUser,
   postQuiz,
   checkIfUserExists,
+  updateUser
 } from "../db/usersCrud";
+// import { verifyJWT } from "../middleware/VerifyJWT"
 const router = express.Router();
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+require("dotenv").config()
+
 
 //register user
 router.post("/", async (req: Request, res: Response) => {
@@ -36,7 +41,9 @@ router.post("/", async (req: Request, res: Response) => {
         quizes: [],
       };
       const createdUser = await createUser(newUser);
-      res.status(201).json(createdUser);
+      res.status(201).json({ Msg: `Success,user ${createdUser} is created`,
+      });
+      // verifyJWT(createdUser)
     } catch (err: any) {
       res.status(500).json({ msg: err.message });
     }
@@ -60,20 +67,44 @@ router.post("/login", async (req: Request, res: Response) => {
   if (!emailAdress || !userName || !password) {
     return res
       .status(400)
-      .json({ msg: "User name, email and password are required" });
+      .json({ Msg: "User name, email and password are required" });
   }
   const foundUser = await logInUser(req.body);
-  console.log(foundUser, 'foundUser')
+  // console.log(foundUser, "foundUser");
   if (Object.keys(foundUser).length === 0) {
-    console.log(Object.keys(foundUser).length !== 0, typeof foundUser)
+    // console.log(Object.keys(foundUser).length !== 0, typeof foundUser);
     //status 409 === conflict
     res.status(401).json({ msg: "Unauthorized" });
   }
   //camparing password
   const match = await bcrypt.compare(password, foundUser[0].password);
   if (match) {
-    //create JWT
-    res.json({ Msg: "Success" });
+    //create JWTs
+    const accessToken = jwt.sign(
+      {"userName": foundUser[0].userName},
+      process.env.ACCESS_TOKEN_SECRET,
+      {expiresIn: '30s'}
+    )
+    const refreshToken = jwt.sign(
+      {"userName": foundUser[0].userName},
+      process.env.REFRESH_TOKEN_SECRET,
+      {expiresIn: '1d'}
+    )
+    // const allUsers = await getAllUsers()
+    // const otherUsers = allUsers.filter((user) => user.userName !== foundUser[0].userName )
+    const currentUser = { ...foundUser[0], refreshToken}
+    //updating user
+    const updatedUser = await updateUser(currentUser)
+    console.log(updatedUser, 'coming from /login')
+    // res.json({
+    //   Msg: `Success, ${JSON.stringify(
+    //     foundUser[0].emailAdress
+    //   )} is now logged in`,
+    // });
+
+    //sending the accesstoken as httpOnly cookie so js doesn't have access to it
+    res.cookie('jwt', refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000}) //1d
+    res.json({ accessToken, currentUser });
   } else {
     res.sendStatus(401);
   }
