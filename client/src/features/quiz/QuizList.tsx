@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 export const QuizList = () => {
   const { activeUser } = useSelector((state: any) => state.auth);
-  console.log(activeUser)
   const [allQuizes, setAllQuizes] = useState([]);
   useEffect(() => {
     setAllQuizes(activeUser.quizes);

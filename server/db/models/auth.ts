@@ -47,7 +47,7 @@ export const userSchema = new mongoose.Schema({
 userSchema.pre('save', async function(this: any, next: any){
   // const salt = await bcrypt.genSalt()
    this.password = await bcrypt.hash(this.password, 10);
-  console.log('user about to be created :)', this)
+  // console.log('user about to be created :)', this)
    next()
 })
 

@@ -16,16 +16,22 @@ axios.defaults.baseURL = "https://quiz-app-backend-heroku.herokuapp.com";
 //   }
 // };
 
-
 export const registerUser = async (user: object) => {
-  console.log(user)
+  console.log(user, 'user');
   try {
-    const registeredUser = await axios.post("/signup", user);
-    console.log('everthings good here :)')
-    return registeredUser;
+    const response = await axios.post("/signup", user, {
+      headers: {
+        "Content-Type": "application/json",
+        withCredentials: true,
+        credentials: "include",
+      },
+    });
+    // console.log("everthings good here :)");
+    // console.log(response, 'response');
+    return response;
   } catch (error: any) {
-    console.log('we have an error', error.response)
-    return error.response;
+    console.log("we have an error", error.response.data.errors);
+    return error.response.data;
   }
 };
 
@@ -35,11 +41,12 @@ export const loginUser = async (logInCredentials: object) => {
       headers: {
         "Content-Type": "application/json",
         withCredentials: true,
+        credentials: "include",
       },
     });
     const accessToken = response?.data?.accessToken;
     // console.log(accessToken, "this is accesstoken");
-    console.log(response, 'res')
+    console.log(response, "res");
     return response;
   } catch (error: any) {
     if (!error.response) {
@@ -54,4 +61,3 @@ export const loginUser = async (logInCredentials: object) => {
     return error.response;
   }
 };
-

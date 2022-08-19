@@ -7,10 +7,15 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import { AuthBtn } from "../buttons/AuthBtn";
 import { toggleModalState, setActiveForm } from "./ModalSlice";
-import { setLogInSuccess, fetchLoggedInUser } from "./AuthSlice";
+import {
+  setLogInSuccess,
+  fetchLoggedInUser,
+  fetchNewUser,
+  resetErrorMsgs,
+} from "./AuthSlice";
 import { credentialsType } from "../../interface/userType";
 import { useNavigate } from "react-router-dom";
-import * as api from "../../api/userApi";
+// import * as api from "../../api/userApi";
 
 export const Modal = () => {
   const initialCredentialsState = {
@@ -25,6 +30,7 @@ export const Modal = () => {
   const { modalType } = useSelector((state: any) => state.modal);
   const { activeForm } = useSelector((state: any) => state.modal);
   const { activeUser } = useSelector((state: any) => state.auth);
+  const { errorMsgs } = useSelector((state: any) => state.auth);
 
   //decreing state varibles
   const [credentials, setCredentials] = useState<credentialsType>(
@@ -56,6 +62,8 @@ export const Modal = () => {
         password: "",
       };
     });
+    //clear errorMsgs
+    dispatch(resetErrorMsgs());
     //clear check marks
     setIsCorrect((current) => {
       return {
@@ -149,18 +157,20 @@ export const Modal = () => {
       sendCredentials();
     }
   };
-
-  const sendCredentials = () => {
-    api.registerUser(credentials);
+  const sendCredentials = async () => {
+    dispatch(resetErrorMsgs());
+    const res = await dispatch(fetchNewUser(credentials));
+    if(res.payload.data){
     dispatch(setLogInSuccess(true));
     dispatch(toggleModalState({ showModal: false, modalType: "" }));
     navigate("/");
+    }
   };
 
   //LÄGG TILL I EN EGEN MAPP *Controllers/authController*
   //alla error varibler kan läggas antingen en egen error slice, eller useRef
   const handleLogIn = async () => {
-    if(logInCredentials.password !== ''){
+    if (logInCredentials.password !== "") {
       await dispatch(fetchLoggedInUser(logInCredentials));
     }
     console.log(Object.keys(activeUser).length !== 0);
@@ -224,9 +234,10 @@ export const Modal = () => {
           <div className="close-icon-container">
             <CloseRoundedIcon
               className="close-icon"
-              onClick={() =>
-                dispatch(toggleModalState({ showModal: false, modalType: "" }))
-              }
+              onClick={() => {
+                dispatch(toggleModalState({ showModal: false, modalType: "" }));
+                dispatch(resetErrorMsgs());
+              }}
             />
           </div>
           <div className="btn-container">
@@ -265,7 +276,9 @@ export const Modal = () => {
               className={isCorrect.email ? "check-icon" : "hide"}
             />
           </div>
-          <p className="error">{errors && errors.emailAdress}</p>
+          {/* <p className="error">{errors && errors.emailAdress}</p> */}
+          <p className="error">{errorMsgs.emailAdress}</p>
+
           <div className="input-box">
             <input
               type="text"
@@ -281,7 +294,9 @@ export const Modal = () => {
               className={isCorrect.userName ? "check-icon" : "hide"}
             />
           </div>
-          <p className="error">{errors.userName}</p>
+          {/* <p className="error">{errors.userName}</p> */}
+          <p className="error">{errorMsgs.userName}</p>
+
           <div className="input-box">
             <input
               type="password"
@@ -297,12 +312,13 @@ export const Modal = () => {
               className={isCorrect.password ? "check-icon" : "hide"}
             />
           </div>
-          <p className="error">{errors.password}</p>
+          <p className="error">{errorMsgs.password}</p>
           <AuthBtn
             variant="secondary"
             isFullWidth={true}
             btnText="Sign Up"
-            onClick={validateForm}
+            // onClick={validateForm}
+            onClick={sendCredentials}
           />
         </form>
       );
@@ -319,7 +335,10 @@ export const Modal = () => {
           <div className="close-icon-container">
             <CloseRoundedIcon
               className="close-icon"
-              onClick={() => dispatch(toggleModalState(false))}
+              onClick={() => {
+                dispatch(toggleModalState(false));
+                dispatch(resetErrorMsgs());
+              }}
             />
           </div>
           <div className="btn-container">
