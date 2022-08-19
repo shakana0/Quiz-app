@@ -6,20 +6,33 @@ interface UserAuthType {
   userList: Array<credentialsType>;
   logInSuccess: boolean;
   activeUser: object;
-  errorMsgs: object;
+  // errorMsgs: object;
+  errorMsgs: { emailAdress: string; userName: string; password: string };
+  isCorrect: {
+    email: boolean;
+    userName: boolean;
+    password: boolean;
+  };
 }
 
 const initialState: UserAuthType = {
   userList: [],
   logInSuccess: false,
   activeUser: {},
-  errorMsgs: {},
+  // errorMsgs: {},
+  errorMsgs: { emailAdress: "", userName: "", password: "" },
+  isCorrect: {
+    email: false,
+    userName: false,
+    password: false,
+  },
 };
 
 //fetch errors
 export const fetchNewUser: any = createAsyncThunk(
   "user/fetchNewUser",
   async (logInCredentials: object) => {
+    console.log('hejsan')
     const response = await api.registerUser(logInCredentials);
     return response;
   }
@@ -30,7 +43,8 @@ export const fetchLoggedInUser: any = createAsyncThunk(
   "user/fetchLoggedInUser",
   async (logInCredentials: object) => {
     const response = await api.loginUser(logInCredentials);
-    return response.data;
+    console.log(response, "heres response");
+    return response;
   }
 );
 const AuthSlice = createSlice({
@@ -44,17 +58,38 @@ const AuthSlice = createSlice({
       state.logInSuccess = payload;
     },
     resetErrorMsgs: (state) => {
-      state.errorMsgs = {};
+      state.errorMsgs = { emailAdress: "", userName: "", password: "" };
+      state.isCorrect = {
+        email: false,
+        userName: false,
+        password: false,
+      };
+    },
+    setIsCorrect: (state) => {
+      if (Object.keys(state.errorMsgs).length !== 0) {
+        if (state.errorMsgs.emailAdress === "") {
+          state.isCorrect.email = true;
+        }
+        if (state.errorMsgs.userName === "") {
+          state.isCorrect.userName = true;
+        }
+        if (state.errorMsgs.password === "") {
+          state.isCorrect.password = true;
+        }
+      }
     },
   },
   extraReducers: {
     [fetchLoggedInUser.fulfilled]: (state, { payload }) => {
-      console.log(payload);
-      if (payload.length) {
-        console.log("den är inte tom");
-        state.activeUser = payload[0];
+      console.log(payload, 'payload')
+      if (payload.errors) {
+        state.errorMsgs = payload.errors;
+      } else {
+        //won't save password in redux state now
+        delete payload.data.password;
+        state.activeUser = payload.data.user;
+        console.log(state.activeUser)
       }
-      console.log(state.activeUser);
     },
     [fetchNewUser.fulfilled]: (state, { payload }) => {
       if (payload.errors) {
@@ -68,5 +103,6 @@ const AuthSlice = createSlice({
   },
 });
 
-export const { setLogInSuccess, resetErrorMsgs } = AuthSlice.actions;
+export const { setLogInSuccess, resetErrorMsgs, setIsCorrect } =
+  AuthSlice.actions;
 export default AuthSlice.reducer;

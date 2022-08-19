@@ -12,6 +12,7 @@ import {
   fetchLoggedInUser,
   fetchNewUser,
   resetErrorMsgs,
+  setIsCorrect,
 } from "./AuthSlice";
 import { credentialsType } from "../../interface/userType";
 import { useNavigate } from "react-router-dom";
@@ -31,22 +32,23 @@ export const Modal = () => {
   const { activeForm } = useSelector((state: any) => state.modal);
   const { activeUser } = useSelector((state: any) => state.auth);
   const { errorMsgs } = useSelector((state: any) => state.auth);
+  const { isCorrect } = useSelector((state: any) => state.auth);
 
   //decreing state varibles
   const [credentials, setCredentials] = useState<credentialsType>(
     initialCredentialsState
   );
-  const [errors, setErrors] = useState<credentialsType>(
-    initialCredentialsState
-  );
+  // const [errors, setErrors] = useState<credentialsType>(
+  //   initialCredentialsState
+  // );
   const [logInCredentials, setLogInCredentials] = useState<credentialsType>(
     initialCredentialsState
   );
-  const [isCorrect, setIsCorrect] = useState({
-    email: false,
-    userName: false,
-    password: false,
-  });
+  // const [isCorrect, setIsCorrect] = useState({
+  //   email: false,
+  //   userName: false,
+  //   password: false,
+  // });
 
   const resetForm = () => {
     //clears all input fields in form
@@ -54,141 +56,144 @@ export const Modal = () => {
       ref.current.reset();
     }
     //clears all errors
-    setErrors((current) => {
-      return {
-        ...current,
-        emailAdress: "",
-        userName: "",
-        password: "",
-      };
-    });
+    // setErrors((current) => {
+    //   return {
+    //     ...current,
+    //     emailAdress: "",
+    //     userName: "",
+    //     password: "",
+    //   };
+    // });
     //clear errorMsgs
     dispatch(resetErrorMsgs());
     //clear check marks
-    setIsCorrect((current) => {
-      return {
-        ...current,
-        email: false,
-        userName: false,
-        password: false,
-      };
-    });
+    // setIsCorrect((current) => {
+    //   return {
+    //     ...current,
+    //     email: false,
+    //     userName: false,
+    //     password: false,
+    //   };
+    // });
   };
 
-  const validateForm = (event: any) => {
-    event.preventDefault();
-    let newErr = {
-      emailAdress: "",
-      userName: "",
-      password: "",
-    };
-    const validChar = /^[0-9a-zA-Z@.-_åäöÅÄÖ]+$/;
-    const emailValidFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  // const validateForm = (event: any) => {
+  //   event.preventDefault();
+  //   let newErr = {
+  //     emailAdress: "",
+  //     userName: "",
+  //     password: "",
+  //   };
+  //   const validChar = /^[0-9a-zA-Z@.-_åäöÅÄÖ]+$/;
+  //   const emailValidFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    //validation for email
-    if (credentials.emailAdress === "") {
-      newErr.emailAdress = "Email adress is required";
-    } else if (!validChar.test(credentials.emailAdress)) {
-      newErr.emailAdress = "Invalid characters detected :(";
-    } else if (!emailValidFormat.test(credentials.emailAdress)) {
-      newErr.emailAdress =
-        "Email adress must be in correct format for e.g. name@gmail.com :( ";
-    } else if (
-      credentials.emailAdress.length! < 10 ||
-      credentials.emailAdress.length! > 20
-    ) {
-      newErr.emailAdress =
-        "Your email adress needs to be between 13 and 20 characters long";
-    } else {
-      setIsCorrect((current) => {
-        return {
-          ...current,
-          email: true,
-        };
-      });
-    }
+  //   //validation for email
+  //   if (credentials.emailAdress === "") {
+  //     newErr.emailAdress = "Email adress is required";
+  //   } else if (!validChar.test(credentials.emailAdress)) {
+  //     newErr.emailAdress = "Invalid characters detected :(";
+  //   } else if (!emailValidFormat.test(credentials.emailAdress)) {
+  //     newErr.emailAdress =
+  //       "Email adress must be in correct format for e.g. name@gmail.com :( ";
+  //   } else if (
+  //     credentials.emailAdress.length! < 10 ||
+  //     credentials.emailAdress.length! > 20
+  //   ) {
+  //     newErr.emailAdress =
+  //       "Your email adress needs to be between 13 and 20 characters long";
+  //   } else {
+  //     setIsCorrect((current) => {
+  //       return {
+  //         ...current,
+  //         email: true,
+  //       };
+  //     });
+  //   }
 
-    //validation for user name
-    if (credentials.userName === "") {
-      newErr.userName = "User name is required";
-    } else if (!validChar.test(credentials.userName)) {
-      newErr.userName = "Invalid characters detected :(";
-    } else if (
-      credentials.userName.length! < 8 ||
-      credentials.userName.length! > 15
-    ) {
-      newErr.userName =
-        "Your user name needs to be between 8 and 15 characters long";
-    } else {
-      setIsCorrect((current) => {
-        return {
-          ...current,
-          userName: true,
-        };
-      });
-    }
+  //   //validation for user name
+  //   if (credentials.userName === "") {
+  //     newErr.userName = "User name is required";
+  //   } else if (!validChar.test(credentials.userName)) {
+  //     newErr.userName = "Invalid characters detected :(";
+  //   } else if (
+  //     credentials.userName.length! < 8 ||
+  //     credentials.userName.length! > 15
+  //   ) {
+  //     newErr.userName =
+  //       "Your user name needs to be between 8 and 15 characters long";
+  //   } else {
+  //     setIsCorrect((current) => {
+  //       return {
+  //         ...current,
+  //         userName: true,
+  //       };
+  //     });
+  //   }
 
-    //validation for password
-    if (credentials.password === "") {
-      newErr.password = "Password is required";
-    } else if (
-      credentials.password.length! < 8 ||
-      credentials.password.length! > 15
-    ) {
-      newErr.password =
-        "Your password needs to be between 8 and 15 characters long";
-    } else {
-      setIsCorrect((current) => {
-        return {
-          ...current,
-          password: true,
-        };
-      });
-    }
-    setErrors(newErr);
-    //checking if there is any errors
-    let noErr = [];
-    for (let value of Object.values(newErr)) {
-      if (value !== "") {
-        noErr.push("error");
-      }
-    }
-    if (!noErr.length) {
-      sendCredentials();
-    }
-  };
+  //   //validation for password
+  //   if (credentials.password === "") {
+  //     newErr.password = "Password is required";
+  //   } else if (
+  //     credentials.password.length! < 8 ||
+  //     credentials.password.length! > 15
+  //   ) {
+  //     newErr.password =
+  //       "Your password needs to be between 8 and 15 characters long";
+  //   } else {
+  //     setIsCorrect((current) => {
+  //       return {
+  //         ...current,
+  //         password: true,
+  //       };
+  //     });
+  //   }
+  //   setErrors(newErr);
+  //   //checking if there is any errors
+  //   let noErr = [];
+  //   for (let value of Object.values(newErr)) {
+  //     if (value !== "") {
+  //       noErr.push("error");
+  //     }
+  //   }
+  //   if (!noErr.length) {
+  //     sendCredentials();
+  //   }
+  // };
   const sendCredentials = async () => {
     dispatch(resetErrorMsgs());
     const res = await dispatch(fetchNewUser(credentials));
-    if(res.payload.data){
-    dispatch(setLogInSuccess(true));
-    dispatch(toggleModalState({ showModal: false, modalType: "" }));
-    navigate("/");
+    dispatch(setIsCorrect());
+
+    if (res.payload.data) {
+      dispatch(setLogInSuccess(true));
+      dispatch(toggleModalState({ showModal: false, modalType: "" }));
+      navigate("/");
     }
   };
 
-  //LÄGG TILL I EN EGEN MAPP *Controllers/authController*
-  //alla error varibler kan läggas antingen en egen error slice, eller useRef
   const handleLogIn = async () => {
-    if (logInCredentials.password !== "") {
-      await dispatch(fetchLoggedInUser(logInCredentials));
-    }
-    console.log(Object.keys(activeUser).length !== 0);
+    const res = await dispatch(fetchLoggedInUser(logInCredentials));
 
-    if (Object.keys(activeUser).length !== 0) {
+    // if (Object.keys(activeUser).length !== 0) {
+    //   dispatch(setLogInSuccess(true));
+    //   window.localStorage.setItem("isLoggedIn", "true");
+    //   dispatch(toggleModalState({ showModal: false, modalType: "" }));
+    //   navigate("/");
+    // }
+    console.log(res)
+    if (res.payload.data) {
       dispatch(setLogInSuccess(true));
-      window.localStorage.setItem("isLoggedIn", "true");
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
       navigate("/");
     } else {
-      setErrors((current) => {
-        return {
-          ...current,
-          emailAdress: "Email adress or user name does not exist",
-          userName: "",
-          password: "Wrong password",
-        };
-      });
+      // setErrors((current) => {
+      //   return {
+      //     ...current,
+      //     emailAdress: "Email adress or user name does not exist",
+      //     userName: "",
+      //     password: "Wrong password",
+      //   };
+      // });
     }
   };
 
@@ -294,7 +299,6 @@ export const Modal = () => {
               className={isCorrect.userName ? "check-icon" : "hide"}
             />
           </div>
-          {/* <p className="error">{errors.userName}</p> */}
           <p className="error">{errorMsgs.userName}</p>
 
           <div className="input-box">
@@ -368,7 +372,9 @@ export const Modal = () => {
               className={isCorrect.email ? "check-icon" : "hide"}
             />
           </div>
-          <p className="error">{errors && errors.emailAdress}</p>
+          {/* <p className="error">{errors && errors.emailAdress}</p> */}
+          <p className="error">{errorMsgs.emailAdress}</p>
+
           <div className="input-box">
             <input
               type="password"
@@ -384,7 +390,7 @@ export const Modal = () => {
               className={isCorrect.password ? "check-icon" : "hide"}
             />
           </div>
-          <p className="error">{errors.password}</p>
+          <p className="error">{errorMsgs.password}</p>
           <AuthBtn
             variant="secondary"
             isFullWidth={true}

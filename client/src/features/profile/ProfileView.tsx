@@ -1,7 +1,7 @@
 import React from "react";
 import { ProfileViewStyling } from "../../components/styles/Profile.styled";
 import { useDispatch } from "react-redux";
-import { setLogInSuccess } from "../Modal/AuthSlice";
+import { setLogInSuccess, resetErrorMsgs } from "../Modal/AuthSlice";
 import { AuthBtn } from "../buttons/AuthBtn";
 import { useSelector } from "react-redux";
 import { QuizList } from "../quiz/QuizList";
@@ -19,6 +19,7 @@ export const ProfileView = () => {
           className="log-out-btn"
           onClick={() => {
             disptach(setLogInSuccess(false));
+            disptach(resetErrorMsgs())
             navigate("/");
           }}
         >
