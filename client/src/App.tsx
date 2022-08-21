@@ -3,7 +3,7 @@ import "./App.css";
 // import { ThemeProvider } from "styled-components";
 // import { Theme } from "./components/styles/Theme.styled"
 import { useSelector } from "react-redux";
-import { Layout } from "./components/styles/Layout";
+import { Layout } from "./components/Layout";
 import { Routes, Route } from "react-router-dom";
 import { LandingPage } from "./features/home/LandingPageView";
 import { Home } from "./features/home/Home";

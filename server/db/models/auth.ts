@@ -83,7 +83,7 @@ userSchema.statics.login = async function (
     //compare hached password
    const auth = await bcrypt.compare(password,user[0].password)
    if(auth){
-    console.log(user)
+    // console.log(user)
     return user;
    }
    //the throw method will be catched in the login func

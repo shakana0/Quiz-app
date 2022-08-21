@@ -27,12 +27,12 @@ export const registerUser = async (user: object) => {
     });
     return response;
   } catch (error: any) {
+    console.log(error.response)
     return error.response.data;
   }
 };
 
 export const loginUser = async (logInCredentials: object) => {
-  console.log("api", logInCredentials);
   try {
     const response = await axios.post("/login", logInCredentials, {
       headers: {
@@ -42,18 +42,10 @@ export const loginUser = async (logInCredentials: object) => {
       },
     });
     console.log(response, "res");
+    // localStorage.setItem('accessToken', JSON.stringify(response.accessToken))
     return response;
   } catch (error: any) {
-    console.log("we have an error", error.response.data.errors);
+    console.log("we have an error", error.response);
     return error.response.data;
-    // if (!error.response) {
-    //   console.log("No server response");
-    // } else if (error.response?.status === 400) {
-    //   console.log(`Server didn't get expected body`);
-    // } else if (error.response?.status === 401) {
-    //   console.log(`Unauthorized`);
-    // } else {
-    //   console.log("Login failed");
-    // }
   }
 };
