@@ -8,7 +8,7 @@ export const createToken = (id: string) => {
   // return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {
   //   expiresIn: maxAge
   // })
-  return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {
+  return jwt.sign({ id }, `${process.env.ACCESS_TOKEN_SECRET}`, {
     expiresIn: maxAge
   })
 

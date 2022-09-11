@@ -74,4 +74,13 @@ export default configureStore({
     quiz: quizReducer,
     auth: authReducer
   },
+  middleware: getDefaultMiddleware =>
+  getDefaultMiddleware({
+    serializableCheck: false,
+  })
 });
+
+
+
+//icon animation hover
+//https://ianlunn.github.io/Hover/

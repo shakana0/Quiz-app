@@ -32,7 +32,6 @@ const initialState: UserAuthType = {
 export const fetchNewUser: any = createAsyncThunk(
   "user/fetchNewUser",
   async (logInCredentials: object) => {
-    console.log('hejsan')
     const response = await api.registerUser(logInCredentials);
     return response;
   }
@@ -81,23 +80,25 @@ const AuthSlice = createSlice({
   },
   extraReducers: {
     [fetchLoggedInUser.fulfilled]: (state, { payload }) => {
-      console.log(payload, 'payload')
+      // console.log(payload.errors)
+      // console.log(payload.data.user)
       if (payload.errors) {
         state.errorMsgs = payload.errors;
       } else {
         //won't save password in redux state now
-        delete payload.data.password;
+        // delete payload.data[0].password;
         state.activeUser = payload.data.user;
         console.log(state.activeUser)
       }
     },
     [fetchNewUser.fulfilled]: (state, { payload }) => {
+      console.log(payload, "payload");
       if (payload.errors) {
         state.errorMsgs = payload.errors;
       } else {
         //won't save password in redux state now
-        delete payload.data.password;
-        state.activeUser = payload.data;
+        // delete payload.data.password;
+        state.activeUser = payload.data.createdUser;
       }
     },
   },
