@@ -13,6 +13,8 @@ import { CreateQuiz } from "./features/quiz/CreateQuiz";
 
 const App = () => {
   const { logInSuccess } = useSelector((state: any) => state.auth);
+  // const token = localStorage.getItem('accessToken')
+  // console.log(window.localStorage.accessToken, ':))')
   return (
     // <ThemeProvider theme={Theme}>
     <>

@@ -6,7 +6,6 @@ import { AuthBtn } from "../buttons/AuthBtn";
 import { useSelector } from "react-redux";
 import { QuizList } from "../quiz/QuizList";
 import { useNavigate } from "react-router";
-// import { persistor } from "../../store/store";
 
 export const ProfileView = () => {
   const navigate = useNavigate();
@@ -18,6 +17,7 @@ export const ProfileView = () => {
         <button
           className="log-out-btn"
           onClick={() => {
+            // localStorage.removeItem("accessToken")
             disptach(setLogInSuccess(false));
             disptach(resetErrorMsgs())
             navigate("/");

@@ -41,10 +41,10 @@ module.exports.login_post = async (req: Request, res: Response) => {
     const user = await User.login(emailAdress, userName, password);
     const token = createToken(user[0]._id);
     res.cookie("jwt", token, { httpOnly: true, sameSite: "none", secure: true, maxAge: 24 * 60 * 60 * 1000 });
-    const accessToken = req.cookies;
+    // const accessToken = req.cookies;
     //remove user password from response for security
     user[0].password = undefined
-    res.status(200).json({user: user[0], accessToken: accessToken.jwt });
+    res.status(200).json({user: user[0], accessToken: token});
     //  res.status(200).json(user);
   } catch (error: any) {
     const errors = handleErrors(error);

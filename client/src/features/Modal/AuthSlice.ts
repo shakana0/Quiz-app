@@ -54,6 +54,13 @@ const AuthSlice = createSlice({
       if (payload === false) {
         state.activeUser = {};
       }
+      // const token = localStorage.getItem('accessToken')
+      // if(token){
+      //   state.logInSuccess = true
+      // }else{
+      //   state.logInSuccess = false
+      //   state.activeUser = {}
+      // }
       state.logInSuccess = payload;
     },
     resetErrorMsgs: (state) => {
@@ -95,10 +102,14 @@ const AuthSlice = createSlice({
       console.log(payload, "payload");
       if (payload.errors) {
         state.errorMsgs = payload.errors;
-      } else {
-        //won't save password in redux state now
-        // delete payload.data.password;
+      } 
+      // if(localStorage.getItem("user")){
+      //   // const arr = JSON.parse( localStorage.getItem('user') )
+      //   state.activeUser = JSON.parse( localStorage.getItem('user') || '{}')
+      // }
+      else {
         state.activeUser = payload.data.createdUser;
+        // state.activeUser = {};
       }
     },
   },

@@ -11,17 +11,19 @@ const requireAuth = (req: Request, res: Response, next: any) => {
       process.env.ACCESS_TOKEN_SECRET,
       (err: any, decodedToken: string) => {
         if (err) {
-            console.log(err.message)
-          throw Error("token does not exist");
-        }else{
-            console.log(decodedToken, 'decodedToken')
-            next();
+          console.log(err.message);
+          res.status(401).send({result: 'Unauthorized'})
+          // throw Error("token does not exist");
+        } else {
+          console.log(decodedToken, "decodedToken");
+          next();
         }
       }
     );
   } else {
-    throw Error("token does not exist");
+    // throw Error("please provide a token");
+    res.status(403).send({result: 'Token not provided'})
   }
 };
 
-module.exports = { requireAuth }
+module.exports = { requireAuth };

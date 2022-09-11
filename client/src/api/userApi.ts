@@ -19,12 +19,22 @@ axios.defaults.baseURL = "https://quiz-app-backend-heroku.herokuapp.com";
 export const registerUser = async (user: object) => {
   try {
     const response = await axios.post("/signup", user, {
-      withCredentials: true
+      withCredentials: true,
     });
     console.log(response, "res");
+    // if (response.data.accessToken) {
+    //   localStorage.setItem(
+    //     "accessToken",
+    //     JSON.stringify(response.data.accessToken)
+    //   );
+    //   localStorage.setItem(
+    //     "user",
+    //     JSON.stringify(response.data.createdUser)
+    //   );
+    // }
     return response;
   } catch (error: any) {
-    console.log(error.response)
+    console.log(error.response);
     return error.response.data;
   }
 };
@@ -32,10 +42,19 @@ export const registerUser = async (user: object) => {
 export const loginUser = async (logInCredentials: object) => {
   try {
     const response = await axios.post("/login", logInCredentials, {
-      withCredentials: true
+      withCredentials: true,
     });
     console.log(response, "res");
-    // localStorage.setItem('accessToken', JSON.stringify(response.accessToken))
+    // if (response.data.accessToken) {
+    //   localStorage.setItem(
+    //     "accessToken",
+    //     JSON.stringify(response.data.accessToken)
+    //   );
+    //   localStorage.setItem(
+    //     "user",
+    //     JSON.stringify(response.data.user)
+    //   );
+    // }
     return response;
   } catch (error: any) {
     console.log("we have an error", error.response);
