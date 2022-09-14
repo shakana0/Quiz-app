@@ -45,19 +45,14 @@ export const loginUser = async (logInCredentials: object) => {
       withCredentials: true,
     });
     console.log(response, "res");
-    // if (response.data.accessToken) {
-    //   localStorage.setItem(
-    //     "accessToken",
-    //     JSON.stringify(response.data.accessToken)
-    //   );
-    //   localStorage.setItem(
-    //     "user",
-    //     JSON.stringify(response.data.user)
-    //   );
-    // }
+    const accessToken = response.data.accessToken
     return response;
   } catch (error: any) {
     console.log("we have an error", error.response);
     return error.response.data;
   }
 };
+
+const userAuth = async() => {
+const res = await axios.get("/login", {headers: {}})
+}

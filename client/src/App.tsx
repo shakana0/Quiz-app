@@ -10,6 +10,7 @@ import { Home } from "./features/home/Home";
 import { ProfileView } from "./features/profile/ProfileView";
 import { SingleQuizView } from "./features/singleQuiz/SingleQuizView";
 import { CreateQuiz } from "./features/quiz/CreateQuiz";
+import RequireAuth from "./hooks/RequireAuth";
 
 const App = () => {
   const { logInSuccess } = useSelector((state: any) => state.auth);
@@ -20,17 +21,22 @@ const App = () => {
     <>
       <Layout>
         <Routes>
-          {logInSuccess ? (
+          {/* {logInSuccess ? (
             <Route path="/" element={<Home />} />
           ) : (
             <Route path="/" element={<LandingPage />} />
-          )}
+          )} */}
+
           {/* <Route path="/quiz/:id" element={<SingleQuizView />} /> 
           ORIGINAL ROUTE
           */}
-          <Route path="/single-quiz/:id" element={<SingleQuizView />} />
-          <Route path="/profile" element={<ProfileView />} />
-          <Route path="/create-quiz" element={<CreateQuiz />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route element={<RequireAuth />}>
+            <Route path="/home" element={<Home />} />
+            <Route path="/single-quiz/:id" element={<SingleQuizView />} />
+            <Route path="/profile" element={<ProfileView />} />
+            <Route path="/create-quiz" element={<CreateQuiz />} />
+          </Route>
         </Routes>
       </Layout>
     </>

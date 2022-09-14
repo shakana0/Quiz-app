@@ -8,7 +8,7 @@ module.exports.signup_get = (req: Request, res: Response) => {
 };
 
 module.exports.login_get = (req: Request, res: Response) => {
-  res.status(201).json({ msg: "here's get login in" });
+  res.status(201).json({ msg: "you're authenticated :))" });
 };
 
 module.exports.signup_post = async (req: Request, res: Response) => {

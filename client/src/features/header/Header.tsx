@@ -94,7 +94,7 @@ export const Header = () => {
       {RenderModal()}
       <HeaderStyling>
         <div className="icons-container">
-          <Link to={"/"}>
+          <Link to={"/home"}>
             <HomeOutlinedIcon className="home-icon" />
           </Link>
           {RenderIcons()}

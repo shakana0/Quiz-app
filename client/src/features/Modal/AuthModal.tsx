@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { AuthContext } from "../../context/AuthProvider";
 import { useDispatch, useSelector } from "react-redux";
 import { ModalStyling } from "../../components/styles/Modal.styled";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
@@ -17,14 +18,16 @@ import {
 import { credentialsType } from "../../interface/userType";
 import { useNavigate } from "react-router-dom";
 // import * as api from "../../api/userApi";
+import useAuth from "../../hooks/userAuth";
 
 export const Modal = () => {
+  const appContext = useAuth();
+
   const initialCredentialsState = {
     emailAdress: "",
     userName: "",
     password: "",
   };
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const ref = useRef<HTMLFormElement>(null);
@@ -174,13 +177,21 @@ export const Modal = () => {
   const handleLogIn = async () => {
     const res = await dispatch(fetchLoggedInUser(logInCredentials));
 
+    // appContext.setAuth({
+    //   emailAdress: "riri@gmail.com",
+    //   userName: "riri1234",
+    //   password: "riri1234",
+    // });
+    console.log(res.payload.data.user);
+    appContext.setAuth(res.payload.data.user);
+
     // if (Object.keys(activeUser).length !== 0) {
     //   dispatch(setLogInSuccess(true));
     //   window.localStorage.setItem("isLoggedIn", "true");
     //   dispatch(toggleModalState({ showModal: false, modalType: "" }));
     //   navigate("/");
     // }
-    console.log(res)
+    console.log(res);
     if (res.payload.data) {
       dispatch(setLogInSuccess(true));
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
