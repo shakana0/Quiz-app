@@ -45,7 +45,6 @@ export const loginUser = async (logInCredentials: object) => {
       withCredentials: true,
     });
     console.log(response, "res");
-    const accessToken = response.data.accessToken
     return response;
   } catch (error: any) {
     console.log("we have an error", error.response);
@@ -53,6 +52,38 @@ export const loginUser = async (logInCredentials: object) => {
   }
 };
 
-const userAuth = async() => {
-const res = await axios.get("/login", {headers: {}})
-}
+export const userAuth = async () => {
+  console.log('in userAuth api')
+  try {
+    const res = await axios.get("/currUser", {
+      withCredentials: true,
+    });
+    return res;
+  } catch (err: any) {
+    console.log(err, "Token invalid or expired");
+  }
+};
+
+export const refreshToken = async () => {
+  console.log('in refreshToken api')
+  try {
+    const res = await axios.get("/refresh", {
+      withCredentials: true,
+    });
+    console.log(res, 'res')
+    return res;
+  } catch (err: any) {
+    console.log(err, "RefreshToken invalid or expired");
+  }
+};
+
+export const logoutUser = async () => {
+    const res = await axios.post("/logout", {
+      withCredentials: true,
+    });
+    console.log(res, 'res')
+    if(res.status === 200){
+      return res;
+    }
+    return new Error('Unable to logout. Plase try again.')
+};

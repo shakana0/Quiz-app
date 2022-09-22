@@ -170,7 +170,7 @@ export const Modal = () => {
     if (res.payload.data) {
       dispatch(setLogInSuccess(true));
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
-      navigate("/");
+      navigate("/home");
     }
   };
 
@@ -191,11 +191,10 @@ export const Modal = () => {
     //   dispatch(toggleModalState({ showModal: false, modalType: "" }));
     //   navigate("/");
     // }
-    console.log(res);
     if (res.payload.data) {
       dispatch(setLogInSuccess(true));
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
-      navigate("/");
+      navigate("/home");
     } else {
       // setErrors((current) => {
       //   return {

@@ -81,16 +81,29 @@ userSchema.statics.login = async function (
   });
   if (user.length) {
     //compare hached password
-   const auth = await bcrypt.compare(password,user[0].password)
-   if(auth){
-    // console.log(user)
-    return user;
-   }
-   //the throw method will be catched in the login func
-   throw Error("incorrect password");
+    const auth = await bcrypt.compare(password, user[0].password);
+    if (auth) {
+      // console.log(user)
+      return user;
+    }
+    //the throw method will be catched in the login func
+    throw Error("incorrect password");
   }
   throw Error("incorrect email or user name");
 };
 
+userSchema.statics.userAuth = async function (this: any, id: string) {
+  try {
+    const user: any = await this.findById({ _id: id });
+    user.password = undefined;
+    return user;
+  } catch (err: any) {
+    console.log(err);
+  }
+};
+
 const User = mongoose.model("user", userSchema);
+// const userAuth = mongoose.model("user", userSchema);
+
 module.exports = User;
+// module.exports = userAuth;

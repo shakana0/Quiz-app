@@ -10,28 +10,29 @@ import authReducer from "../features/Modal/AuthSlice";
 import modalReducer from "../features/Modal/ModalSlice";
 import quizReducer from "../features/singleQuiz/QuizSlice";
 
-const persistConfig = {
-  key: "persist-key",
-  storage,
-  whitelist: ["auth"],
-};
+// const persistConfig = {
+//   key: "persist-key",
+//   storage,
+//   whitelist: ["auth"],
+// };
 
-const reducer = combineReducers({
-  modal: modalReducer, //modal är namnet som användes i useSelector för att komma åt state => state.modal
-  quiz: quizReducer,
-  auth: authReducer,
-});
+// const reducer = combineReducers({
+//   modal: modalReducer, //modal är namnet som användes i useSelector för att komma åt state => state.modal
+//   quiz: quizReducer,
+//   auth: authReducer,
+// });
 
-const persistedReducer = persistReducer(persistConfig, reducer);
+// const persistedReducer = persistReducer(persistConfig, reducer);
 
-export default configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
-});
+// export default configureStore({
+//   reducer: persistedReducer,
+//   middleware: (getDefaultMiddleware) =>
+//     getDefaultMiddleware({
+//       serializableCheck: false,
+//     }),
+// });
 
+/************ */
 // const appReducer = combineReducers({
 //   modal: modalReducer,
 //   quiz: quizReducer,
@@ -53,17 +54,17 @@ export default configureStore({
 
 /************ */
 
-// export default configureStore({
-//   reducer: {
-//     modal: modalReducer, //modal är namnet som användes i useSelector för att komma åt state => state.modal
-//     quiz: quizReducer,
-//     auth: authReducer
-//   },
-//   middleware: getDefaultMiddleware =>
-//   getDefaultMiddleware({
-//     serializableCheck: false,
-//   })
-// });
+export default configureStore({
+  reducer: {
+    modal: modalReducer, //modal är namnet som användes i useSelector för att komma åt state => state.modal
+    quiz: quizReducer,
+    auth: authReducer
+  },
+  middleware: getDefaultMiddleware =>
+  getDefaultMiddleware({
+    serializableCheck: false,
+  })
+});
 
 //icon animation hover
 //https://ianlunn.github.io/Hover/

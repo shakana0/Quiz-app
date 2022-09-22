@@ -6,6 +6,7 @@ import { AuthBtn } from "../buttons/AuthBtn";
 import { useSelector } from "react-redux";
 import { QuizList } from "../quiz/QuizList";
 import { useNavigate } from "react-router";
+import { logoutUser } from "../Modal/AuthSlice";
 
 export const ProfileView = () => {
   const navigate = useNavigate();
@@ -18,8 +19,9 @@ export const ProfileView = () => {
           className="log-out-btn"
           onClick={() => {
             // localStorage.removeItem("accessToken")
-            disptach(setLogInSuccess(false));
-            disptach(resetErrorMsgs())
+            // disptach(setLogInSuccess(false));
+            disptach(logoutUser());
+            disptach(resetErrorMsgs());
             navigate("/");
           }}
         >

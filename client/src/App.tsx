@@ -1,8 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
-// import { ThemeProvider } from "styled-components";
-// import { Theme } from "./components/styles/Theme.styled"
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Layout } from "./components/Layout";
 import { Routes, Route } from "react-router-dom";
 import { LandingPage } from "./features/home/LandingPageView";
@@ -11,13 +9,29 @@ import { ProfileView } from "./features/profile/ProfileView";
 import { SingleQuizView } from "./features/singleQuiz/SingleQuizView";
 import { CreateQuiz } from "./features/quiz/CreateQuiz";
 import RequireAuth from "./hooks/RequireAuth";
+import {
+  fetchCurrentUser,
+  refreshCurrentUser,
+} from "./features/Modal/AuthSlice";
 
 const App = () => {
   const { logInSuccess } = useSelector((state: any) => state.auth);
-  // const token = localStorage.getItem('accessToken')
-  // console.log(window.localStorage.accessToken, ':))')
+  const [firstRender, setFirstRender] = useState(true);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(!firstRender)
+    if (firstRender) {
+      setFirstRender(false)
+      dispatch(fetchCurrentUser());
+    }
+    let interval = setInterval(() => {
+      console.log('interval')
+      dispatch(refreshCurrentUser());
+    }, 1000 * 50);
+    return () => clearInterval(interval)
+  }, []);
   return (
-    // <ThemeProvider theme={Theme}>
     <>
       <Layout>
         <Routes>
@@ -40,7 +54,6 @@ const App = () => {
         </Routes>
       </Layout>
     </>
-    // </ThemeProvider>
   );
 };
 

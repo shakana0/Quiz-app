@@ -46,6 +46,37 @@ export const fetchLoggedInUser: any = createAsyncThunk(
     return response;
   }
 );
+
+//fetching current user
+export const fetchCurrentUser: any = createAsyncThunk(
+  "user/fetchCurrentUser",
+  async () => {
+    const response = await api.userAuth();
+    console.log(response, "heres response");
+    return response;
+  }
+);
+
+//refresh current user
+export const refreshCurrentUser: any = createAsyncThunk(
+  "user/refreshCurrentUser",
+  async () => {
+console.log('from refreshCurrentUser')
+    const response = await api.refreshToken();
+    // console.log(response, "heres response");
+    return response;
+  }
+);
+
+export const logoutUser: any = createAsyncThunk(
+  "user/logoutUser",
+  async () => {
+    const response = await api.logoutUser();
+    // console.log(response, "heres response");
+    return response;
+  }
+);
+
 const AuthSlice = createSlice({
   name: "AuthState",
   initialState,
@@ -54,13 +85,6 @@ const AuthSlice = createSlice({
       if (payload === false) {
         state.activeUser = {};
       }
-      // const token = localStorage.getItem('accessToken')
-      // if(token){
-      //   state.logInSuccess = true
-      // }else{
-      //   state.logInSuccess = false
-      //   state.activeUser = {}
-      // }
       state.logInSuccess = payload;
     },
     resetErrorMsgs: (state) => {
@@ -86,31 +110,47 @@ const AuthSlice = createSlice({
     },
   },
   extraReducers: {
-    [fetchLoggedInUser.fulfilled]: (state, { payload }) => {
-      // console.log(payload.errors)
-      // console.log(payload.data.user)
-      if (payload.errors) {
-        state.errorMsgs = payload.errors;
-      } else {
-        //won't save password in redux state now
-        // delete payload.data[0].password;
-        state.activeUser = payload.data.user;
-        console.log(state.activeUser)
-      }
-    },
     [fetchNewUser.fulfilled]: (state, { payload }) => {
       console.log(payload, "payload");
       if (payload.errors) {
         state.errorMsgs = payload.errors;
       } 
-      // if(localStorage.getItem("user")){
-      //   // const arr = JSON.parse( localStorage.getItem('user') )
-      //   state.activeUser = JSON.parse( localStorage.getItem('user') || '{}')
-      // }
       else {
         state.activeUser = payload.data.createdUser;
-        // state.activeUser = {};
       }
+    },
+    [fetchLoggedInUser.fulfilled]: (state, { payload }) => {
+      if (payload.errors) {
+        state.errorMsgs = payload.errors;
+      } else {
+        state.activeUser = payload.data.user;
+        console.log(state.activeUser)
+      }
+    },
+    [fetchCurrentUser.fulfilled]: (state, { payload }) => {
+      console.log(payload, "payload");
+      if (payload === undefined) {
+        state.logInSuccess = false
+      } 
+      else {
+        state.activeUser = payload.data.user;
+        state.logInSuccess = true
+      }
+    },
+    [refreshCurrentUser.fulfilled]: (state, { payload }) => {
+      console.log(payload, "payload");
+      if (payload === undefined) {
+        state.logInSuccess = false
+      } 
+      else {
+        state.activeUser = payload.data.user;
+        state.logInSuccess = true
+      }
+    },
+    [logoutUser.fulfilled]: (state, { payload }) => {
+      console.log(payload, "payload");
+      state.activeUser = {}
+      state.logInSuccess = false
     },
   },
 });

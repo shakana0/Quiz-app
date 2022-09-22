@@ -6,7 +6,7 @@ const authRoutes = require("./routes/auth");
 const cookie = require("cookie-parser");
 dotenv.config();
 const app = express(); //middleware => takes any request json data passess it into js object
-import { createToken } from "./errors/jwt";
+import { createToken } from "./middleware/jwt";
 
 //Middlewares
 app.use(cookie());
@@ -21,7 +21,7 @@ app.use(
   })
 );
 app.set("trust proxy", 1); //if using heroku
-app.use("/user", userRouter);
+// app.use("/user", userRouter);
 app.use(authRoutes);
 
 //cookies
