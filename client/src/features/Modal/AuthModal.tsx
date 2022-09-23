@@ -170,7 +170,7 @@ export const Modal = () => {
     if (res.payload.data) {
       dispatch(setLogInSuccess(true));
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
-      navigate("/home");
+      navigate("/");
     }
   };
 
@@ -183,7 +183,7 @@ export const Modal = () => {
     //   password: "riri1234",
     // });
     console.log(res.payload.data.user);
-    appContext.setAuth(res.payload.data.user);
+    // appContext.setAuth(res.payload.data.user);
 
     // if (Object.keys(activeUser).length !== 0) {
     //   dispatch(setLogInSuccess(true));
@@ -194,7 +194,7 @@ export const Modal = () => {
     if (res.payload.data) {
       dispatch(setLogInSuccess(true));
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
-      navigate("/home");
+      navigate("/");
     } else {
       // setErrors((current) => {
       //   return {

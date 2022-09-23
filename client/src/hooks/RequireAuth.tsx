@@ -6,14 +6,14 @@ const RequireAuth = () => {
   // const { auth } = useAuth();
   const location = useLocation();
   // console.log(auth?.emailAdress, "auth :)");
+  // console.log(auth, 'auth');
 
   const { logInSuccess } = useSelector((state: any) => state.auth);
-
 
   return logInSuccess ? (
     <Outlet />
   ) : (
-    <Navigate to="/" state={{ from: location }} replace />
+    <Navigate to="/home" state={{ from: location }} replace />
   ); //where not asking to user to navigate
 };
 

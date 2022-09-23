@@ -13,44 +13,65 @@ import {
   fetchCurrentUser,
   refreshCurrentUser,
 } from "./features/Modal/AuthSlice";
+// import useAuth from "./hooks/userAuth";
 
 const App = () => {
   const { logInSuccess } = useSelector((state: any) => state.auth);
   const [firstRender, setFirstRender] = useState(true);
   const dispatch = useDispatch();
+  const [user, setUser] = useState(false);
+  // const appContext = useAuth();
+  useEffect(() => {
+    const currUser: any = localStorage.getItem("isLoggedIn");
+    setUser(currUser)
+    // user && JSON.parse(currUser) ? setUser(true) : setUser(false)
+    console.log( currUser, 'curruser')
+    console.log(user, 'user')
+  }, [user]);
 
   useEffect(() => {
-    console.log(!firstRender)
     if (firstRender) {
-      setFirstRender(false)
+      setFirstRender(false);
       dispatch(fetchCurrentUser());
+      // appContext.setAuth(activeUser);
     }
+    // localStorage.setItem("isLoggedIn", logInSuccess);
+
+    console.log(user, 'user')
+
+
     let interval = setInterval(() => {
-      console.log('interval')
       dispatch(refreshCurrentUser());
-    }, 1000 * 50);
-    return () => clearInterval(interval)
-  }, []);
+    }, 10 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, [logInSuccess]);
+
   return (
     <>
       <Layout>
         <Routes>
-          {/* {logInSuccess ? (
-            <Route path="/" element={<Home />} />
+          {logInSuccess ? (
+            <Route>
+              <Route path="/" element={<Home />} />
+              <Route path="/single-quiz/:id" element={<SingleQuizView />} />
+              <Route path="/profile" element={<ProfileView />} />
+              <Route path="/create-quiz" element={<CreateQuiz />} />
+            </Route>
           ) : (
             <Route path="/" element={<LandingPage />} />
-          )} */}
+          )}
 
           {/* <Route path="/quiz/:id" element={<SingleQuizView />} /> 
           ORIGINAL ROUTE
           */}
-          <Route path="/" element={<LandingPage />} />
+
+          {/* <Route path="/" element={<LandingPage />} />
           <Route element={<RequireAuth />}>
-            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="/single-quiz/:id" element={<SingleQuizView />} />
             <Route path="/profile" element={<ProfileView />} />
             <Route path="/create-quiz" element={<CreateQuiz />} />
-          </Route>
+          </Route> */}
         </Routes>
       </Layout>
     </>

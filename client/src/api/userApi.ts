@@ -53,7 +53,6 @@ export const loginUser = async (logInCredentials: object) => {
 };
 
 export const userAuth = async () => {
-  console.log('in userAuth api')
   try {
     const res = await axios.get("/currUser", {
       withCredentials: true,
@@ -65,7 +64,6 @@ export const userAuth = async () => {
 };
 
 export const refreshToken = async () => {
-  console.log('in refreshToken api')
   try {
     const res = await axios.get("/refresh", {
       withCredentials: true,
@@ -78,7 +76,7 @@ export const refreshToken = async () => {
 };
 
 export const logoutUser = async () => {
-    const res = await axios.post("/logout", {
+    const res = await axios.post("/logout", null, {
       withCredentials: true,
     });
     console.log(res, 'res')

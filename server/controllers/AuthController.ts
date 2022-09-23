@@ -17,7 +17,7 @@ module.exports.signup_post = async (req: Request, res: Response) => {
     //creating an intance and saving to db
     const createdUser = await User.create({ emailAdress, userName, password });
     const token = createToken(createdUser._id);
-    res.cookie("jwt", token, { httpOnly: true, sameSite: "none", secure: true, maxAge: 24 * 60 * 60 * 1000 });
+    res.cookie("jwt", token, { httpOnly: true, sameSite: "none", secure: true, maxAge: 10 * 60 * 1000 });
     //remove user password from response for security
     createdUser.password = undefined
     res.status(201).json({ createdUser, accessToken: token });
@@ -32,11 +32,10 @@ module.exports.login_post = async (req: Request, res: Response) => {
   try {
     const user = await User.login(emailAdress, userName, password);
     const token = createToken(user[0]._id);
-    console.log('generated token', token)
     if(req.cookies.jwt){
       req.cookies.jwt = ""
     }
-    res.cookie("jwt", token, { httpOnly: true, sameSite: "none", secure: true, maxAge: 60*1000});
+    res.cookie("jwt", token, { httpOnly: true, sameSite: "none", secure: true, maxAge: 10 * 60 * 1000});
     //remove user password from response for security
     user[0].password = undefined
     res.status(200).json({user: user[0], accessToken: token});

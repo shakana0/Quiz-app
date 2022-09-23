@@ -6,7 +6,6 @@ interface UserAuthType {
   userList: Array<credentialsType>;
   logInSuccess: boolean;
   activeUser: object;
-  // errorMsgs: object;
   errorMsgs: { emailAdress: string; userName: string; password: string };
   isCorrect: {
     email: boolean;
@@ -19,7 +18,6 @@ const initialState: UserAuthType = {
   userList: [],
   logInSuccess: false,
   activeUser: {},
-  // errorMsgs: {},
   errorMsgs: { emailAdress: "", userName: "", password: "" },
   isCorrect: {
     email: false,
@@ -42,7 +40,6 @@ export const fetchLoggedInUser: any = createAsyncThunk(
   "user/fetchLoggedInUser",
   async (logInCredentials: object) => {
     const response = await api.loginUser(logInCredentials);
-    console.log(response, "heres response");
     return response;
   }
 );
@@ -52,7 +49,6 @@ export const fetchCurrentUser: any = createAsyncThunk(
   "user/fetchCurrentUser",
   async () => {
     const response = await api.userAuth();
-    console.log(response, "heres response");
     return response;
   }
 );
@@ -61,9 +57,7 @@ export const fetchCurrentUser: any = createAsyncThunk(
 export const refreshCurrentUser: any = createAsyncThunk(
   "user/refreshCurrentUser",
   async () => {
-console.log('from refreshCurrentUser')
     const response = await api.refreshToken();
-    // console.log(response, "heres response");
     return response;
   }
 );
@@ -72,7 +66,6 @@ export const logoutUser: any = createAsyncThunk(
   "user/logoutUser",
   async () => {
     const response = await api.logoutUser();
-    // console.log(response, "heres response");
     return response;
   }
 );
@@ -124,11 +117,10 @@ const AuthSlice = createSlice({
         state.errorMsgs = payload.errors;
       } else {
         state.activeUser = payload.data.user;
-        console.log(state.activeUser)
+        localStorage.setItem("isLoggedIn", 'true');
       }
     },
     [fetchCurrentUser.fulfilled]: (state, { payload }) => {
-      console.log(payload, "payload");
       if (payload === undefined) {
         state.logInSuccess = false
       } 
@@ -145,12 +137,18 @@ const AuthSlice = createSlice({
       else {
         state.activeUser = payload.data.user;
         state.logInSuccess = true
+        // localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
+        localStorage.setItem("isLoggedIn", 'true');
+
       }
     },
     [logoutUser.fulfilled]: (state, { payload }) => {
       console.log(payload, "payload");
       state.activeUser = {}
       state.logInSuccess = false
+      // localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
+      localStorage.setItem("isLoggedIn", 'false');
+
     },
   },
 });
