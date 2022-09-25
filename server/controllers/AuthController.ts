@@ -3,13 +3,13 @@ const User = require("../db/models/auth");
 import { handleErrors } from "../errors/errorHandler";
 import { createToken } from "../middleware/jwt";
 
-module.exports.signup_get = (req: Request, res: Response) => {
-  res.status(201).json({ msg: "here's get sign up" });
-};
+// module.exports.signup_get = (req: Request, res: Response) => {
+//   res.status(201).json({ msg: "here's get sign up" });
+// };
 
-module.exports.login_get = (req: Request, res: Response) => {
-  res.status(201).json({ msg: "you're authenticated :))"});
-};
+// module.exports.login_get = (req: Request, res: Response) => {
+//   res.status(201).json({ msg: "you're authenticated :))"});
+// };
 
 module.exports.signup_post = async (req: Request, res: Response) => {
   const { emailAdress, userName, password } = req.body;
@@ -44,3 +44,4 @@ module.exports.login_post = async (req: Request, res: Response) => {
     res.status(400).json({ errors });
   }
 };
+

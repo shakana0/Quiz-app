@@ -62,13 +62,10 @@ export const refreshCurrentUser: any = createAsyncThunk(
   }
 );
 
-export const logoutUser: any = createAsyncThunk(
-  "user/logoutUser",
-  async () => {
-    const response = await api.logoutUser();
-    return response;
-  }
-);
+export const logoutUser: any = createAsyncThunk("user/logoutUser", async () => {
+  const response = await api.logoutUser();
+  return response;
+});
 
 const AuthSlice = createSlice({
   name: "AuthState",
@@ -107,8 +104,7 @@ const AuthSlice = createSlice({
       console.log(payload, "payload");
       if (payload.errors) {
         state.errorMsgs = payload.errors;
-      } 
-      else {
+      } else {
         state.activeUser = payload.data.createdUser;
       }
     },
@@ -117,38 +113,37 @@ const AuthSlice = createSlice({
         state.errorMsgs = payload.errors;
       } else {
         state.activeUser = payload.data.user;
-        localStorage.setItem("isLoggedIn", 'true');
+        localStorage.setItem("isLoggedIn", "true");
+        console.log("local storge is set to true now :)");
       }
     },
     [fetchCurrentUser.fulfilled]: (state, { payload }) => {
       if (payload === undefined) {
-        state.logInSuccess = false
-      } 
-      else {
+        state.logInSuccess = false;
+        localStorage.setItem("isLoggedIn", "false");
+      } else {
         state.activeUser = payload.data.user;
-        state.logInSuccess = true
+        state.logInSuccess = true;
+        localStorage.setItem("isLoggedIn", "true");
       }
     },
     [refreshCurrentUser.fulfilled]: (state, { payload }) => {
       console.log(payload, "payload");
       if (payload === undefined) {
-        state.logInSuccess = false
-      } 
-      else {
+        state.logInSuccess = false;
+      } else {
         state.activeUser = payload.data.user;
-        state.logInSuccess = true
-        // localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
-        localStorage.setItem("isLoggedIn", 'true');
-
+        state.logInSuccess = true;
+        localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
       }
     },
     [logoutUser.fulfilled]: (state, { payload }) => {
       console.log(payload, "payload");
-      state.activeUser = {}
-      state.logInSuccess = false
+      state.activeUser = {};
+      state.logInSuccess = false;
       // localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
-      localStorage.setItem("isLoggedIn", 'false');
-
+      localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
+      console.log("local storge is set to false now :)");
     },
   },
 });

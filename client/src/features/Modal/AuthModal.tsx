@@ -182,8 +182,10 @@ export const Modal = () => {
     //   userName: "riri1234",
     //   password: "riri1234",
     // });
+
     console.log(res.payload.data.user);
-    // appContext.setAuth(res.payload.data.user);
+    const user =  JSON.parse(localStorage.getItem("isLoggedIn") || 'false')
+    appContext.setAuth(user);
 
     // if (Object.keys(activeUser).length !== 0) {
     //   dispatch(setLogInSuccess(true));

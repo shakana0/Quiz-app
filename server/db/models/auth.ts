@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { isEmail } = require("validator");
 const bcrypt = require("bcrypt");
 const validChar = /^[0-9a-zA-Z@.-_åäöÅÄÖ]+$/;
+// import QuizType from "./quizes"
 
 export const userSchema = new mongoose.Schema({
   emailAdress: {
@@ -102,8 +103,17 @@ userSchema.statics.userAuth = async function (this: any, id: string) {
   }
 };
 
+// userSchema.statics.userAuth = async function (this: any, id: string) {
+//   try {
+//     const user: any = await this.findById({ _id: id });
+//     user.password = undefined;
+//     return user;
+//   } catch (err: any) {
+//     console.log(err);
+//   }
+// };
+
 const User = mongoose.model("user", userSchema);
 // const userAuth = mongoose.model("user", userSchema);
 
 module.exports = User;
-// module.exports = userAuth;

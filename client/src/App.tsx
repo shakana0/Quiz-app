@@ -14,37 +14,41 @@ import {
   refreshCurrentUser,
 } from "./features/Modal/AuthSlice";
 // import useAuth from "./hooks/userAuth";
-
 const App = () => {
   const { logInSuccess } = useSelector((state: any) => state.auth);
   const [firstRender, setFirstRender] = useState(true);
   const dispatch = useDispatch();
   const [user, setUser] = useState(false);
   // const appContext = useAuth();
+
+  // console.log(user, "user");
+
   useEffect(() => {
-    const currUser: any = localStorage.getItem("isLoggedIn");
-    setUser(currUser)
     // user && JSON.parse(currUser) ? setUser(true) : setUser(false)
-    console.log( currUser, 'curruser')
+    // const currUser = JSON.parse(
+    //   localStorage.getItem("isLoggedIn") || "false"
+    // );
+    const currUser = window.localStorage.getItem('isLoggedIn')
+    if(currUser !== null){
+      console.log( currUser, 'curruser')
+      setUser(JSON.parse(currUser))
+    }
     console.log(user, 'user')
-  }, [user]);
+  }, []);
 
   useEffect(() => {
     if (firstRender) {
       setFirstRender(false);
+      // localStorage.clear();
       dispatch(fetchCurrentUser());
       // appContext.setAuth(activeUser);
     }
-    // localStorage.setItem("isLoggedIn", logInSuccess);
-
-    console.log(user, 'user')
-
 
     let interval = setInterval(() => {
       dispatch(refreshCurrentUser());
     }, 10 * 60 * 1000);
     return () => clearInterval(interval);
-  }, [logInSuccess]);
+  }, []);
 
   return (
     <>
@@ -64,10 +68,10 @@ const App = () => {
           {/* <Route path="/quiz/:id" element={<SingleQuizView />} /> 
           ORIGINAL ROUTE
           */}
-
-          {/* <Route path="/" element={<LandingPage />} />
+{/* 
+          <Route path="/" element={<LandingPage />} />
           <Route element={<RequireAuth />}>
-            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/single-quiz/:id" element={<SingleQuizView />} />
             <Route path="/profile" element={<ProfileView />} />
             <Route path="/create-quiz" element={<CreateQuiz />} />

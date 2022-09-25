@@ -124,10 +124,10 @@ router.delete("/:id", async (req: Request, res: Response) => {
 });
 
 //posta quiz
-router.post("/:id/quizes", async (req: Request, res: Response) => {
-  const postedQuiz = await postQuiz(req.params.id, req.body);
-  console.log(req.body.quizes, "reqbody");
-  res.status(201).json(postedQuiz);
-});
+// router.post("/:id/quizes", async (req: Request, res: Response) => {
+//   const postedQuiz = await postQuiz(req.params.id, req.body);
+//   console.log(req.body.quizes, "reqbody");
+//   res.status(201).json(postedQuiz);
+// });
 
 export default router;
