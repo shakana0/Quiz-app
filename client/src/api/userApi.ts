@@ -59,7 +59,7 @@ export const userAuth = async () => {
     });
     return res;
   } catch (err: any) {
-    console.log(err, "Token invalid or expired");
+    console.log(err.response, "Token invalid or expired");
   }
 };
 

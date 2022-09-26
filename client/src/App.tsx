@@ -14,7 +14,9 @@ import {
   refreshCurrentUser,
 } from "./features/Modal/AuthSlice";
 // import useAuth from "./hooks/userAuth";
+import { useNavigate } from "react-router-dom";
 const App = () => {
+  const navigate = useNavigate();
   const { logInSuccess } = useSelector((state: any) => state.auth);
   const [firstRender, setFirstRender] = useState(true);
   const dispatch = useDispatch();
@@ -28,12 +30,12 @@ const App = () => {
     // const currUser = JSON.parse(
     //   localStorage.getItem("isLoggedIn") || "false"
     // );
-    const currUser = window.localStorage.getItem('isLoggedIn')
-    if(currUser !== null){
-      console.log( currUser, 'curruser')
-      setUser(JSON.parse(currUser))
+    const currUser = window.localStorage.getItem("isLoggedIn");
+    if (currUser !== null) {
+      // console.log(currUser, "curruser");
+      setUser(JSON.parse(currUser));
     }
-    console.log(user, 'user')
+    // console.log(user, 'user')
   }, []);
 
   useEffect(() => {
@@ -43,10 +45,12 @@ const App = () => {
       dispatch(fetchCurrentUser());
       // appContext.setAuth(activeUser);
     }
-
     let interval = setInterval(() => {
       dispatch(refreshCurrentUser());
     }, 10 * 60 * 1000);
+    // if (logInSuccess === false) {
+    //   navigate("/");
+    // }
     return () => clearInterval(interval);
   }, []);
 
@@ -68,7 +72,7 @@ const App = () => {
           {/* <Route path="/quiz/:id" element={<SingleQuizView />} /> 
           ORIGINAL ROUTE
           */}
-{/* 
+          {/* 
           <Route path="/" element={<LandingPage />} />
           <Route element={<RequireAuth />}>
             <Route path="/home" element={<Home />} />

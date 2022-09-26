@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 const { isEmail } = require("validator");
 const bcrypt = require("bcrypt");
 const validChar = /^[0-9a-zA-Z@.-_åäöÅÄÖ]+$/;
-// import QuizType from "./quizes"
+import { QuizType } from "./quizes"
+const QuizModel = require("./quizes")
 
 export const userSchema = new mongoose.Schema({
   emailAdress: {
@@ -43,7 +44,7 @@ export const userSchema = new mongoose.Schema({
     minlength: [8, "passowrd must be 8 characters long"],
   },
   quizes: {
-    type: [Object],
+    type: Array<QuizType>,
     required: false,
   },
 });
@@ -80,9 +81,11 @@ userSchema.statics.login = async function (
       },
     ],
   });
+  console.log(user, 'user')
   if (user.length) {
     //compare hached password
     const auth = await bcrypt.compare(password, user[0].password);
+    console.log(auth, 'auth')
     if (auth) {
       // console.log(user)
       return user;
@@ -103,15 +106,23 @@ userSchema.statics.userAuth = async function (this: any, id: string) {
   }
 };
 
-// userSchema.statics.userAuth = async function (this: any, id: string) {
-//   try {
-//     const user: any = await this.findById({ _id: id });
-//     user.password = undefined;
-//     return user;
-//   } catch (err: any) {
-//     console.log(err);
-//   }
-// };
+userSchema.statics.postQuiz = async function(this: any, id: String, quiz: QuizType){
+  // console.log(id, quiz, 'heres the fkn arguemnt')
+  // const newQuiz: any = await this.findById({ _id: id })
+  const newQuiz: any = await this.findOneAndUpdate({ _id: id },   { $push: { quizes: quiz } }).exec()
+
+  console.log(newQuiz, ':newQuiz', id, ':id')
+  if (!newQuiz) {
+    throw "404";
+  }
+  return newQuiz
+ 
+  // else {
+  //   newQuiz.quizes.push(quiz);
+  //   await newQuiz.save();
+  //   return newQuiz;
+  // }
+};
 
 const User = mongoose.model("user", userSchema);
 // const userAuth = mongoose.model("user", userSchema);

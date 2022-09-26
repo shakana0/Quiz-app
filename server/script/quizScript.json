@@ -1,15 +1,98 @@
-{
-  "titel": "Kemi -kapitel 1",
-  "description": "Frågor om kapitel 1",
-  "questions": [
-    {
-      "term": "Citronsyra",
-      "definition": "Svag syra"
-    },
-    {
-      "term": "Mjölksyra",
-      "definition": "Svag syra"
-    }
-  ]
-}
-
+[
+  {
+    "id": "6ee38b80-4ee5-46c7-8fd1-d529ef008865",
+    "titel": "Biologi -kap 2",
+    "description": "Växter och djur",
+    "questions": [
+      {
+        "id": 1,
+        "term": "Fotosyntes",
+        "definition": "Processen där växter och andra levande organismer tar hand om energi från solljus och lagrar energin i kemiska bindningar."
+      },
+      {
+        "id": 2,
+        "term": "Cellandning",
+        "definition": "Är cellens sätt att få energi."
+      },
+      {
+        "id": 3,
+        "term": "Cellulosa",
+        "definition": "Växtens cellvägg består av Detta. Det stödjer upp växtens cellvägg."
+      }
+    ]
+  },
+  {
+    "id": "71b9a18f-4d84-4d71-9c26-21d326d1d92c",
+    "titel": "Kemi -kap 2",
+    "description": "Syror och baser",
+    "questions": [
+      {
+        "id": 1,
+        "term": "Syra",
+        "definition": "Ett ämne som genom dissociation kan avge protoner (vätejoner). Om det tillförs till vatten bildas en sur lösning."
+      },
+      {
+        "id": 2,
+        "term": "Baser",
+        "definition": "Har förmågan att ta upp vätejoner.  I en vattenlösning ger det ett pH-värde på över 7."
+      },
+      {
+        "id": 3,
+        "term": "Citronsyra",
+        "definition": "Finns naturligt i bland annat citroner och produceras i vävnaden hos djur."
+      },
+      {
+        "id": 4,
+        "term": "Svavelsyra",
+        "definition": "Även kallad batterisyra är starkt frätande syra som tar upp vatten genom luften."
+      },
+      {
+        "id": 5,
+        "term": "Mjölksyra",
+        "definition": "Dess bas laktat produceras i olika celler i kroppen, både under normal syretillförsel men mer under otillräcklig syretillförsel."
+      }
+    ]
+  },
+  {
+    "id": "d5d5dad1-41bb-49ed-8e39-5bb39ce558e3",
+    "titel": "Matte -kap 5",
+    "description": "Funktioner",
+    "questions": [
+      {
+        "id": 1,
+        "term": "Derivata",
+        "definition": "Är en funktion som anger förändringshastigheten hos en annan känd funktion."
+      },
+      {
+        "id": 2,
+        "term": "Funtioner",
+        "definition": "Kan beskrivas av en ekvation, en tabell eller en graf."
+      },
+      {
+        "id": 3,
+        "term": "Linjär funktion",
+        "definition": "Är en ekvation som har formen y=kx+m."
+      },
+      {
+        "id": 4,
+        "term": "Förändringsfaktor",
+        "definition": "Är en faktor som indikerar procentuell förändring (en minskning eller en ökning)."
+      },
+      {
+        "id": 5,
+        "term": "Exponentialfunktion",
+        "definition": "En funktion med variabel i exponenten."
+      },
+      {
+        "id": 6,
+        "term": "Potensfunktion",
+        "definition": " En funktion med variabel i basen."
+      },
+      {
+        "id": 7,
+        "term": "Exponent och bas",
+        "definition": "En exponent anger antal gånger basen ska multipliceras i sig själv. T.ex: 34,103,x2eller1,4x"
+      }
+    ]
+  }
+]
