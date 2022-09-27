@@ -15,6 +15,7 @@ import {
 } from "./features/Modal/AuthSlice";
 // import useAuth from "./hooks/userAuth";
 import { useNavigate } from "react-router-dom";
+import Google from "@mui/icons-material/Google";
 const App = () => {
   const navigate = useNavigate();
   const { logInSuccess } = useSelector((state: any) => state.auth);
@@ -47,6 +48,7 @@ const App = () => {
     }
     let interval = setInterval(() => {
       dispatch(refreshCurrentUser());
+      console.log('refreshing :)')
     }, 10 * 60 * 1000);
     // if (logInSuccess === false) {
     //   navigate("/");

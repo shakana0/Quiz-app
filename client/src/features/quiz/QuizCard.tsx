@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import { QuizCardStyling } from "../../components/styles/QuizCard";
-import { QuizType } from "../../interface/quizType";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
 interface quizProps {
   quiz?: any;
@@ -8,9 +8,14 @@ interface quizProps {
 
 export const QuizCard = ({ quiz }: quizProps) => {
   return (
-    <QuizCardStyling >
-      <h2>{quiz.titel}</h2>
-      <p>{quiz.description}</p>
+    <QuizCardStyling>
+      <div className="icon-container">
+        <DeleteOutlineOutlinedIcon className={"delete-icon"} />
+      </div>
+      <div className="quiz-card-info">
+        <h2>{quiz.titel}</h2>
+        <p>{quiz.description}</p>
+      </div>
     </QuizCardStyling>
   );
 };

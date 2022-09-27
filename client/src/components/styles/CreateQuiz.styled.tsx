@@ -18,6 +18,7 @@ export const CreateQuizStyling = styled.div`
       border-bottom: 2px solid white;
       padding: 1rem;
       margin-top: 1rem;
+
       ::placeholder {
         color: #ffffffb7;
         font-size: 1.1rem;
@@ -76,7 +77,10 @@ export const CreateQuizStyling = styled.div`
         display: flex;
         flex-direction: column;
         margin: 2rem 0;
-        padding: 0 2rem 2rem 2rem;
+        padding: 0 0 2rem 2rem;
+        input:last-child{
+        margin-right: 2rem;
+        }
         .top {
           width: 100%;
           display: flex;
@@ -95,7 +99,7 @@ export const CreateQuizStyling = styled.div`
               border-radius: 10px;
               padding: 0 1.5rem;
               height: 45px;
-              margin: 1rem 1rem 0 0;
+              margin: 1rem 2rem 0 0;
             }
             //fixa ikonen
             .delete-icon {

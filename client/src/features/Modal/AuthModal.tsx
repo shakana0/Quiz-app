@@ -19,6 +19,7 @@ import { credentialsType } from "../../interface/userType";
 import { useNavigate } from "react-router-dom";
 // import * as api from "../../api/userApi";
 import useAuth from "../../hooks/userAuth";
+import { GoogleLoginBtn } from "../buttons/LoginBtn"
 
 export const Modal = () => {
   const appContext = useAuth();
@@ -262,10 +263,11 @@ export const Modal = () => {
 
             <div className="sign-up-btn-container">
               <div>
-                <button>
+                <GoogleLoginBtn/>
+                {/* <button>
                   <GoogleIcon className="google-icon" />
                   <p>Log In With Google</p>
-                </button>
+                </button> */}
                 <button>
                   <FacebookIcon className="facebook-icon" />
                   <p>Log In With Facebook</p>
