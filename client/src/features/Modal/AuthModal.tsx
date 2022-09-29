@@ -361,10 +361,11 @@ export const Modal = () => {
           </div>
           <div className="btn-container">
             {RenderModalToggleBtns()}
-            <button>
+            <GoogleLoginBtn/>
+            {/* <button>
               <GoogleIcon className="google-icon" />
               <p>Log In With Google</p>
-            </button>
+            </button> */}
             <button>
               <FacebookIcon className="facebook-icon" />
               <p>Log In With Facebook</p>

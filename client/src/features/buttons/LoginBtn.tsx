@@ -1,27 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import GoogleIcon from "@mui/icons-material/Google";
 import GoogleLogin, {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
   GoogleLogout,
 } from "react-google-login";
+import { setLogInSuccess } from "../Modal/AuthSlice";
+import { useDispatch } from "react-redux";
+import { gapi } from "gapi-script";
 
 export const GoogleLoginBtn = () => {
   const [showLogin, setShowLogin] = useState(true);
   const [showLogout, setShowLogout] = useState(false);
+  const dispatch = useDispatch();
+
+useEffect(() => {
+// const init = () => {
+//   gapi.load('auth2', function() {
+//     /* Ready. Make a call to gapi.auth2.init or some other API */
+//   });
+// }
+
+function start(){
+  gapi.client.init({
+    clientId: `${process.env.REACT_APP_CLIENT_ID}`,
+    scope: ""
+  })
+}
+gapi.load('client:auth2', start)
+}, [])
 
   const handleLogin = async (
-    res: GoogleLoginResponse | GoogleLoginResponseOffline
+    res: any
   ) => {
-    console.log("login success :)", res);
+    console.log("login success :)", res.wt.cu , res.wt.Ad);
     setShowLogin(false);
     setShowLogout(true);
+    // const userName =  res.wt.Ad
+    // const emailAdress = res.wt.cu
 
-    // if ("accessToken" in res) {
-    //   console.log(res.accessToken);
-    // } else {
-    //   console.log("offline");
-    // }
+    // dispatch(setLogInSuccess(true));
+
   };
   const handleFailure = (
     res: GoogleLoginResponse | GoogleLoginResponseOffline
@@ -33,6 +52,7 @@ export const GoogleLoginBtn = () => {
 
   const handleLogout = () => {
     console.log("you have been logged out successfully :)");
+    dispatch(setLogInSuccess(false));
   };
   return (
     <>
@@ -42,6 +62,7 @@ export const GoogleLoginBtn = () => {
           onSuccess={handleLogin}
           onFailure={handleFailure}
           cookiePolicy="single_host_origin"
+          className={"google-btn"}
         >
           <button>
             <GoogleIcon className="google-icon" />
@@ -60,4 +81,12 @@ export const GoogleLoginBtn = () => {
   );
 };
 
-//https://www.youtube.com/watch?v=bf-vfhgWtKg
+//https://www.youtube.com/watch?v=75aTZq-qoZk 
+//google login in and mongodb
+//https://towardsdatascience.com/tutorial-mongodb-user-authentication-with-google-sign-in-fcc13076799f 
+
+// 1. skapa en api request som skickar datan till en route i backend const loginWGoogle
+/* 2. i backend har vi först vår route, router.post("URL", Auth.signup_post, Auth.login_post) =>
+Auth.signup_post: om email eller userName existerar => (error) , annars skapa modell m jwt o allt.
+Auth.login_post: om använadre exiterar login
+*/

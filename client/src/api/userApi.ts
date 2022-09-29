@@ -18,37 +18,23 @@ axios.defaults.baseURL = "https://quiz-app-backend-heroku.herokuapp.com";
 
 export const registerUser = async (user: object) => {
   try {
-    const response = await axios.post("/signup", user, {
+    const res = await axios.post("/signup", user, {
       withCredentials: true,
     });
-    console.log(response, "res");
-    // if (response.data.accessToken) {
-    //   localStorage.setItem(
-    //     "accessToken",
-    //     JSON.stringify(response.data.accessToken)
-    //   );
-    //   localStorage.setItem(
-    //     "user",
-    //     JSON.stringify(response.data.createdUser)
-    //   );
-    // }
-    return response;
+    return res;
   } catch (error: any) {
-    console.log(error.response);
-    return error.response.data;
+    return error.res.data;
   }
 };
 
 export const loginUser = async (logInCredentials: object) => {
   try {
-    const response = await axios.post("/login", logInCredentials, {
+    const res = await axios.post("/login", logInCredentials, {
       withCredentials: true,
     });
-    console.log(response, "res");
-    return response;
+    return res;
   } catch (error: any) {
-    console.log("we have an error", error.response);
-    return error.response.data;
+    return error.res.data;
   }
 };
 
@@ -68,7 +54,7 @@ export const refreshToken = async () => {
     const res = await axios.get("/refresh", {
       withCredentials: true,
     });
-    console.log(res, 'res')
+    console.log(res, "res");
     return res;
   } catch (err: any) {
     console.log(err, "RefreshToken invalid or expired");
@@ -76,12 +62,23 @@ export const refreshToken = async () => {
 };
 
 export const logoutUser = async () => {
-    const res = await axios.post("/logout", null, {
+  const res = await axios.post("/logout", null, {
+    withCredentials: true,
+  });
+  console.log(res, "res");
+  if (res.status === 200) {
+    return res;
+  }
+  return new Error("Unable to logout. Plase try again.");
+};
+
+export const loginWithGoogle = async (user: object) => {
+  try {
+    const res = await axios.post("/google-login", user, {
       withCredentials: true,
     });
-    console.log(res, 'res')
-    if(res.status === 200){
-      return res;
-    }
-    return new Error('Unable to logout. Plase try again.')
+    return res;
+  } catch (err: any) {
+    console.log(err, "err");
+  }
 };

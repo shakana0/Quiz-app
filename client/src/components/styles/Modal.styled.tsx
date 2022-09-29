@@ -98,7 +98,6 @@ export const ModalStyling = styled.article`
         button {
           box-sizing: border-box;
           border: 2px solid white;
-
           p {
             font-size: 0.7rem;
             margin-left: 0.5rem;
@@ -118,6 +117,9 @@ export const ModalStyling = styled.article`
         }
       }
 
+      .google-btn{
+        background-color: black;
+      }
       button {
         border: 2px solid green;
         width: 60%;
