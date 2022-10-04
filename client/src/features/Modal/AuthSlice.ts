@@ -62,6 +62,14 @@ export const refreshCurrentUser: any = createAsyncThunk(
   }
 );
 
+//fetch logged in user with Google
+export const fetchUserGoogleLogin: any = createAsyncThunk(
+  "user/fetchUserGoogleLogin",
+  async (idToken: object) => {
+    const response = await api.loginWithGoogle(idToken);
+    return response;
+  }
+);
 export const logoutUser: any = createAsyncThunk("user/logoutUser", async () => {
   const response = await api.logoutUser();
   return response;
@@ -144,6 +152,13 @@ const AuthSlice = createSlice({
       // localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
       localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
       console.log("local storge is set to false now :)");
+    },
+    [fetchUserGoogleLogin.fulfilled]: (state, { payload }) => {
+      console.log(payload, "payload");
+      if (payload) {
+        state.activeUser = payload.data
+        console.log(state.activeUser, 'this is state.activeuser')
+      }
     },
   },
 });

@@ -5,42 +5,33 @@ import GoogleLogin, {
   GoogleLoginResponseOffline,
   GoogleLogout,
 } from "react-google-login";
-import { setLogInSuccess } from "../Modal/AuthSlice";
+import { setLogInSuccess, fetchUserGoogleLogin } from "../Modal/AuthSlice";
 import { useDispatch } from "react-redux";
 import { gapi } from "gapi-script";
+import { loginWithGoogle } from "../../api/userApi";
 
 export const GoogleLoginBtn = () => {
   const [showLogin, setShowLogin] = useState(true);
   const [showLogout, setShowLogout] = useState(false);
   const dispatch = useDispatch();
 
-useEffect(() => {
-// const init = () => {
-//   gapi.load('auth2', function() {
-//     /* Ready. Make a call to gapi.auth2.init or some other API */
-//   });
-// }
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId: `${process.env.REACT_APP_CLIENT_ID}`,
+        scope: "",
+      });
+    }
+    gapi.load("client:auth2", start);
+  }, []);
 
-function start(){
-  gapi.client.init({
-    clientId: `${process.env.REACT_APP_CLIENT_ID}`,
-    scope: ""
-  })
-}
-gapi.load('client:auth2', start)
-}, [])
-
-  const handleLogin = async (
-    res: any
-  ) => {
-    console.log("login success :)", res.wt.cu , res.wt.Ad);
+  const handleLogin = async (res: any) => {
+    console.log("login success :)", res);
     setShowLogin(false);
     setShowLogout(true);
-    // const userName =  res.wt.Ad
-    // const emailAdress = res.wt.cu
+    dispatch(fetchUserGoogleLogin({tokenId: res.tokenId}));
 
     // dispatch(setLogInSuccess(true));
-
   };
   const handleFailure = (
     res: GoogleLoginResponse | GoogleLoginResponseOffline
@@ -81,9 +72,10 @@ gapi.load('client:auth2', start)
   );
 };
 
-//https://www.youtube.com/watch?v=75aTZq-qoZk 
+//https://www.youtube.com/watch?v=75aTZq-qoZk
+//https://www.youtube.com/watch?v=LA16VCpUido
 //google login in and mongodb
-//https://towardsdatascience.com/tutorial-mongodb-user-authentication-with-google-sign-in-fcc13076799f 
+//https://towardsdatascience.com/tutorial-mongodb-user-authentication-with-google-sign-in-fcc13076799f
 
 // 1. skapa en api request som skickar datan till en route i backend const loginWGoogle
 /* 2. i backend har vi först vår route, router.post("URL", Auth.signup_post, Auth.login_post) =>

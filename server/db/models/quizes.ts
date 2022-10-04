@@ -28,26 +28,10 @@ quizSchema.post("save", function (doc: any, next: any) {
   next();
 });
 
-// quizSchema.statics.postQuiz = async function(this: any, id: String, quiz: QuizType){
-//   // console.log(id, quiz, 'heres the fkn arguemnt')
-//   const newQuiz: any = await this.findById({ _id: "5a68fde3f09ad7646ddec17e" })
-//   console.log(newQuiz, ':newQuiz', id, ':id')
-//   if (!newQuiz) {
-//     throw "404";
-//   } else {
-//     newQuiz.quizes.push(quiz);
-//     await newQuiz.save();
-//     return newQuiz;
-//   }
-// };
-
 // "quizes" är namnet på mongoDB collectionen i powershell
 // const QuizModel = model<QuizType>("quizes", schema);
 
 // const QuizModel = model<QuizType>("quizes", quizSchema);
 const QuizModel = mongoose.model("quizes", quizSchema);
-
-
-// export default QuizModel;
 module.exports = QuizModel;
 

@@ -2,8 +2,7 @@ const mongoose = require("mongoose");
 const { isEmail } = require("validator");
 const bcrypt = require("bcrypt");
 const validChar = /^[0-9a-zA-Z@.-_åäöÅÄÖ]+$/;
-import { QuizType } from "./quizes"
-const QuizModel = require("./quizes")
+import { QuizType } from "./quizes";
 
 export const userSchema = new mongoose.Schema({
   emailAdress: {
@@ -81,13 +80,10 @@ userSchema.statics.login = async function (
       },
     ],
   });
-  console.log(user, 'user')
   if (user.length) {
     //compare hached password
     const auth = await bcrypt.compare(password, user[0].password);
-    console.log(auth, 'auth')
     if (auth) {
-      // console.log(user)
       return user;
     }
     //the throw method will be catched in the login func
@@ -106,25 +102,29 @@ userSchema.statics.userAuth = async function (this: any, id: string) {
   }
 };
 
-userSchema.statics.postQuiz = async function(this: any, id: String, quiz: QuizType){
-  // console.log(id, quiz, 'heres the fkn arguemnt')
-  // const newQuiz: any = await this.findById({ _id: id })
-  const newQuiz: any = await this.findOneAndUpdate({ _id: id },   { $push: { quizes: quiz } }).exec()
-
-  console.log(newQuiz, ':newQuiz', id, ':id')
+userSchema.statics.postQuiz = async function (
+  this: any,
+  id: String,
+  quiz: QuizType
+) {
+  const newQuiz: any = await this.findOneAndUpdate(
+    { _id: id },
+    { $push: { quizes: quiz } }
+  ).exec();
   if (!newQuiz) {
     throw "404";
   }
-  return newQuiz
- 
-  // else {
-  //   newQuiz.quizes.push(quiz);
-  //   await newQuiz.save();
-  //   return newQuiz;
-  // }
+  return newQuiz;
 };
 
+userSchema.statics.add_google_user = async function (this: any, user: object) {
+  console.log(user, "user");
+  const newUser = new userSchema({ $push: { user } }).exec();
+  console.log(newUser, "newUser");
+  if (!newUser) {
+    throw "400";
+  }
+  return newUser;
+};
 const User = mongoose.model("user", userSchema);
-// const userAuth = mongoose.model("user", userSchema);
-
 module.exports = User;

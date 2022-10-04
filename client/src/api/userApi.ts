@@ -72,9 +72,9 @@ export const logoutUser = async () => {
   return new Error("Unable to logout. Plase try again.");
 };
 
-export const loginWithGoogle = async (user: object) => {
+export const loginWithGoogle = async (idToken: object) => {
   try {
-    const res = await axios.post("/google-login", user, {
+    const res = await axios.post("/google-login", idToken, {
       withCredentials: true,
     });
     return res;

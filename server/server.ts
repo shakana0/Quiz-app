@@ -6,7 +6,6 @@ const authRoutes = require("./routes/auth");
 const cookie = require("cookie-parser");
 dotenv.config();
 const app = express(); //middleware => takes any request json data passess it into js object
-import { createToken } from "./middleware/jwt";
 
 //Middlewares
 app.use(cookie());
