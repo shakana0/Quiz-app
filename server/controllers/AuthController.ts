@@ -60,13 +60,48 @@ module.exports.google_login = async (req: Request, res: Response) => {
     });
     const { name, email } = data.getPayload();
     //creating an intance and saving to db
-    const createdUser = await User.add_google_user({
-      emailAdress: email,
-      userName: name,
-      password: 'hej12345'
-    });
+    const emailAdress = email;
+    const userName = name;
+    const password = "hej12345";
+
+    //  const emailAdress = "maxinee@gmail.com"
+    // const userName = "maxinee1234"
+    // const password = "maxinee1234"
+
+    // const createdUser = await User.add_google_user({
+    //   emailAdress: email,
+    //   userName: name,
+    //   password: 'hej12345'
+    // });
+    //check if user alredy exists in db
+    const user = await User.check_google_user(email);
+    if (!user.length) {
+      console.log("new user");
+      const user = await User.create({
+        emailAdress,
+        userName,
+        password,
+      });
+      user.password = undefined;
+      return res.status(201).json({ user });
+    } else {
+      console.log("user already exits :)");
+      user.password = undefined;
+      return res.status(201).json({ user: user[0] });
+    }
+    // await createdUser.save(function (err: any) {
+    //   if (err) {
+    //     console.log(err, 'err')
+    //     res.status(500).json("Failed to register. Please try again.");
+    //   } else {
+    //     // res.status(200).send("Registered.")
+    //     res.status(201).json({ createdUser });
+    //     return createdUser
+    //   }
+    // });
+
     // res.status(201).json({ userName: name, emailAdress: email });
-    res.status(201).json({ createdUser });
+    // res.status(201).json({ createdUser });
   } catch (err: any) {
     res.status(401).json({ msg: "User Is Unauthorized" });
   }

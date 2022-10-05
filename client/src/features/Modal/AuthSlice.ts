@@ -156,7 +156,7 @@ const AuthSlice = createSlice({
     [fetchUserGoogleLogin.fulfilled]: (state, { payload }) => {
       console.log(payload, "payload");
       if (payload) {
-        state.activeUser = payload.data
+        state.activeUser = payload.data.user
         console.log(state.activeUser, 'this is state.activeuser')
       }
     },

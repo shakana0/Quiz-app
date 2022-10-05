@@ -6,9 +6,9 @@ import GoogleLogin, {
   GoogleLogout,
 } from "react-google-login";
 import { setLogInSuccess, fetchUserGoogleLogin } from "../Modal/AuthSlice";
+import { toggleModalState } from "../Modal/ModalSlice";
 import { useDispatch } from "react-redux";
 import { gapi } from "gapi-script";
-import { loginWithGoogle } from "../../api/userApi";
 
 export const GoogleLoginBtn = () => {
   const [showLogin, setShowLogin] = useState(true);
@@ -29,9 +29,11 @@ export const GoogleLoginBtn = () => {
     console.log("login success :)", res);
     setShowLogin(false);
     setShowLogout(true);
-    dispatch(fetchUserGoogleLogin({tokenId: res.tokenId}));
-
-    // dispatch(setLogInSuccess(true));
+    const user = await dispatch(fetchUserGoogleLogin({ tokenId: res.tokenId }));
+    if (user) {
+      // dispatch(setLogInSuccess(true));
+      // dispatch(toggleModalState({ showModal: false, modalType: "" }));
+    }
   };
   const handleFailure = (
     res: GoogleLoginResponse | GoogleLoginResponseOffline
