@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import GoogleIcon from "@mui/icons-material/Google";
 import GoogleLogin, {
   GoogleLoginResponse,
@@ -7,17 +7,19 @@ import GoogleLogin, {
 } from "react-google-login";
 import { setLogInSuccess, fetchUserGoogleLogin } from "../Modal/AuthSlice";
 import { toggleModalState } from "../Modal/ModalSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { gapi } from "gapi-script";
+import { useNavigate } from "react-router";
+
 
 export const GoogleLoginBtn = () => {
-  const [showLogin, setShowLogin] = useState(true);
-  const [showLogout, setShowLogout] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const { authLogin } = useSelector((state: any) => state.auth);
 
   useEffect(() => {
     function start() {
-      gapi.client.init({
+      gapi.auth2.init({
         clientId: `${process.env.REACT_APP_CLIENT_ID}`,
         scope: "",
       });
@@ -25,51 +27,66 @@ export const GoogleLoginBtn = () => {
     gapi.load("client:auth2", start);
   }, []);
 
+  /*
+  HA EN USEEFFECT SOM LADDAR IN ANVÄNADRE LÖPANDE
+  */
   const handleLogin = async (res: any) => {
     console.log("login success :)", res);
-    setShowLogin(false);
-    setShowLogout(true);
+    // setShowLogin(false);
+    // setShowLogout(true);
     const user = await dispatch(fetchUserGoogleLogin({ tokenId: res.tokenId }));
     if (user) {
-      // dispatch(setLogInSuccess(true));
-      // dispatch(toggleModalState({ showModal: false, modalType: "" }));
+      dispatch(setLogInSuccess(true));
+      dispatch(toggleModalState({ showModal: false, modalType: "" }));
     }
   };
   const handleFailure = (
     res: GoogleLoginResponse | GoogleLoginResponseOffline
   ) => {
     console.log("login failed", res);
-    setShowLogin(true);
-    setShowLogout(false);
+    // setShowLogin(true);
+    // setShowLogout(false);
   };
 
   const handleLogout = () => {
     console.log("you have been logged out successfully :)");
     dispatch(setLogInSuccess(false));
+    navigate("/")
   };
   return (
     <>
-      {showLogin ? (
+      {authLogin.isGoogleLogin ? (
+        <GoogleLogout
+          clientId={`${process.env.REACT_APP_CLIENT_ID}`}
+          // buttonText="Logout"
+          onLogoutSuccess={handleLogout}
+          render={(renderProps) => (
+            <button
+              onClick={renderProps.onClick}
+              disabled={renderProps.disabled}
+              className="log-out-btn"
+            >
+              G Log Out
+            </button>
+          )}
+        ></GoogleLogout>
+      ) : (
         <GoogleLogin
           clientId={`${process.env.REACT_APP_CLIENT_ID}`}
           onSuccess={handleLogin}
           onFailure={handleFailure}
           cookiePolicy="single_host_origin"
-          className={"google-btn"}
-        >
-          <button>
-            <GoogleIcon className="google-icon" />
-            <p>Log In With Google</p>
-          </button>
-        </GoogleLogin>
-      ) : null}
-      {showLogout ? (
-        <GoogleLogout
-          clientId={`${process.env.REACT_APP_CLIENT_ID}`}
-          buttonText="Logout"
-          onLogoutSuccess={handleLogout}
-        ></GoogleLogout>
-      ) : null}
+          render={(renderProps) => (
+            <button
+              onClick={renderProps.onClick}
+              disabled={renderProps.disabled}
+            >
+              <GoogleIcon className="google-icon" />
+              <p>Log In With Google</p>
+            </button>
+          )}
+        ></GoogleLogin>
+      )}
     </>
   );
 };

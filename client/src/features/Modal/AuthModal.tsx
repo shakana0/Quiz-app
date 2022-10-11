@@ -176,6 +176,7 @@ export const Modal = () => {
   };
 
   const handleLogIn = async () => {
+    console.log('hejsaan')
     const res = await dispatch(fetchLoggedInUser(logInCredentials));
 
     // appContext.setAuth({
@@ -184,7 +185,7 @@ export const Modal = () => {
     //   password: "riri1234",
     // });
 
-    console.log(res);
+    console.log(res, 'res.payload.data');
     // const user =  JSON.parse(localStorage.getItem("isLoggedIn") || 'false')
     // appContext.setAuth(user);
 

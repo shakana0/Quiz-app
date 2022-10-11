@@ -12,6 +12,7 @@ interface UserAuthType {
     userName: boolean;
     password: boolean;
   };
+  authLogin: {isGoogleLogin: boolean, isFacbookLogin: boolean}
 }
 
 const initialState: UserAuthType = {
@@ -24,6 +25,7 @@ const initialState: UserAuthType = {
     userName: false,
     password: false,
   },
+  authLogin: {isGoogleLogin: false, isFacbookLogin: false}
 };
 
 //fetch errors
@@ -40,6 +42,7 @@ export const fetchLoggedInUser: any = createAsyncThunk(
   "user/fetchLoggedInUser",
   async (logInCredentials: object) => {
     const response = await api.loginUser(logInCredentials);
+    console.log(response)
     return response;
   }
 );
@@ -80,9 +83,11 @@ const AuthSlice = createSlice({
   initialState,
   reducers: {
     setLogInSuccess: (state, { payload }) => {
-      if (payload === false) {
-        state.activeUser = {};
-      }
+      // if (payload === false) {
+      //   state.activeUser = {};
+      // }
+      state.authLogin.isGoogleLogin = payload
+      // state.authLogin.isGoogleLogin = false
       state.logInSuccess = payload;
     },
     resetErrorMsgs: (state) => {
@@ -157,7 +162,8 @@ const AuthSlice = createSlice({
       console.log(payload, "payload");
       if (payload) {
         state.activeUser = payload.data.user
-        console.log(state.activeUser, 'this is state.activeuser')
+        // state.authLogin.isGoogleLogin = true
+        console.log( state.authLogin.isGoogleLogin, ' state.authLogin.isGoogleLogin')
       }
     },
   },

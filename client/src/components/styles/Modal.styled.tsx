@@ -116,10 +116,6 @@ export const ModalStyling = styled.article`
           }
         }
       }
-
-      .google-btn{
-        background-color: black;
-      }
       button {
         border: 2px solid green;
         width: 60%;
@@ -130,7 +126,6 @@ export const ModalStyling = styled.article`
         background-color: transparent;
         border: 3px solid white;
         margin: 1rem;
-
         .google-icon,
         .facebook-icon {
           font-size: 2rem;

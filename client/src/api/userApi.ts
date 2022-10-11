@@ -23,7 +23,7 @@ export const registerUser = async (user: object) => {
     });
     return res;
   } catch (error: any) {
-    return error.res.data;
+    return error.response.data;
   }
 };
 
@@ -34,7 +34,7 @@ export const loginUser = async (logInCredentials: object) => {
     });
     return res;
   } catch (error: any) {
-    return error.res.data;
+    return error.response.data;
   }
 };
 
@@ -77,7 +77,7 @@ export const loginWithGoogle = async (idToken: object) => {
     const res = await axios.post("/google-login", idToken, {
       withCredentials: true,
     });
-    console.log(res, 'reeeess')
+    console.log(res, "reeeess");
     return res;
   } catch (err: any) {
     console.log(err, "err");

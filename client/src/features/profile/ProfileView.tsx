@@ -7,27 +7,33 @@ import { useSelector } from "react-redux";
 import { QuizList } from "../quiz/QuizList";
 import { useNavigate } from "react-router";
 import { logoutUser } from "../Modal/AuthSlice";
+import { GoogleLoginBtn } from "../buttons/LoginBtn";
 
 export const ProfileView = () => {
   const navigate = useNavigate();
   const disptach = useDispatch();
-  const { activeUser } = useSelector((state: any) => state.auth);
+  const { activeUser, authLogin } = useSelector((state: any) => state.auth);
+  console.log(authLogin.isGoogleLogin, 'from profile')
   return (
     <ProfileViewStyling>
       <section className="profile">
-        <button
-          className="log-out-btn"
-          onClick={() => {
-            // localStorage.removeItem("accessToken")
-            // disptach(setLogInSuccess(false));
-            disptach(logoutUser());
-            disptach(resetErrorMsgs());
-            navigate("/");
-          }}
-        >
-          Log Out
-        </button>
-
+        {authLogin.isGoogleLogin ? (
+          <GoogleLoginBtn />
+        ) : (
+          // <button className="log-out-btn">Hej</button>
+          <button
+            className="log-out-btn"
+            onClick={() => {
+              // localStorage.removeItem("accessToken")
+              // disptach(setLogInSuccess(false));
+              disptach(logoutUser());
+              disptach(resetErrorMsgs());
+              navigate("/");
+            }}
+          >
+            Log Out
+          </button>
+        )}
         <section className="profile-info">
           <div>
             <div className="circle"></div>
