@@ -86,9 +86,11 @@ const AuthSlice = createSlice({
       // if (payload === false) {
       //   state.activeUser = {};
       // }
-      state.authLogin.isGoogleLogin = payload
-      // state.authLogin.isGoogleLogin = false
+      state.authLogin.isGoogleLogin = false
       state.logInSuccess = payload;
+    },
+    setAuthLogin: (state, { payload }) => {
+      state.authLogin.isGoogleLogin = payload
     },
     resetErrorMsgs: (state) => {
       state.errorMsgs = { emailAdress: "", userName: "", password: "" };
@@ -169,6 +171,6 @@ const AuthSlice = createSlice({
   },
 });
 
-export const { setLogInSuccess, resetErrorMsgs, setIsCorrect } =
+export const { setLogInSuccess, resetErrorMsgs, setIsCorrect, setAuthLogin } =
   AuthSlice.actions;
 export default AuthSlice.reducer;
