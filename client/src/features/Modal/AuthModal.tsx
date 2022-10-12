@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 // import * as api from "../../api/userApi";
 import useAuth from "../../hooks/userAuth";
 import { GoogleLoginBtn } from "../buttons/GoogleBtn"
+import { FacebookLoginBtn } from "../buttons/FacebookBtn";
 
 export const Modal = () => {
   const appContext = useAuth();
@@ -269,10 +270,11 @@ export const Modal = () => {
                   <GoogleIcon className="google-icon" />
                   <p>Log In With Google</p>
                 </button> */}
-                <button>
+                {/* <button>
                   <FacebookIcon className="facebook-icon" />
                   <p>Log In With Facebook</p>
-                </button>
+                </button> */}
+                <FacebookLoginBtn/>
               </div>
               <div className="or-email">
                 <span></span>
@@ -367,10 +369,11 @@ export const Modal = () => {
               <GoogleIcon className="google-icon" />
               <p>Log In With Google</p>
             </button> */}
-            <button>
+            {/* <button>
               <FacebookIcon className="facebook-icon" />
               <p>Log In With Facebook</p>
-            </button>
+            </button> */}
+            <FacebookLoginBtn/>
           </div>
           <div className="input-box">
             <input
