@@ -1,18 +1,19 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { credentialsType } from "../../interface/userType";
+import { credentialsType, errorMsgsType } from "../../interface/userType";
 import * as api from "../../api/userApi";
 
 interface UserAuthType {
   userList: Array<credentialsType>;
   logInSuccess: boolean;
   activeUser: object;
-  errorMsgs: { emailAdress: string; userName: string; password: string };
+  // errorMsgs: { emailAdress: string; userName: string; password: string };
+  errorMsgs: errorMsgsType;
   isCorrect: {
     email: boolean;
     userName: boolean;
     password: boolean;
   };
-  authLogin: {isGoogleLogin: boolean, isFacbookLogin: boolean}
+  authLogin: {isGoogleLogin: boolean, isFacebookLogin: boolean}
 }
 
 const initialState: UserAuthType = {
@@ -25,9 +26,8 @@ const initialState: UserAuthType = {
     userName: false,
     password: false,
   },
-  authLogin: {isGoogleLogin: false, isFacbookLogin: false}
-};
-
+  authLogin: {isGoogleLogin: false, isFacebookLogin: false}
+}
 //fetch errors
 export const fetchNewUser: any = createAsyncThunk(
   "user/fetchNewUser",
@@ -164,8 +164,9 @@ const AuthSlice = createSlice({
       console.log(payload, "payload");
       if (payload) {
         state.activeUser = payload.data.user
+        state.logInSuccess = true
         // state.authLogin.isGoogleLogin = true
-        console.log( state.authLogin.isGoogleLogin, ' state.authLogin.isGoogleLogin')
+        //console.log( state.authLogin, ' state.authLogin.isGoogleLogin')
       }
     },
   },

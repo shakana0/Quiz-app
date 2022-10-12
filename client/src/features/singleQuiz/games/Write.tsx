@@ -64,7 +64,7 @@ export const Write = () => {
   };
   const checkAnwser = () => {
     if (guessedTerm !== "") {
-      if (quiz[0].term.toLowerCase() === guessedTerm) {
+      if (quiz[0].term.toLowerCase() === guessedTerm.toLowerCase()) {
         setPoints((prev) => prev + 1);
         setGuessedTerm("");
       } else {

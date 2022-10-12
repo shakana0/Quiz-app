@@ -62,7 +62,7 @@ module.exports.google_login = async (req: Request, res: Response) => {
     //creating an intance and saving to db
     const emailAdress = email;
     const userName = name;
-    const password = "hej12345";
+    const password = `${process.env.GOOGLE_LOGIN_PASSWORD}`;
     //check if user alredy exists in db
     const user = await User.check_google_user(email);
     if (!user.length) {

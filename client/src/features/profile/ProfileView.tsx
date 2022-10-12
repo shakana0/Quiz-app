@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { QuizList } from "../quiz/QuizList";
 import { useNavigate } from "react-router";
 import { logoutUser } from "../Modal/AuthSlice";
-import { GoogleLoginBtn } from "../buttons/LoginBtn";
+import { GoogleLoginBtn } from "../buttons/GoogleBtn";
 
 export const ProfileView = () => {
   const navigate = useNavigate();

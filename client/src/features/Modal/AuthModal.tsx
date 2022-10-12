@@ -19,7 +19,7 @@ import { credentialsType } from "../../interface/userType";
 import { useNavigate } from "react-router-dom";
 // import * as api from "../../api/userApi";
 import useAuth from "../../hooks/userAuth";
-import { GoogleLoginBtn } from "../buttons/LoginBtn"
+import { GoogleLoginBtn } from "../buttons/GoogleBtn"
 
 export const Modal = () => {
   const appContext = useAuth();

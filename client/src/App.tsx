@@ -12,13 +12,14 @@ import RequireAuth from "./hooks/RequireAuth";
 import {
   fetchCurrentUser,
   refreshCurrentUser,
+  fetchUserGoogleLogin,
+  setAuthLogin
 } from "./features/Modal/AuthSlice";
 // import useAuth from "./hooks/userAuth";
 import { useNavigate } from "react-router-dom";
-import Google from "@mui/icons-material/Google";
 const App = () => {
   const navigate = useNavigate();
-  const { logInSuccess } = useSelector((state: any) => state.auth);
+  const { logInSuccess, authLogin } = useSelector((state: any) => state.auth);
   const [firstRender, setFirstRender] = useState(true);
   const dispatch = useDispatch();
   const [user, setUser] = useState(false);
@@ -40,19 +41,33 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (firstRender) {
+    //null check
+    const isGoogleLogIn = JSON.parse(window.localStorage.getItem("isGoogleLogIn") || "{}")
+
+    //fetching user on first render
+    if (firstRender && !isGoogleLogIn.login) {
       setFirstRender(false);
       // localStorage.clear();
       dispatch(fetchCurrentUser());
       // appContext.setAuth(activeUser);
     }
+    if(firstRender && isGoogleLogIn.login){
+      setFirstRender(false);
+      console.log('refreshing google login, token: ')
+      dispatch(fetchUserGoogleLogin({ tokenId: isGoogleLogIn.token }));
+      dispatch(setAuthLogin({login: true, token: ""}))
+    }
+
+    //refeshing current user 
     let interval = setInterval(() => {
-      dispatch(refreshCurrentUser());
+      //vet inte om det behövs
+      if(authLogin.isGoogleLogin){
+        dispatch(fetchUserGoogleLogin({ tokenId: isGoogleLogIn.token }));
+       }else{
+         dispatch(refreshCurrentUser());
+       }
       console.log('refreshing :)')
-    }, 10 * 60 * 1000);
-    // if (logInSuccess === false) {
-    //   navigate("/");
-    // }
+    }, 10 * 60 * 3000);
     return () => clearInterval(interval);
   }, []);
 
