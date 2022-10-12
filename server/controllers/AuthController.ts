@@ -66,7 +66,6 @@ module.exports.google_login = async (req: Request, res: Response) => {
     //check if user alredy exists in db
     const user = await User.check_google_user(email);
     if (!user.length) {
-      console.log("new user");
       const user = await User.create({
         emailAdress,
         userName,

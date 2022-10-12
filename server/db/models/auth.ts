@@ -117,43 +117,26 @@ userSchema.statics.postQuiz = async function (
   return newQuiz;
 };
 
-userSchema.statics.add_google_user = async function (
-  this: any,
-  user: any,
-) {
-  // console.log(user,  "this is userrr");
+userSchema.statics.add_google_user = async function (this: any, user: any) {
   const { emailAdress, userName, password } = user;
-  console.log(emailAdress, userName, password, 'här är dem')
   const newUser = await this.create({ emailAdress, userName, password });
-  console.log('hej')
-  // const newUser = this.create({ user });
   if (!newUser) {
-    console.log('no newUser found')
+    console.log("no newUser found");
     throw "400";
   }
-  // await newUser.save();
-  console.log(newUser, "newUser");
   return newUser;
 };
 //logga in
 userSchema.statics.check_google_user = async function (
   this: any,
-  emailAdress: string,
+  emailAdress: string
 ) {
-  // console.log(user,  "this is userrr");
-  // const { emailAdress, userName } = user;
-
-  // console.log(emailAdress, userName, 'här är dem')
   const user = await this.find({ emailAdress });
-  // const newUser = this.create({ user });
   if (!user) {
     throw "400";
   }
-  // await newUser.save();
-  console.log(user, "user");
   return user;
 };
-
 
 const User = mongoose.model("user", userSchema);
 module.exports = User;
