@@ -73,6 +73,7 @@ export const logoutUser = async () => {
 };
 
 export const loginWithGoogle = async (idToken: object) => {
+  console.log(idToken, 'idToken')
   try {
     const res = await axios.post("/google-login", idToken, {
       withCredentials: true,

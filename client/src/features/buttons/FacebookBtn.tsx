@@ -1,19 +1,36 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import FacebookLogin from "react-facebook-login";
-
+import {fetchUserGoogleLogin, setLogInSuccess, setAuthLogin} from "../Modal/AuthSlice"
+import { toggleModalState } from "../Modal/ModalSlice"
 export const FacebookLoginBtn = () => {
     const [isSignedIn, setIsSignedIn] = useState(false);
+    const dispatch = useDispatch()
 
-  const responseFacebook = (response: any) => {
-    console.log(response);
-    // setData(response);
-    // setPicture(response.picture.data.url);
-    if (response.accessToken) {
-        setIsSignedIn(true);
-    } else {
-        setIsSignedIn(false);
-    }
+  const responseFacebook = async(res: any) => {
+    console.log(res);
+    // const user = await dispatch(fetchUserGoogleLogin({ tokenId: res.accessToken }));
+    // if (res.accessToken) {
+    //     setIsSignedIn(true);
+    // } else {
+    //     setIsSignedIn(false);
+    // }
+
+    // if (user) {
+    //   dispatch(setLogInSuccess(true));
+    //   // dispatch(setAuthLogin(true));
+    //   localStorage.setItem(
+    //     "isGoogleLogIn",
+    //     JSON.stringify({ login: true, token: res.accessToken })
+    //   );
+    //   dispatch(toggleModalState({ showModal: false, modalType: "" }));
+    //   setIsSignedIn(true);
+    // }
   };
+
+  // const FB.logout = (response) => {
+  //   // user is now logged out
+  // };
 
   return <>
     <FacebookLogin
@@ -22,6 +39,13 @@ export const FacebookLoginBtn = () => {
     fields="name,email,picture"
     // onClick={componentClicked}
     callback={responseFacebook} />
+{/* 
+<FacebookLogin
+    appId={`${process.env.REACT_APP_FACEBOOK_APP_ID}`}
+    // autoLoad={true}
+    fields="name,email,picture"
+    // onClick={componentClicked}
+    callback={responseFacebook} /> */}
 
 {/* {!isSignedIn &&
 

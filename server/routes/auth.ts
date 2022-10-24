@@ -14,6 +14,9 @@ router.post("/logout", Verify.verifyToken, Verify.logout)
 router.post("/user/:id/quizes", Quiz.quiz_post)
 //google login
 router.post("/google-login", Auth.google_login)
+//facebook login
+router.post("/facebook-login", Auth.facebook_login)
+
 
 
 module.exports = router;
