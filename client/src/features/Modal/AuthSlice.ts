@@ -65,6 +65,11 @@ export const refreshCurrentUser: any = createAsyncThunk(
   }
 );
 
+export const logoutUser: any = createAsyncThunk("user/logoutUser", async () => {
+  const response = await api.logoutUser();
+  return response;
+});
+
 //fetch logged in user with Google
 export const fetchUserGoogleLogin: any = createAsyncThunk(
   "user/fetchUserGoogleLogin",
@@ -73,10 +78,15 @@ export const fetchUserGoogleLogin: any = createAsyncThunk(
     return response;
   }
 );
-export const logoutUser: any = createAsyncThunk("user/logoutUser", async () => {
-  const response = await api.logoutUser();
-  return response;
-});
+
+//fetch logged in user with Facebook
+export const fetchUserFacebookLogin: any = createAsyncThunk(
+  "user/fetchUserGoogleLogin",
+  async (credentials: object) => {
+    const response = await api.loginWithGoogle(credentials);
+    return response;
+  }
+);
 
 const AuthSlice = createSlice({
   name: "AuthState",
@@ -167,6 +177,13 @@ const AuthSlice = createSlice({
         state.logInSuccess = true
         // state.authLogin.isGoogleLogin = true
         //console.log( state.authLogin, ' state.authLogin.isGoogleLogin')
+      }
+    },
+    [fetchUserFacebookLogin.fulfilled]: (state, { payload }) => {
+      console.log(payload, "payload");
+      if (payload) {
+        state.activeUser = payload.data.user
+        state.logInSuccess = true
       }
     },
   },

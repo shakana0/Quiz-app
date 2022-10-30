@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import FacebookLogin from "react-facebook-login";
-import {fetchUserGoogleLogin, setLogInSuccess, setAuthLogin} from "../Modal/AuthSlice"
+import {fetchUserGoogleLogin, fetchUserFacebookLogin, setLogInSuccess, setAuthLogin} from "../Modal/AuthSlice"
 import { toggleModalState } from "../Modal/ModalSlice"
 export const FacebookLoginBtn = () => {
     const [isSignedIn, setIsSignedIn] = useState(false);
@@ -9,23 +9,23 @@ export const FacebookLoginBtn = () => {
 
   const responseFacebook = async(res: any) => {
     console.log(res);
-    // const user = await dispatch(fetchUserGoogleLogin({ tokenId: res.accessToken }));
-    // if (res.accessToken) {
-    //     setIsSignedIn(true);
-    // } else {
-    //     setIsSignedIn(false);
-    // }
+    const user = await dispatch(fetchUserFacebookLogin({ tokenId: res.accessToken, userId: res.userID }));
+    if (res.accessToken) {
+        setIsSignedIn(true);
+    } else {
+        setIsSignedIn(false);
+    }
 
-    // if (user) {
-    //   dispatch(setLogInSuccess(true));
-    //   // dispatch(setAuthLogin(true));
-    //   localStorage.setItem(
-    //     "isGoogleLogIn",
-    //     JSON.stringify({ login: true, token: res.accessToken })
-    //   );
-    //   dispatch(toggleModalState({ showModal: false, modalType: "" }));
-    //   setIsSignedIn(true);
-    // }
+    if (user) {
+      dispatch(setLogInSuccess(true));
+      // dispatch(setAuthLogin(true));
+      localStorage.setItem(
+        "isGoogleLogIn",
+        JSON.stringify({ login: true, token: res.accessToken })
+      );
+      dispatch(toggleModalState({ showModal: false, modalType: "" }));
+      setIsSignedIn(true);
+    }
   };
 
   // const FB.logout = (response) => {

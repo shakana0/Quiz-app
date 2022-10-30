@@ -87,12 +87,12 @@ module.exports.google_login = async (req: Request, res: Response) => {
 };
 
 module.exports.facebook_login = async (req: Request, res: Response) => {
-  console.log('hallåå')
-  const { tokenId } = req.body;
-  console.log(tokenId, 'tokenid :)')
+  console.log('hallåå fb')
+  const { tokenId, userId } = req.body;
+  console.log(tokenId, userId, 'user info :)' )
   try {
     //verify tokenId w OAuth2Client by using client-id again
-    const data = await client.verifyIdToken({
+    const data = await fbClient.verifyIdToken({
       idToken: tokenId,
       audience: process.env.FACEBOOK_APP_ID,
     });
@@ -120,3 +120,7 @@ module.exports.facebook_login = async (req: Request, res: Response) => {
     res.status(401).json({ msg: "User Is Unauthorized" });
   }
 };
+
+//https://medium.com/@jackrobertscott/facebook-auth-with-node-js-c4bb90d03fc0
+//https://www.youtube.com/watch?v=CRXAKiXFfuc
+//http://thecodebarbarian.com/passport-free-facebook-login-with-node-js.html

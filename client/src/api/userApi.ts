@@ -71,11 +71,26 @@ export const logoutUser = async () => {
   }
   return new Error("Unable to logout. Plase try again.");
 };
-
+//google login post request
 export const loginWithGoogle = async (idToken: object) => {
   console.log(idToken, 'idToken')
   try {
     const res = await axios.post("/google-login", idToken, {
+      withCredentials: true,
+    });
+    console.log(res, "reeeess");
+    return res;
+  } catch (err: any) {
+    console.log(err, "err");
+  }
+};
+
+//facebook login post request
+
+export const loginWithFacebook = async (credentials: object) => {
+  console.log(credentials, 'user info')
+  try {
+    const res = await axios.post("/facebook-login", credentials, {
       withCredentials: true,
     });
     console.log(res, "reeeess");
