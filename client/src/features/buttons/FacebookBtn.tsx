@@ -4,27 +4,26 @@ import FacebookLogin from "react-facebook-login";
 import {fetchUserGoogleLogin, fetchUserFacebookLogin, setLogInSuccess, setAuthLogin} from "../Modal/AuthSlice"
 import { toggleModalState } from "../Modal/ModalSlice"
 export const FacebookLoginBtn = () => {
-    const [isSignedIn, setIsSignedIn] = useState(false);
+    // const [isSignedIn, setIsSignedIn] = useState(false);
     const dispatch = useDispatch()
 
   const responseFacebook = async(res: any) => {
     console.log(res);
-    const user = await dispatch(fetchUserFacebookLogin({ tokenId: res.accessToken, userId: res.userID }));
-    if (res.accessToken) {
-        setIsSignedIn(true);
-    } else {
-        setIsSignedIn(false);
-    }
-
+    const user = await dispatch(fetchUserFacebookLogin({ accessToken: res.accessToken, userId: res.userID }));
+    // if (res.accessToken) {
+    //     setIsSignedIn(true);
+    // } else {
+    //     setIsSignedIn(false);
+    // }
     if (user) {
       dispatch(setLogInSuccess(true));
       // dispatch(setAuthLogin(true));
       localStorage.setItem(
-        "isGoogleLogIn",
+        "isfacebookLogIn",
         JSON.stringify({ login: true, token: res.accessToken })
       );
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
-      setIsSignedIn(true);
+      // setIsSignedIn(true);
     }
   };
 
@@ -62,5 +61,8 @@ export const FacebookLoginBtn = () => {
 } */}
   </>;
 };
-//https://jasonwatmore.com/post/2020/10/25/react-facebook-login-tutorial-example
-//https://dev.to/quod_ai/how-to-integrate-facebook-login-api-into-your-react-app-33de
+
+//https://www.youtube.com/watch?v=zQNPDRg_1Po  18:16
+//Facebook logout
+//fixa alla errors i consolen
+//

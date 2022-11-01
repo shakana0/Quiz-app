@@ -81,9 +81,9 @@ export const fetchUserGoogleLogin: any = createAsyncThunk(
 
 //fetch logged in user with Facebook
 export const fetchUserFacebookLogin: any = createAsyncThunk(
-  "user/fetchUserGoogleLogin",
+  "user/fetchUserFacebookLogin",
   async (credentials: object) => {
-    const response = await api.loginWithGoogle(credentials);
+    const response = await api.loginWithFacebook(credentials);
     return response;
   }
 );
@@ -180,7 +180,7 @@ const AuthSlice = createSlice({
       }
     },
     [fetchUserFacebookLogin.fulfilled]: (state, { payload }) => {
-      console.log(payload, "payload");
+      console.log(payload, "payload fb");
       if (payload) {
         state.activeUser = payload.data.user
         state.logInSuccess = true

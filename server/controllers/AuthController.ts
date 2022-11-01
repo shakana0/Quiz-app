@@ -5,7 +5,8 @@ import { createToken } from "../middleware/jwt";
 const { OAuth2Client } = require("google-auth-library");
 //initializing OAuth2Client using client-id
 const client: any = new OAuth2Client(process.env.CLIENT_ID);
-const fbClient: any = new OAuth2Client(process.env.FACEBOOK_APP_ID);
+const fetch = require("node-fetch")
+// const fbClient: any = new OAuth2Client(process.env.FACEBOOK_APP_ID);
 
 
 module.exports.signup_post = async (req: Request, res: Response) => {
@@ -67,7 +68,7 @@ module.exports.google_login = async (req: Request, res: Response) => {
     const userName = name;
     const password = `${process.env.GOOGLE_LOGIN_PASSWORD}`;
     //check if user alredy exists in db
-    const user = await User.check_google_user(email);
+    const user = await User.check_social_media_user(email);
     if (!user.length) {
       const user = await User.create({
         emailAdress,
@@ -87,40 +88,42 @@ module.exports.google_login = async (req: Request, res: Response) => {
 };
 
 module.exports.facebook_login = async (req: Request, res: Response) => {
-  console.log('hallåå fb')
-  const { tokenId, userId } = req.body;
-  console.log(tokenId, userId, 'user info :)' )
-  try {
-    //verify tokenId w OAuth2Client by using client-id again
-    const data = await fbClient.verifyIdToken({
-      idToken: tokenId,
-      audience: process.env.FACEBOOK_APP_ID,
-    });
-    const { name, email } = data.getPayload();
-    //creating an intance and saving to db
-    const emailAdress = email;
-    const userName = name;
+  const { accessToken, userId } = req.body;
+  try{
+    let urlGraphFacebook = `https://graph.facebook.com/v15.0/${userId}/?fields=name,email&access_token=${accessToken}`
+    const result = await fetch(urlGraphFacebook, {
+      method: 'GET'
+    })
+    const data = await result.json();
+    const {email, name} = data
+    if(data.error){
+      return res.status(401).json(data);
+
+    }else{
+       //creating an intance and saving to db
+    const emailAdress = data.email;
+    const userName = data.name;
     const password = `${process.env.GOOGLE_LOGIN_PASSWORD}`;
+
     //check if user alredy exists in db
-    const user = await User.check_google_user(email);
+    const user = await User.check_social_media_user(emailAdress);
     if (!user.length) {
-      const user = await User.create({
+      const newUser = await User.create({
         emailAdress,
         userName,
         password,
       });
-      user[0].password = undefined;
-      return res.status(201).json({ user });
+      newUser.password = undefined;
+      return res.status(201).json({ newUser });
     } else {
       console.log("user already exits :)");
       user[0].password = undefined;
       return res.status(201).json({ user: user[0] });
     }
-  } catch (err: any) {
+    }
+  }catch(error: any){
     res.status(401).json({ msg: "User Is Unauthorized" });
   }
 };
 
-//https://medium.com/@jackrobertscott/facebook-auth-with-node-js-c4bb90d03fc0
-//https://www.youtube.com/watch?v=CRXAKiXFfuc
-//http://thecodebarbarian.com/passport-free-facebook-login-with-node-js.html
+//https://www.youtube.com/watch?v=zQNPDRg_1Po  18:16

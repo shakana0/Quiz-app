@@ -25,10 +25,10 @@ export const userSchema = new mongoose.Schema({
     required: [true, "User name is required"],
     unique: true,
     lowercase: true,
-    minlength: [8, "User name must be 8 characters long"],
+    minlength: [6, "User name must be 6 characters long"],
     maxlength: [
       15,
-      "Your user name needs to be between 8 and 15 characters long",
+      "Your user name needs to be between 6 and 15 characters long",
     ],
     validate: [
       (userName: string) => {
@@ -126,8 +126,8 @@ userSchema.statics.add_google_user = async function (this: any, user: any) {
   }
   return newUser;
 };
-//logga in
-userSchema.statics.check_google_user = async function (
+//check social media user login
+userSchema.statics.check_social_media_user = async function (
   this: any,
   emailAdress: string
 ) {
