@@ -55,7 +55,7 @@ const App = () => {
       setFirstRender(false);
       console.log('refreshing google login, token: ')
       dispatch(fetchUserGoogleLogin({ tokenId: isGoogleLogIn.token }));
-      dispatch(setAuthLogin({login: true, token: ""}))
+      // dispatch(setAuthLogin({login: true, token: ""}))
     }
 
     //refeshing current user 

@@ -8,19 +8,23 @@ import { QuizList } from "../quiz/QuizList";
 import { useNavigate } from "react-router";
 import { logoutUser } from "../Modal/AuthSlice";
 import { GoogleLoginBtn } from "../buttons/GoogleBtn";
+import { FacebookLoginBtn } from "../buttons/FacebookBtn";
 
 export const ProfileView = () => {
   const navigate = useNavigate();
   const disptach = useDispatch();
   const { activeUser, authLogin } = useSelector((state: any) => state.auth);
-  console.log(authLogin.isGoogleLogin, 'from profile')
+  const authSatet = JSON.parse(window.localStorage.getItem("authLoginState") || '')
+  console.log(authSatet, "from profile");
+
   return (
     <ProfileViewStyling>
       <section className="profile">
         {authLogin.isGoogleLogin ? (
           <GoogleLoginBtn />
+        ) : authLogin.isFacebookLogin ? (
+          <FacebookLoginBtn />
         ) : (
-          // <button className="log-out-btn">Hej</button>
           <button
             className="log-out-btn"
             onClick={() => {

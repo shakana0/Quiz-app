@@ -13,7 +13,7 @@ interface UserAuthType {
     userName: boolean;
     password: boolean;
   };
-  authLogin: {isGoogleLogin: boolean, isFacebookLogin: boolean}
+  authLogin: { isGoogleLogin: boolean; isFacebookLogin: boolean };
 }
 
 const initialState: UserAuthType = {
@@ -26,8 +26,8 @@ const initialState: UserAuthType = {
     userName: false,
     password: false,
   },
-  authLogin: {isGoogleLogin: false, isFacebookLogin: false}
-}
+  authLogin: { isGoogleLogin: false, isFacebookLogin: false },
+};
 //fetch errors
 export const fetchNewUser: any = createAsyncThunk(
   "user/fetchNewUser",
@@ -42,7 +42,7 @@ export const fetchLoggedInUser: any = createAsyncThunk(
   "user/fetchLoggedInUser",
   async (logInCredentials: object) => {
     const response = await api.loginUser(logInCredentials);
-    console.log(response)
+    console.log(response);
     return response;
   }
 );
@@ -96,11 +96,22 @@ const AuthSlice = createSlice({
       // if (payload === false) {
       //   state.activeUser = {};
       // }
-      state.authLogin.isGoogleLogin = false
+      state.authLogin.isGoogleLogin = false;
       state.logInSuccess = payload;
     },
     setAuthLogin: (state, { payload }) => {
-      state.authLogin.isGoogleLogin = payload
+      console.log(payload, 'payload from setAuthLogin')
+      if (payload.google) {
+        state.authLogin.isGoogleLogin = payload.google;
+      }
+      if (payload) {
+        console.log(payload.facebook, 'payload.facebook')
+        state.authLogin.isFacebookLogin = payload.facebook;
+      }
+      localStorage.setItem(
+        "authLoginState",
+        JSON.stringify(state.authLogin)
+      );
     },
     resetErrorMsgs: (state) => {
       state.errorMsgs = { emailAdress: "", userName: "", password: "" };
@@ -173,8 +184,8 @@ const AuthSlice = createSlice({
     [fetchUserGoogleLogin.fulfilled]: (state, { payload }) => {
       console.log(payload, "payload");
       if (payload) {
-        state.activeUser = payload.data.user
-        state.logInSuccess = true
+        state.activeUser = payload.data.user;
+        state.logInSuccess = true;
         // state.authLogin.isGoogleLogin = true
         //console.log( state.authLogin, ' state.authLogin.isGoogleLogin')
       }
@@ -182,8 +193,8 @@ const AuthSlice = createSlice({
     [fetchUserFacebookLogin.fulfilled]: (state, { payload }) => {
       console.log(payload, "payload fb");
       if (payload) {
-        state.activeUser = payload.data.user
-        state.logInSuccess = true
+        state.activeUser = payload.data.user;
+        state.logInSuccess = true;
       }
     },
   },

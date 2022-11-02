@@ -20,6 +20,8 @@ export const GoogleLoginBtn = () => {
   const navigate = useNavigate();
   const { authLogin } = useSelector((state: any) => state.auth);
   const [isSignedIn, setIsSignedIn] = useState(false);
+  // const authSatet = JSON.parse(window.localStorage.getItem("authLoginState") || '')
+
 
   useEffect(() => {
     function start() {
@@ -36,7 +38,8 @@ export const GoogleLoginBtn = () => {
     const user = await dispatch(fetchUserGoogleLogin({ tokenId: res.tokenId }));
     if (user) {
       dispatch(setLogInSuccess(true));
-      dispatch(setAuthLogin(true));
+      dispatch(setAuthLogin({google:true}));
+      // dispatch(setAuthLogin(true));
       localStorage.setItem(
         "isGoogleLogIn",
         JSON.stringify({ login: true, token: res.tokenId })
@@ -54,8 +57,12 @@ export const GoogleLoginBtn = () => {
   const handleLogout = () => {
     console.log("you have been logged out successfully :)");
     dispatch(setLogInSuccess(false));
-    dispatch(setAuthLogin(false));
-    localStorage.clear();
+    dispatch(setAuthLogin({google:false}));
+    // localStorage.clear();
+    localStorage.setItem(
+      "authLoginState",
+      JSON.stringify({ isGoogleLogin: false })
+    );
     setIsSignedIn(false);
     navigate("/");
   };
@@ -81,7 +88,7 @@ export const GoogleLoginBtn = () => {
           onSuccess={handleLogin}
           onFailure={handleFailure}
           cookiePolicy="single_host_origin"
-          isSignedIn={isSignedIn}
+          // isSignedIn={isSignedIn}
           render={(renderProps) => (
             <button
               onClick={renderProps.onClick}
