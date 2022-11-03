@@ -20,11 +20,13 @@ export const FacebookLoginBtn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { authLogin } = useSelector((state: any) => state.auth);
+  const authState = JSON.parse(window.localStorage.getItem("authLoginState") || 'false')
+
 
   let FB = window.FB;
 
   const responseFacebook = async (res: any) => {
-    console.log(res);
+    // console.log(res);
     const user = await dispatch(
       fetchUserFacebookLogin({
         accessToken: res.accessToken,
@@ -35,8 +37,8 @@ export const FacebookLoginBtn = () => {
       dispatch(setLogInSuccess(true));
       dispatch(setAuthLogin({ facebook: true }));
       localStorage.setItem(
-        "isfacebookLogIn",
-        JSON.stringify({ login: true, token: res.accessToken })
+        "isFacebookLogIn",
+        JSON.stringify({ login: true, accessToken: res.accessToken, userId: res.userID })
       );
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
       // setIsSignedIn(true);
@@ -45,15 +47,22 @@ export const FacebookLoginBtn = () => {
   };
 
   const facebookLogout = () => {
+    //doesnt work on refresh
     FB.getLoginStatus(function (response: any) {
-      console.log(response, "responsee");
+      console.log(response, "responsee fbb");
       FB.logout(function (response: any) {
         console.log("user is now logged out :)");
       });
     });
     dispatch(setAuthLogin({ facebook: false }));
-    localStorage.clear();
+    // localStorage.clear();
     dispatch(setLogInSuccess(false));
+    localStorage.setItem(
+      "authLoginState",
+      JSON.stringify({ isFacebookLogin: false })
+    );
+    localStorage.removeItem("isFacebookLogIn")
+    setIsSignedIn(false);
     navigate("/");
 
     // setIsSignedIn(false);
@@ -61,7 +70,7 @@ export const FacebookLoginBtn = () => {
 
   return (
     <>
-      {authLogin.isFacebookLogin ? (
+      {authState.isFacebookLogin ? (
         <button className="log-out-btn" onClick={facebookLogout}>
           Fb Log out
         </button>
@@ -82,4 +91,6 @@ export const FacebookLoginBtn = () => {
 //on refresh förvinner statet för alla logout knappar
 //efetrsom vi har tillgång till access token för både fb och google så kan dessa spara i cookies istället för localstorage.
 //fixa alla errors i consolen
-//
+
+
+//https://stackoverflow.com/questions/32256967/how-do-i-use-fb-getloginstatus-on-page-load-if-parse-com-handles-init

@@ -42,7 +42,7 @@ export const fetchLoggedInUser: any = createAsyncThunk(
   "user/fetchLoggedInUser",
   async (logInCredentials: object) => {
     const response = await api.loginUser(logInCredentials);
-    console.log(response);
+    // console.log(response);
     return response;
   }
 );
@@ -100,12 +100,12 @@ const AuthSlice = createSlice({
       state.logInSuccess = payload;
     },
     setAuthLogin: (state, { payload }) => {
-      console.log(payload, 'payload from setAuthLogin')
+      // console.log(payload, 'payload from setAuthLogin')
       if (payload.google) {
         state.authLogin.isGoogleLogin = payload.google;
       }
       if (payload) {
-        console.log(payload.facebook, 'payload.facebook')
+        // console.log(payload.facebook, 'payload.facebook')
         state.authLogin.isFacebookLogin = payload.facebook;
       }
       localStorage.setItem(

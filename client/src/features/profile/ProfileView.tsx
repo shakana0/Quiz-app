@@ -14,15 +14,14 @@ export const ProfileView = () => {
   const navigate = useNavigate();
   const disptach = useDispatch();
   const { activeUser, authLogin } = useSelector((state: any) => state.auth);
-  const authSatet = JSON.parse(window.localStorage.getItem("authLoginState") || '')
-  console.log(authSatet, "from profile");
+  const authState = JSON.parse(window.localStorage.getItem("authLoginState") || "{")
 
   return (
     <ProfileViewStyling>
       <section className="profile">
-        {authLogin.isGoogleLogin ? (
+        {authState.isGoogleLogin ? (
           <GoogleLoginBtn />
-        ) : authLogin.isFacebookLogin ? (
+        ) : authState.isFacebookLogin ? (
           <FacebookLoginBtn />
         ) : (
           <button

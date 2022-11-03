@@ -20,7 +20,7 @@ export const GoogleLoginBtn = () => {
   const navigate = useNavigate();
   const { authLogin } = useSelector((state: any) => state.auth);
   const [isSignedIn, setIsSignedIn] = useState(false);
-  // const authSatet = JSON.parse(window.localStorage.getItem("authLoginState") || '')
+  const authState = JSON.parse(window.localStorage.getItem("authLoginState") || 'false')
 
 
   useEffect(() => {
@@ -63,12 +63,13 @@ export const GoogleLoginBtn = () => {
       "authLoginState",
       JSON.stringify({ isGoogleLogin: false })
     );
+    localStorage.removeItem("isGoogleLogIn")
     setIsSignedIn(false);
     navigate("/");
   };
   return (
     <>
-      {authLogin.isGoogleLogin ? (
+      {authState.isGoogleLogin ? (
         <GoogleLogout
           clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`}
           onLogoutSuccess={handleLogout}

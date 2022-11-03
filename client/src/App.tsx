@@ -13,7 +13,7 @@ import {
   fetchCurrentUser,
   refreshCurrentUser,
   fetchUserGoogleLogin,
-  setAuthLogin
+  fetchUserFacebookLogin,
 } from "./features/Modal/AuthSlice";
 // import useAuth from "./hooks/userAuth";
 import { useNavigate } from "react-router-dom";
@@ -42,31 +42,47 @@ const App = () => {
 
   useEffect(() => {
     //null check
-    const isGoogleLogIn = JSON.parse(window.localStorage.getItem("isGoogleLogIn") || "{}")
+    const isGoogleLogIn = JSON.parse(
+      window.localStorage.getItem("isGoogleLogIn") || "{}"
+    );
+    const isFacebookLogIn = JSON.parse(
+      window.localStorage.getItem("isFacebookLogIn") || "{}"
+    );
+    console.log(isFacebookLogIn, 'isFacebookLogIn')
 
     //fetching user on first render
     if (firstRender && !isGoogleLogIn.login) {
       setFirstRender(false);
-      // localStorage.clear();
       dispatch(fetchCurrentUser());
       // appContext.setAuth(activeUser);
     }
-    if(firstRender && isGoogleLogIn.login){
+    if (firstRender && isGoogleLogIn.login) {
       setFirstRender(false);
-      console.log('refreshing google login, token: ')
+      console.log("refreshing google login, token: ");
       dispatch(fetchUserGoogleLogin({ tokenId: isGoogleLogIn.token }));
-      // dispatch(setAuthLogin({login: true, token: ""}))
     }
 
-    //refeshing current user 
+    //fetching user on first render
+    if (firstRender && !isFacebookLogIn.login) {
+      setFirstRender(false);
+      dispatch(fetchCurrentUser());
+    }
+    console.log(firstRender && isFacebookLogIn.login)
+    if (firstRender && isFacebookLogIn.login) {
+      setFirstRender(false);
+      console.log("refreshing facebook login, token: ");
+      dispatch(fetchUserFacebookLogin({ accessToken: isFacebookLogIn.accessToken, userId: isFacebookLogIn.userId}));
+    }
+
+    //refeshing current user
     let interval = setInterval(() => {
       //vet inte om det behövs
-      if(authLogin.isGoogleLogin){
+      if (authLogin.isGoogleLogin) {
         dispatch(fetchUserGoogleLogin({ tokenId: isGoogleLogIn.token }));
-       }else{
-         dispatch(refreshCurrentUser());
-       }
-      console.log('refreshing :)')
+      } else {
+        dispatch(refreshCurrentUser());
+      }
+      console.log("refreshing :)");
     }, 10 * 60 * 3000);
     return () => clearInterval(interval);
   }, []);
