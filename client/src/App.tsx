@@ -48,7 +48,6 @@ const App = () => {
     const isFacebookLogIn = JSON.parse(
       window.localStorage.getItem("isFacebookLogIn") || "{}"
     );
-    console.log(isFacebookLogIn, 'isFacebookLogIn')
 
     //fetching user on first render
     if (firstRender && !isGoogleLogIn.login) {
@@ -67,7 +66,7 @@ const App = () => {
       setFirstRender(false);
       dispatch(fetchCurrentUser());
     }
-    console.log(firstRender && isFacebookLogIn.login)
+    console.log(firstRender, "first render")
     if (firstRender && isFacebookLogIn.login) {
       setFirstRender(false);
       console.log("refreshing facebook login, token: ");

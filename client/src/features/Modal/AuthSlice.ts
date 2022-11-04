@@ -182,7 +182,7 @@ const AuthSlice = createSlice({
       console.log("local storge is set to false now :)");
     },
     [fetchUserGoogleLogin.fulfilled]: (state, { payload }) => {
-      console.log(payload, "payload");
+      // console.log(payload, "payload");
       if (payload) {
         state.activeUser = payload.data.user;
         state.logInSuccess = true;
@@ -191,7 +191,7 @@ const AuthSlice = createSlice({
       }
     },
     [fetchUserFacebookLogin.fulfilled]: (state, { payload }) => {
-      console.log(payload, "payload fb");
+      // console.log(payload, "payload fb");
       if (payload) {
         state.activeUser = payload.data.user;
         state.logInSuccess = true;

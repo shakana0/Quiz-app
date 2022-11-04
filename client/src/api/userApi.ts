@@ -54,7 +54,7 @@ export const refreshToken = async () => {
     const res = await axios.get("/refresh", {
       withCredentials: true,
     });
-    console.log(res, "res");
+    // console.log(res, "res");
     return res;
   } catch (err: any) {
     console.log(err, "RefreshToken invalid or expired");
@@ -65,7 +65,7 @@ export const logoutUser = async () => {
   const res = await axios.post("/logout", null, {
     withCredentials: true,
   });
-  console.log(res, "res");
+  // console.log(res, "res");
   if (res.status === 200) {
     return res;
   }
@@ -73,12 +73,11 @@ export const logoutUser = async () => {
 };
 //google login post request
 export const loginWithGoogle = async (idToken: object) => {
-  console.log(idToken, 'idToken')
   try {
     const res = await axios.post("/google-login", idToken, {
       withCredentials: true,
     });
-    console.log(res, "reeeess");
+    // console.log(res, "reeeess");
     return res;
   } catch (err: any) {
     console.log(err, "err");
@@ -93,7 +92,7 @@ export const loginWithFacebook = async (credentials: object) => {
     const res = await axios.post("/facebook-login", credentials, {
       withCredentials: true,
     });
-    console.log(res, "reeeess");
+    // console.log(res, "reeeess");
     return res;
   } catch (err: any) {
     console.log(err, "err");

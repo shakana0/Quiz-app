@@ -101,6 +101,7 @@ export const ModalStyling = styled.article`
           p {
             font-size: 0.7rem;
             margin-left: 0.5rem;
+            width: 80%;
           }
         }
         .or-email {
@@ -134,9 +135,14 @@ export const ModalStyling = styled.article`
         p {
           color: purple;
           font-size: 1.3rem;
-          width: 80%;
+          width: 65%;
+          text-align: left;
+          margin-left: 10%;
         }
       }
+    }
+    .input-box:focus-within {
+      border-bottom-color: rgba(130, 57, 223, 1);
     }
     .input-box {
       border: none;
@@ -145,7 +151,6 @@ export const ModalStyling = styled.article`
       align-items: center;
       width: 60%;
       margin-top: 1rem;
-
       input {
         width: 80%;
         font-size: 1.2rem;

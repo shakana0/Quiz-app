@@ -3,8 +3,6 @@ import { AuthContext } from "../../context/AuthProvider";
 import { useDispatch, useSelector } from "react-redux";
 import { ModalStyling } from "../../components/styles/Modal.styled";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import GoogleIcon from "@mui/icons-material/Google";
-import FacebookIcon from "@mui/icons-material/Facebook";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import { AuthBtn } from "../buttons/AuthBtn";
 import { toggleModalState, setActiveForm } from "./ModalSlice";
@@ -266,14 +264,6 @@ export const Modal = () => {
             <div className="sign-up-btn-container">
               <div>
                 <GoogleLoginBtn/>
-                {/* <button>
-                  <GoogleIcon className="google-icon" />
-                  <p>Log In With Google</p>
-                </button> */}
-                {/* <button>
-                  <FacebookIcon className="facebook-icon" />
-                  <p>Log In With Facebook</p>
-                </button> */}
                 <FacebookLoginBtn/>
               </div>
               <div className="or-email">
@@ -365,14 +355,6 @@ export const Modal = () => {
           <div className="btn-container">
             {RenderModalToggleBtns()}
             <GoogleLoginBtn/>
-            {/* <button>
-              <GoogleIcon className="google-icon" />
-              <p>Log In With Google</p>
-            </button> */}
-            {/* <button>
-              <FacebookIcon className="facebook-icon" />
-              <p>Log In With Facebook</p>
-            </button> */}
             <FacebookLoginBtn/>
           </div>
           <div className="input-box">
