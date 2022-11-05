@@ -102,13 +102,6 @@ module.exports.logout = (req: any, res: Response, next: any) => {
         secure: true,
         maxAge: 1,
       });
-      // res.cookie('jwt', {expires: Date.now()});
-      // res.cookie("jwt", "", {
-      //   httpOnly: true,
-      //   sameSite: "none",
-      //   secure: true,
-      //   maxAge: 1,
-      // });
       req.cookies.jwt = "";
       // res.end();
       console.log(req.headers.cookie, "req.headers.cookie");

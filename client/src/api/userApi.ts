@@ -87,7 +87,7 @@ export const loginWithGoogle = async (idToken: object) => {
 //facebook login post request
 
 export const loginWithFacebook = async (credentials: object) => {
-  console.log(credentials, 'user info')
+  // console.log(credentials, 'user info')
   try {
     const res = await axios.post("/facebook-login", credentials, {
       withCredentials: true,
