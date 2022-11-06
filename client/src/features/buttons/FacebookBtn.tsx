@@ -4,9 +4,7 @@ import { useNavigate } from "react-router";
 // import FacebookLogin from "react-facebook-login";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-// import { withCookies, Cookies } from 'react-cookie';
-// import cookie from 'react-cookie';
-import Cookies from 'universal-cookie';
+import Cookie from 'js-cookie'
 
 
 
@@ -35,9 +33,6 @@ export const FacebookLoginBtn = () => {
   );
 
   let FB = window.FB;
-  const cookies = new Cookies();
-
-
   // window.fbAsyncInit = function () {
   //   FB.init({
   //     appId: `${process.env.REACT_APP_FACEBOOK_APP_ID}`,
@@ -70,11 +65,11 @@ export const FacebookLoginBtn = () => {
       // setIsSignedIn(true);
     }
     // setIsSignedIn(true);
-    console.log(cookies.get('facebookToken'), "Cookies");
+    console.log(Cookie.get(), "Cookies");
   };
 
   const facebookLogout = () => {
-    console.log(cookies.get('facebookToken'), "Cookies");
+    console.log(Cookie.get(), "Cookies");
 
     window.fbAsyncInit = function () {
       FB.init({

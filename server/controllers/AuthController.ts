@@ -129,19 +129,19 @@ module.exports.facebook_login = async (req: Request, res: Response) => {
         });
         res.cookie("facebookToken", accessToken, {
           httpOnly: false,
-          sameSite: "none",
-          secure: true,
-          maxAge: 10 * 60 * 1000,
+          sameSite: "strict",
+          secure: false,
+          maxAge: 60 * 60 * 1000,
         });
         newUser.password = undefined;
         return res.status(201).json({ newUser });
       } else {
         console.log("user already exits :)");
         res.cookie("facebookToken", accessToken, {
-          httpOnly: true,
-          sameSite: "none",
-          secure: true,
-          maxAge: 10 * 60 * 1000,
+          httpOnly: false,
+          sameSite: "strict",
+          secure: false,
+          maxAge: 60 * 60 * 1000,
         });
         console.log(req.cookies, 'req cookies')
         user[0].password = undefined;
@@ -154,3 +154,4 @@ module.exports.facebook_login = async (req: Request, res: Response) => {
 };
 
 //https://www.youtube.com/watch?v=zQNPDRg_1Po  18:16
+//https://www.npmjs.com/package/js-cookie
