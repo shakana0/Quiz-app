@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import { QuizCardStyling } from "../../components/styles/QuizCard";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 

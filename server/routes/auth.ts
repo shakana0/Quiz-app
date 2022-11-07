@@ -16,6 +16,9 @@ router.post("/user/:id/quizes", Quiz.quiz_post)
 router.post("/google-login", Auth.google_login)
 //facebook login
 router.post("/facebook-login", Auth.facebook_login)
+//social media logout
+router.post("/social-media-logout", Verify.social_media_logout)
+
 
 
 

@@ -1,15 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 // import FacebookLogin from "react-facebook-login";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-import Cookie from 'js-cookie'
-
-
-
-
-
+// import Cookie from 'js-cookie'
 import {
   fetchUserFacebookLogin,
   setLogInSuccess,
@@ -65,11 +60,11 @@ export const FacebookLoginBtn = () => {
       // setIsSignedIn(true);
     }
     // setIsSignedIn(true);
-    console.log(Cookie.get(), "Cookies");
+    // console.log(Cookie.get(), "Cookies");
   };
 
   const facebookLogout = () => {
-    console.log(Cookie.get(), "Cookies");
+    // console.log(Cookie.get(), "Cookies");
 
     window.fbAsyncInit = function () {
       FB.init({

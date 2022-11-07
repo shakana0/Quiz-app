@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { QuestionType, QuizType } from "../../../interface/quizType"
-
 export const Match = () => {
   const { currentQuiz } = useSelector((state: any) => state.quiz);
   const [currIndex, setCurrIndex] = useState(1);

@@ -14,6 +14,20 @@ const splitJWT = (cookies: string, jwt: any) => {
   return jwt;
 };
 
+const splitScoailMediaToken = (cookies: string, token: any) => {
+  // if (cookies !== undefined) {
+  //   tokenName = cookies.split("=")[0];
+  // }
+  // return tokenName;
+  if (cookies !== undefined) {
+    token = cookies
+      .split(";")
+      .filter((name: string) => name.includes("socialMediaToken"))[0]
+      .split("=")[0];
+  }
+  return token;
+};
+
 module.exports.verifyToken = (req: any, res: Response, next: any) => {
   const cookies = req.headers.cookie;
   //get specific token
@@ -108,4 +122,24 @@ module.exports.logout = (req: any, res: Response, next: any) => {
       return res.status(200).json({ msg: "You are successfully logged out!" });
     }
   );
+};
+
+module.exports.social_media_logout = (req: any, res: Response, next: any) => {
+  const cookies = req.headers.cookie;
+  //get specific token name
+  let token;
+  token = splitScoailMediaToken(cookies, token);
+  if (!token) {
+    return res.status(400).json({ msg: "Unuthorized, could not find token" });
+  }
+  res.clearCookie(`${token}`, {
+    httpOnly: true,
+    sameSite: "none",
+    secure: true,
+    maxAge: 1,
+  });
+  res.clearCookie(`${token}`);
+  return res
+    .status(200)
+    .json({ msg: "social media token is empty now :)", token });
 };

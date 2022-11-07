@@ -71,6 +71,7 @@ export const logoutUser = async () => {
   }
   return new Error("Unable to logout. Plase try again.");
 };
+
 //google login post request
 export const loginWithGoogle = async (idToken: object) => {
   try {
@@ -98,3 +99,17 @@ export const loginWithFacebook = async (credentials: object) => {
     console.log(err, "err");
   }
 };
+
+export const socialMediaLogout = async () => {
+  const res = await axios.post("/logout", null, {
+    withCredentials: true,
+  });
+  // console.log(res, "res");
+  if (res.status === 200) {
+    return res;
+  }
+  console.log('Unable to logout. Plase try again.')
+  return new Error("Unable to logout. Plase try again.");
+}
+
+/* MÅSTE SKAPA REFRESH OCKSÅ MEN FB INNEHÅLLER VEN USERID */
