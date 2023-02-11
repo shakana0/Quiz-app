@@ -143,7 +143,6 @@ module.exports.facebook_login = async (req: Request, res: Response) => {
           secure: true,
           maxAge: 60 * 60 * 1000,
         });
-        console.log(req.cookies, "req cookies");
         user[0].password = undefined;
         return res.status(201).json({ user: user[0] });
       }

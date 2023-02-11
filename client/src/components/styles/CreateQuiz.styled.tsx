@@ -57,7 +57,7 @@ export const CreateQuizStyling = styled.div`
       .show-error{
         margin: 3rem auto;
         padding: 1rem;
-        width: 60%;
+        width: 65%;
         display: block;
         border: 3px solid red;
         border-radius: 10px;

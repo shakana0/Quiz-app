@@ -6,26 +6,29 @@ import { createToken } from "./jwt";
 
 const splitJWT = (cookies: string, jwt: any) => {
   if (cookies !== undefined) {
-    jwt = cookies
-      .split(";")
-      .filter((name: string) => name.includes("jwt"))[0]
-      .split("=")[1];
+    jwt = cookies.split(";").filter((name: string) => name.includes("jwt"))[0];
+    //kolla om det ens går att splitta efter att den har tagit specifik token
+    if (!!jwt && jwt.includes("=")) {
+      return jwt.split("=")[1];
+    } else {
+      return undefined;
+    }
   }
-  return jwt;
 };
 
-const splitScoailMediaToken = (cookies: string, token: any) => {
-  // if (cookies !== undefined) {
-  //   tokenName = cookies.split("=")[0];
-  // }
-  // return tokenName;
+const splitSocialilMediaToken = (cookies: string, token: any) => {
   if (cookies !== undefined) {
     token = cookies
       .split(";")
-      .filter((name: string) => name.includes("socialMediaToken"))[0]
-      .split("=")[0];
+      .filter((name: string) => name.includes("socialMediaToken"))[0];
+    //kolla om det ens går att splitta efter att den har tagit specifik token
+    if (!!token && token.includes("=")) {
+       return token.split("=")[1];
+    } else {
+      console.log('im in the else :)')
+      return undefined;
+    }
   }
-  return token;
 };
 
 module.exports.verifyToken = (req: any, res: Response, next: any) => {
@@ -50,6 +53,7 @@ module.exports.verifyToken = (req: any, res: Response, next: any) => {
 };
 
 module.exports.getUser = async (req: any, res: Response) => {
+  console.log('im in getUser :)', req)
   const userId = req.id;
   try {
     let user = await User.userAuth(userId);
@@ -95,9 +99,11 @@ module.exports.refreshToken = (req: any, res: Response, next: any) => {
 
 module.exports.logout = (req: any, res: Response, next: any) => {
   const cookies = req.headers.cookie;
+  console.log(cookies);
   //get specific token
-  let prevToken;
+  let prevToken: any;
   prevToken = splitJWT(cookies, prevToken);
+  console.log(!!prevToken);
   if (!prevToken) {
     return res.status(400).json({ msg: "Unuthorized, could not find token" });
   }
@@ -118,8 +124,9 @@ module.exports.logout = (req: any, res: Response, next: any) => {
       });
       req.cookies.jwt = "";
       // res.end();
-      console.log(req.headers.cookie, "req.headers.cookie");
-      return res.status(200).json({ msg: "You are successfully logged out!" });
+      return res
+        .status(200)
+        .json({ msg: "You are successfully logged out!", prevToken });
     }
   );
 };
@@ -128,17 +135,17 @@ module.exports.social_media_logout = (req: any, res: Response, next: any) => {
   const cookies = req.headers.cookie;
   //get specific token name
   let token;
-  token = splitScoailMediaToken(cookies, token);
+  token = splitSocialilMediaToken(cookies, token);
   if (!token) {
     return res.status(400).json({ msg: "Unuthorized, could not find token" });
   }
-  res.clearCookie(`${token}`, {
+  res.clearCookie("socialMediaToken", {
     httpOnly: true,
     sameSite: "none",
     secure: true,
     maxAge: 1,
   });
-  res.clearCookie(`${token}`);
+  req.cookies.socialMediaToken = "";
   return res
     .status(200)
     .json({ msg: "social media token is empty now :)", token });

@@ -136,7 +136,7 @@ export const CreateQuiz = () => {
         <section className="card-section">
           <span className={questionsError ? "show-error" : "hide-error"}>
             <h4>
-              You need to at least two cards, a term and definition to create
+              You need to have at least two cards, a term and definition to create
               quiz.
             </h4>
           </span>

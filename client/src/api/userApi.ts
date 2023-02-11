@@ -1,6 +1,9 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://quiz-app-backend-heroku.herokuapp.com";
+// axios.defaults.baseURL = "https://quiz-app-backend-heroku.herokuapp.com";
+axios.defaults.baseURL = "https://quiz-app-backend-uco1.onrender.com/";
+
+
 // axios.defaults.headers.common = {
 //   "Content-Type": "application/json",
 //   withCredentials: true,

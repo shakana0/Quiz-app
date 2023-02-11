@@ -13,7 +13,7 @@ app.use(json());
 //app.use(cors()); //för att aktivera alla CORS-förfrågningar
 app.use(
   cors({
-    origin:["http://localhost:3000", "https://localhost:3000"],
+    origin: ["http://localhost:3000", "https://localhost:3000"],
     credentials: true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -43,7 +43,11 @@ app.use(authRoutes);
 //Mongoose Connection
 import { connect } from "mongoose";
 //"quiz-db" är namnet på docker-containern / databasen
-// connect("mongodb://localhost:27017/quiz-db");
+// connect(`mongodb://localhost:27017/quiz-db`).then(() => {
+//   app.listen(PORT, () => {
+//     console.log("hello im listening to port :) " + PORT);
+//   });
+// });
 
 //"quiz-db?" är namnet på databasen i mongoDB compass
 connect(
@@ -51,9 +55,11 @@ connect(
   { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
 ).then(() => {
   app.listen(PORT, () => {
-    console.log("hello im listening to port :) " + PORT);
+    console.log("hiii im listening to port :) " + PORT);
   });
 });
+
+
 
 // const PORT = 3030;
 const PORT = process.env.PORT || 3030;
