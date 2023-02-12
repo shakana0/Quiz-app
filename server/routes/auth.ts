@@ -17,9 +17,11 @@ router.post("/google-login", Auth.google_login)
 //facebook login
 router.post("/facebook-login", Auth.facebook_login)
 //social media logout
-router.post("/social-media-logout", Verify.social_media_logout)
-//refresh socialMediaLogin
-router.get("/social-media-login-refresh", Verify.getUser)
+router.post("/social-media-logout", Verify.socialMediaLogout)
+//get current google or facebook login
+router.get("/curr-google-user", Verify.verifySocialMediaUser, Auth.google_login)
+router.get("/curr-facebook-user", Verify.verifySocialMediaUser, Verify.getFacebookUser)
+
 
 
 

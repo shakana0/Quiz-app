@@ -55,7 +55,6 @@ module.exports.login_post = async (req: Request, res: Response) => {
 };
 
 module.exports.google_login = async (req: Request, res: Response) => {
-  console.log("hejsan");
   const { tokenId } = req.body;
   try {
     //verify tokenId w OAuth2Client by using client-id again
@@ -104,6 +103,7 @@ module.exports.google_login = async (req: Request, res: Response) => {
 
 module.exports.facebook_login = async (req: Request, res: Response) => {
   const { accessToken, userId } = req.body;
+  // console.log('from fb login -->', req.body)
   try {
     let urlGraphFacebook = `https://graph.facebook.com/v15.0/${userId}/?fields=name,email&access_token=${accessToken}`;
     const result = await fetch(urlGraphFacebook, {
@@ -133,11 +133,23 @@ module.exports.facebook_login = async (req: Request, res: Response) => {
           secure: true,
           maxAge: 60 * 60 * 1000,
         });
+        res.cookie("userId", userId, {
+          httpOnly: true,
+          sameSite: "none",
+          secure: true,
+          maxAge: 60 * 60 * 1000,
+        });
         newUser.password = undefined;
         return res.status(201).json({ newUser });
       } else {
         console.log("user already exits :)");
         res.cookie("socialMediaToken", accessToken, {
+          httpOnly: true,
+          sameSite: "none",
+          secure: true,
+          maxAge: 60 * 60 * 1000,
+        });
+        res.cookie("userId", userId, {
           httpOnly: true,
           sameSite: "none",
           secure: true,

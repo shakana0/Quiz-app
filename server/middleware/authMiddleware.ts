@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const User = require("../db/models/auth");
 import { createToken } from "./jwt";
+const fetch = require("node-fetch");
 
 const splitJWT = (cookies: string, jwt: any) => {
   if (cookies !== undefined) {
@@ -21,11 +22,16 @@ const splitSocialilMediaToken = (cookies: string, token: any) => {
     token = cookies
       .split(";")
       .filter((name: string) => name.includes("socialMediaToken"))[0];
+    let userId = cookies
+      .split(";")
+      .filter((name: string) => name.includes("userId"))[0];
     //kolla om det ens går att splitta efter att den har tagit specifik token
     if (!!token && token.includes("=")) {
-       return token.split("=")[1];
+      if (!!userId) {
+        return [token.split("=")[1], userId.split("=")[1]];
+      }
+      return token.split("=")[1];
     } else {
-      console.log('im in the else :)')
       return undefined;
     }
   }
@@ -53,7 +59,6 @@ module.exports.verifyToken = (req: any, res: Response, next: any) => {
 };
 
 module.exports.getUser = async (req: any, res: Response) => {
-  console.log('im in getUser :)', req)
   const userId = req.id;
   try {
     let user = await User.userAuth(userId);
@@ -115,7 +120,6 @@ module.exports.logout = (req: any, res: Response, next: any) => {
         res.status(403).json({ msg: "Authentication failed" });
       }
       //if verification seccuessful then clear cookie
-      // res.clearCookie('jwt')
       res.clearCookie("jwt", {
         httpOnly: true,
         sameSite: "none",
@@ -131,7 +135,7 @@ module.exports.logout = (req: any, res: Response, next: any) => {
   );
 };
 
-module.exports.social_media_logout = (req: any, res: Response, next: any) => {
+module.exports.socialMediaLogout = (req: any, res: Response, next: any) => {
   const cookies = req.headers.cookie;
   //get specific token name
   let token;
@@ -149,4 +153,45 @@ module.exports.social_media_logout = (req: any, res: Response, next: any) => {
   return res
     .status(200)
     .json({ msg: "social media token is empty now :)", token });
+};
+
+module.exports.verifySocialMediaUser = (req: any, res: Response, next: any) => {
+  const cookies = req.headers.cookie;
+  // console.log('cookies -->', cookies)
+  let token;
+  token = splitSocialilMediaToken(cookies, token);
+  // console.log("token -->", token);
+  if (!token) {
+    return res.status(400).json({ msg: "Unuthorized, could not find token" });
+  } else if (token.length > 1) {
+    req.body = { accessToken: `${token[0]}`, userId: `${token[1]}` };
+    next();
+  }
+  req.body = { tokenId: `${token}` };
+  next();
+};
+
+module.exports.getFacebookUser = async (req: Request, res: Response) => {
+  const { accessToken, userId } = req.body;
+  try {
+    let urlGraphFacebook = `https://graph.facebook.com/v15.0/${userId}/?fields=name,email&access_token=${accessToken}`;
+    const result = await fetch(urlGraphFacebook, {
+      method: "GET",
+    });
+    console.log('result --->', result)
+    const data = await result.json();
+    console.log('data --> ', data)
+
+    if (data.error) {
+      console.log('error')
+      return res.status(401).json(data);
+    } else {
+      //check if user alredy exists in db
+      const user = await User.check_social_media_user(data.email);
+      user[0].password = undefined;
+      return res.status(201).json({ user: user[0] });
+    }
+  } catch (error: any) {
+    res.status(401).json({ msg: "User Is Unauthorized" });
+  }
 };
