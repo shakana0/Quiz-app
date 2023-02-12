@@ -15,6 +15,7 @@ export const ProfileView = () => {
   const disptach = useDispatch();
   const { activeUser, authLogin } = useSelector((state: any) => state.auth);
   const authState = JSON.parse(window.localStorage.getItem("authLoginState") || "{")
+  console.log(authState, 'authstate')
 
   return (
     <ProfileViewStyling>

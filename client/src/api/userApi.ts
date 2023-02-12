@@ -104,7 +104,7 @@ export const loginWithFacebook = async (credentials: object) => {
 };
 
 export const socialMediaLogout = async () => {
-  const res = await axios.post("/logout", null, {
+  const res = await axios.post("/social-media-login-refresh", null, {
     withCredentials: true,
   });
   // console.log(res, "res");

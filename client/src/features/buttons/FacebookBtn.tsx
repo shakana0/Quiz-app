@@ -39,6 +39,8 @@ export const FacebookLoginBtn = () => {
   // };
 
   const responseFacebook = async (res: any) => {
+    console.log("login success :)", res);
+
     const user = await dispatch(
       fetchUserFacebookLogin({
         accessToken: res.accessToken,

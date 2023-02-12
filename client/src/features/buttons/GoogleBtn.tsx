@@ -42,7 +42,7 @@ export const GoogleLoginBtn = () => {
       // dispatch(setAuthLogin(true));
       localStorage.setItem(
         "isGoogleLogIn",
-        JSON.stringify({ login: true, token: res.tokenId })
+        JSON.stringify({ login: true, token: '' })
       );
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
       setIsSignedIn(true);
