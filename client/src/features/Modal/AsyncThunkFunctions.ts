@@ -15,7 +15,6 @@ export const fetchLoggedInUser: any = createAsyncThunk(
   "user/fetchLoggedInUser",
   async (logInCredentials: object) => {
     const response = await api.loginUser(logInCredentials);
-    // console.log(response);
     return response;
   }
 );

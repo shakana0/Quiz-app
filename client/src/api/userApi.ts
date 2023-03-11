@@ -56,7 +56,6 @@ export const refreshToken = async () => {
     const res = await axios.get("/refresh", {
       withCredentials: true,
     });
-    // console.log(res, "res");
     return res;
   } catch (err: any) {
     console.log(err, "RefreshToken invalid or expired");
@@ -67,7 +66,6 @@ export const logoutUser = async () => {
   const res = await axios.post("/logout", null, {
     withCredentials: true,
   });
-  // console.log(res, "res");
   if (res.status === 200) {
     return res;
   }
@@ -80,7 +78,6 @@ export const loginWithGoogle = async (idToken: object) => {
     const res = await axios.post("/google-login", idToken, {
       withCredentials: true,
     });
-    // console.log(res, "reeeess");
     return res;
   } catch (err: any) {
     console.log(err, "err");
@@ -100,11 +97,9 @@ export const loginWithFacebook = async (credentials: object) => {
 };
 
 export const socialMediaLogout = async () => {
-  console.log("socialMediaLogout was called");
-  const res = await axios.post("/social-media-login-refresh", null, {
+  const res = await axios.post("/social-media-logout", null, {
     withCredentials: true,
   });
-  // console.log(res, "res");
   if (res.status === 200) {
     return res;
   }
@@ -113,12 +108,10 @@ export const socialMediaLogout = async () => {
 };
 
 export const currGoogleUser = async () => {
-  console.log("hello google");
   try {
     const res = await axios.get("/curr-google-user", {
       withCredentials: true,
     });
-    console.log("currGoogleUser was called res --> ", res);
     return res;
   } catch (err: any) {
     console.log(err.response, "Token invalid or expired");
@@ -126,12 +119,10 @@ export const currGoogleUser = async () => {
 };
 
 export const currFacebookUser = async () => {
-  console.log("hello fb");
   try {
     const res = await axios.get("curr-facebook-user", {
       withCredentials: true,
     });
-    console.log("currFacebookUser was called res --> ", res);
     return res;
   } catch (err: any) {
     console.log(err, "Token invalid or expired");

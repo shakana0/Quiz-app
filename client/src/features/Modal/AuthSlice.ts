@@ -88,14 +88,19 @@ const AuthSlice = createSlice({
         localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
       }
     },
+    setLoggedOutState: (state, { payload }) => {
+      state.activeUser = {};
+      state.logInSuccess = false;
+      localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
+    },
   },
   extraReducers: {
     [fetchNewUser.fulfilled]: (state, { payload }) => {
-      // console.log(payload, "payload");
       if (payload.errors) {
         state.errorMsgs = payload.errors;
       } else {
         state.activeUser = payload.data.createdUser;
+        localStorage.setItem("isLoggedIn", "true");
       }
     },
     [fetchLoggedInUser.fulfilled]: (state, { payload }) => {
@@ -108,51 +113,22 @@ const AuthSlice = createSlice({
     },
     [fetchCurrentUser.fulfilled]: (state, actions) => {
       AuthSlice.caseReducers.setCurrentUser(state, actions);
-      // if (payload === undefined) {
-      //   state.logInSuccess = false;
-      //   localStorage.setItem("isLoggedIn", "false");
-      // } else {
-      //   state.activeUser = payload.data.user;
-      //   state.logInSuccess = true;
-      //   localStorage.setItem("isLoggedIn", "true");
-      // }
     },
     [refreshCurrentUser.fulfilled]: (state, actions) => {
       AuthSlice.caseReducers.setCurrentUser(state, actions);
-      // if (payload === undefined) {
-      //   state.logInSuccess = false;
-      // } else {
-      //   state.activeUser = payload.data.user;
-      //   state.logInSuccess = true;
-      //   localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
-      // }
     },
-    [logoutUser.fulfilled]: (state, { payload }) => {
-      console.log(payload, "payload");
-      state.activeUser = {};
-      state.logInSuccess = false;
-      // localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
-      localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
-      console.log("local storge is set to false now :)");
+    [logoutUser.fulfilled]: (state, actions) => {
+      AuthSlice.caseReducers.setLoggedOutState(state, actions);
     },
     [fetchUserGoogleLogin.fulfilled]: (state, { payload }) => {
-      // console.log(payload, "payload");
       if (payload) {
         state.activeUser = payload.data.user;
         state.logInSuccess = true;
-        // state.authLogin.isGoogleLogin = true
-        //console.log( state.authLogin, ' state.authLogin.isGoogleLogin')
+        state.authLogin.isGoogleLogin = true;
       }
     },
     [fetchCurrentGoogleUser.fulfilled]: (state, actions) => {
       AuthSlice.caseReducers.setCurrentUser(state, actions);
-      // if (payload === undefined) {
-      //   state.logInSuccess = false;
-      // } else {
-      //   state.activeUser = payload.data.user;
-      //   state.logInSuccess = true;
-      //   localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
-      // }
     },
     [fetchUserFacebookLogin.fulfilled]: (state, { payload }) => {
       if (payload) {
@@ -160,24 +136,12 @@ const AuthSlice = createSlice({
         state.logInSuccess = true;
       }
       localStorage.setItem("isLoggedIn", "true");
-      console.log("state.logInSuccess", state.logInSuccess);
     },
     [fetchCurrentFacebookUser.fulfilled]: (state, actions) => {
-      AuthSlice.caseReducers.setCurrentUser(state, actions); ///////////////////////
-      // if (payload === undefined) {
-      //   state.logInSuccess = false;
-      // } else {
-      //   state.activeUser = payload.data.user;
-      //   state.logInSuccess = true;
-      //   localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
-      // }
+      AuthSlice.caseReducers.setCurrentUser(state, actions);
     },
-    [logoutSocialMediaUser.fulfilled]: (state, { payload }) => {
-      console.log(payload, "payload");
-      state.activeUser = {};
-      state.logInSuccess = false;
-      localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
-      console.log("local storge is set to false now :)");
+    [logoutSocialMediaUser.fulfilled]: (state, actions) => {
+      AuthSlice.caseReducers.setLoggedOutState(state, actions);
     },
   },
 });

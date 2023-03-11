@@ -3,17 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchCurrentUser,
   refreshCurrentUser,
-  //   fetchUserGoogleLogin,
-  //   fetchUserFacebookLogin,
   fetchCurrentGoogleUser,
   fetchCurrentFacebookUser,
+  fetchUserFacebookLogin,
+  fetchUserGoogleLogin,
 } from "../features/Modal/AsyncThunkFunctions";
 
 const useUserAuth = () => {
-  const { logInSuccess, authLogin } = useSelector((state: any) => state.auth);
+  const { logInSuccess } = useSelector((state: any) => state.auth);
   const [firstRender, setFirstRender] = useState(true);
   const dispatch = useDispatch();
-  console.log("useUserAuth was called :)");
 
   useEffect(() => {
     //null check
@@ -31,30 +30,23 @@ const useUserAuth = () => {
     }
     if (firstRender && isGoogleLogIn.login) {
       setFirstRender(false);
-      console.log("refreshing google login");
       dispatch(fetchCurrentGoogleUser());
-      //   dispatch(fetchUserGoogleLogin({ tokenId: isGoogleLogIn.token }));
     }
-    // if (firstRender && !isFacebookLogIn.login) {
-    //   setFirstRender(false);
-    //   dispatch(fetchCurrentUser());
-    // }
     if (firstRender && isFacebookLogIn.login) {
       setFirstRender(false);
-      console.log("refreshing facebook login ");
       dispatch(fetchCurrentFacebookUser());
     }
 
     //refeshing current user
     let interval = setInterval(() => {
-      //vet inte om det behövs
-      if (authLogin.isGoogleLogin) {
-        // dispatch(fetchUserGoogleLogin({ tokenId: isGoogleLogIn.token }));
-      } else {
-        dispatch(refreshCurrentUser());
+      if (isFacebookLogIn.login) {
+        dispatch(fetchUserGoogleLogin());
       }
-      console.log("refreshing :)");
-    }, 10 * 60 * 3000);
+      if (isGoogleLogIn.login) {
+        dispatch(fetchUserGoogleLogin());
+      }
+      dispatch(refreshCurrentUser());
+    }, 20 * 60 * 1000); //20min
     return () => clearInterval(interval);
   }, []);
 

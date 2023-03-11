@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import GoogleIcon from "@mui/icons-material/Google";
 import GoogleLogin, {
   GoogleLoginResponse,
@@ -7,7 +7,7 @@ import GoogleLogin, {
 } from "react-google-login";
 import { setLogInSuccess, setAuthLogin } from "../Modal/AuthSlice";
 import { toggleModalState } from "../Modal/ModalSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { gapi } from "gapi-script";
 import { useNavigate } from "react-router";
 import {
@@ -18,8 +18,6 @@ import {
 export const GoogleLoginBtn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { authLogin } = useSelector((state: any) => state.auth);
-  const [isSignedIn, setIsSignedIn] = useState(false);
   const authState = JSON.parse(
     window.localStorage.getItem("authLoginState") || "false"
   );
@@ -35,19 +33,15 @@ export const GoogleLoginBtn = () => {
   }, []);
 
   const handleLogin = async (res: any) => {
-    console.log("login success :)", res);
     const user = await dispatch(fetchUserGoogleLogin({ tokenId: res.tokenId }));
     if (user) {
       dispatch(setLogInSuccess(true));
       dispatch(setAuthLogin({ google: true }));
-      // dispatch(setAuthLogin(true));
       localStorage.setItem(
         "isGoogleLogIn",
         JSON.stringify({ login: true, token: "" })
-        // JSON.stringify({ login: true, token: res.tokenId })
       );
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
-      setIsSignedIn(true);
     }
   };
   const handleFailure = (
@@ -61,13 +55,11 @@ export const GoogleLoginBtn = () => {
     dispatch(logoutSocialMediaUser());
     dispatch(setLogInSuccess(false));
     dispatch(setAuthLogin({ google: false }));
-    // localStorage.clear();
     localStorage.setItem(
       "authLoginState",
       JSON.stringify({ isGoogleLogin: false })
     );
     localStorage.removeItem("isGoogleLogIn");
-    setIsSignedIn(false);
     navigate("/");
   };
   return (

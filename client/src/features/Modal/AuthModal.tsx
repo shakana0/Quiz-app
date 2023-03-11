@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-import { AuthContext } from "../../context/AuthProvider";
+import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ModalStyling } from "../../components/styles/Modal.styled";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
@@ -9,13 +8,13 @@ import { toggleModalState, setActiveForm } from "./ModalSlice";
 import { setLogInSuccess, resetErrorMsgs, setIsCorrect } from "./AuthSlice";
 import { credentialsType } from "../../interface/userType";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/userAuth";
+// import useAuth from "../../hooks/userAuth";
 import { GoogleLoginBtn } from "../buttons/GoogleBtn";
 import { FacebookLoginBtn } from "../buttons/FacebookBtn";
 import { fetchNewUser, fetchLoggedInUser } from "./AsyncThunkFunctions";
 
 export const Modal = () => {
-  const appContext = useAuth();
+  // const appContext = useAuth();
 
   const initialCredentialsState = {
     emailAdress: "",
