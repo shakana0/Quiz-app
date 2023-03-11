@@ -4,13 +4,14 @@ import {
   fetchCurrentUser,
   fetchLoggedInUser,
   fetchNewUser,
+  logoutUser,
+  refreshCurrentUser,
+  fetchCurrentGoogleUser,
   fetchUserFacebookLogin,
   fetchCurrentFacebookUser,
   fetchUserGoogleLogin,
-  logoutUser,
-  refreshCurrentUser,
+  logoutSocialMediaUser,
 } from "./AsyncThunkFunctions";
-// import * as api from "../../api/userApi";
 
 interface UserAuthType {
   userList: Array<credentialsType>;
@@ -44,19 +45,14 @@ const AuthSlice = createSlice({
   initialState,
   reducers: {
     setLogInSuccess: (state, { payload }) => {
-      // if (payload === false) {
-      //   state.activeUser = {};
-      // }
       state.authLogin.isGoogleLogin = false;
       state.logInSuccess = payload;
     },
     setAuthLogin: (state, { payload }) => {
-      // console.log(payload, 'payload from setAuthLogin')
       if (payload.google) {
         state.authLogin.isGoogleLogin = payload.google;
       }
       if (payload) {
-        // console.log(payload.facebook, 'payload.facebook')
         state.authLogin.isFacebookLogin = payload.facebook;
       }
       localStorage.setItem("authLoginState", JSON.stringify(state.authLogin));
@@ -82,10 +78,20 @@ const AuthSlice = createSlice({
         }
       }
     },
+    setCurrentUser: (state, { payload }) => {
+      console.log("user --> ", payload);
+      if (payload === undefined) {
+        state.logInSuccess = false;
+      } else {
+        state.activeUser = payload.data.user;
+        state.logInSuccess = true;
+        localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
+      }
+    },
   },
   extraReducers: {
     [fetchNewUser.fulfilled]: (state, { payload }) => {
-      console.log(payload, "payload");
+      // console.log(payload, "payload");
       if (payload.errors) {
         state.errorMsgs = payload.errors;
       } else {
@@ -98,28 +104,28 @@ const AuthSlice = createSlice({
       } else {
         state.activeUser = payload.data.user;
         localStorage.setItem("isLoggedIn", "true");
-        console.log("local storge is set to true now :)");
       }
     },
-    [fetchCurrentUser.fulfilled]: (state, { payload }) => {
-      if (payload === undefined) {
-        state.logInSuccess = false;
-        localStorage.setItem("isLoggedIn", "false");
-      } else {
-        state.activeUser = payload.data.user;
-        state.logInSuccess = true;
-        localStorage.setItem("isLoggedIn", "true");
-      }
+    [fetchCurrentUser.fulfilled]: (state, actions) => {
+      AuthSlice.caseReducers.setCurrentUser(state, actions);
+      // if (payload === undefined) {
+      //   state.logInSuccess = false;
+      //   localStorage.setItem("isLoggedIn", "false");
+      // } else {
+      //   state.activeUser = payload.data.user;
+      //   state.logInSuccess = true;
+      //   localStorage.setItem("isLoggedIn", "true");
+      // }
     },
-    [refreshCurrentUser.fulfilled]: (state, { payload }) => {
-      console.log(payload, "payload");
-      if (payload === undefined) {
-        state.logInSuccess = false;
-      } else {
-        state.activeUser = payload.data.user;
-        state.logInSuccess = true;
-        localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
-      }
+    [refreshCurrentUser.fulfilled]: (state, actions) => {
+      AuthSlice.caseReducers.setCurrentUser(state, actions);
+      // if (payload === undefined) {
+      //   state.logInSuccess = false;
+      // } else {
+      //   state.activeUser = payload.data.user;
+      //   state.logInSuccess = true;
+      //   localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
+      // }
     },
     [logoutUser.fulfilled]: (state, { payload }) => {
       console.log(payload, "payload");
@@ -138,6 +144,16 @@ const AuthSlice = createSlice({
         //console.log( state.authLogin, ' state.authLogin.isGoogleLogin')
       }
     },
+    [fetchCurrentGoogleUser.fulfilled]: (state, actions) => {
+      AuthSlice.caseReducers.setCurrentUser(state, actions);
+      // if (payload === undefined) {
+      //   state.logInSuccess = false;
+      // } else {
+      //   state.activeUser = payload.data.user;
+      //   state.logInSuccess = true;
+      //   localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
+      // }
+    },
     [fetchUserFacebookLogin.fulfilled]: (state, { payload }) => {
       if (payload) {
         state.activeUser = payload.data.user;
@@ -146,16 +162,23 @@ const AuthSlice = createSlice({
       localStorage.setItem("isLoggedIn", "true");
       console.log("state.logInSuccess", state.logInSuccess);
     },
-    // [fetchCurrentFacebookUser.fulfilled]: (state, { payload }) => {
-    //   console.log(payload, "payload");
-    //   if (payload === undefined) {
-    //     state.logInSuccess = false;
-    //   } else {
-    //     state.activeUser = payload.data.user;
-    //     state.logInSuccess = true;
-    //     localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
-    //   }
-    // },
+    [fetchCurrentFacebookUser.fulfilled]: (state, actions) => {
+      AuthSlice.caseReducers.setCurrentUser(state, actions); ///////////////////////
+      // if (payload === undefined) {
+      //   state.logInSuccess = false;
+      // } else {
+      //   state.activeUser = payload.data.user;
+      //   state.logInSuccess = true;
+      //   localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
+      // }
+    },
+    [logoutSocialMediaUser.fulfilled]: (state, { payload }) => {
+      console.log(payload, "payload");
+      state.activeUser = {};
+      state.logInSuccess = false;
+      localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
+      console.log("local storge is set to false now :)");
+    },
   },
 });
 
