@@ -20,8 +20,9 @@ export const GoogleLoginBtn = () => {
   const navigate = useNavigate();
   const { authLogin } = useSelector((state: any) => state.auth);
   const [isSignedIn, setIsSignedIn] = useState(false);
-  const authState = JSON.parse(window.localStorage.getItem("authLoginState") || 'false')
-
+  const authState = JSON.parse(
+    window.localStorage.getItem("authLoginState") || "false"
+  );
 
   useEffect(() => {
     function start() {
@@ -38,11 +39,12 @@ export const GoogleLoginBtn = () => {
     const user = await dispatch(fetchUserGoogleLogin({ tokenId: res.tokenId }));
     if (user) {
       dispatch(setLogInSuccess(true));
-      dispatch(setAuthLogin({google:true}));
+      dispatch(setAuthLogin({ google: true }));
       // dispatch(setAuthLogin(true));
       localStorage.setItem(
         "isGoogleLogIn",
-        JSON.stringify({ login: true, token: '' })
+        // JSON.stringify({ login: true, token: '' })
+        JSON.stringify({ login: true, token: res.tokenId })
       );
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
       setIsSignedIn(true);
@@ -57,13 +59,13 @@ export const GoogleLoginBtn = () => {
   const handleLogout = () => {
     console.log("you have been logged out successfully :)");
     dispatch(setLogInSuccess(false));
-    dispatch(setAuthLogin({google:false}));
+    dispatch(setAuthLogin({ google: false }));
     // localStorage.clear();
     localStorage.setItem(
       "authLoginState",
       JSON.stringify({ isGoogleLogin: false })
     );
-    localStorage.removeItem("isGoogleLogIn")
+    localStorage.removeItem("isGoogleLogIn");
     setIsSignedIn(false);
     navigate("/");
   };
@@ -104,4 +106,3 @@ export const GoogleLoginBtn = () => {
     </>
   );
 };
-

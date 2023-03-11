@@ -54,7 +54,7 @@ export const FacebookLoginBtn = () => {
         "isFacebookLogIn",
         JSON.stringify({
           login: true,
-          accessToken: res.accessToken,
+          // accessToken: res.accessToken,
           userId: res.userID,
         })
       );

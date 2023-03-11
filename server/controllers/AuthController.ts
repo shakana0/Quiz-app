@@ -46,7 +46,6 @@ module.exports.login_post = async (req: Request, res: Response) => {
     });
     //remove user password from response for security
     user[0].password = undefined;
-    // res.status(200).json({ user: user[0], accessToken: token });
     res.status(200).json({ user: user[0] });
   } catch (error: any) {
     const errors = handleErrors(error);
@@ -94,7 +93,7 @@ module.exports.google_login = async (req: Request, res: Response) => {
         maxAge: 10 * 60 * 1000,
       });
       user[0].password = undefined;
-      return res.status(201).json({ user: user[0] });
+      return res.status(200).json({ user: user[0] });
     }
   } catch (err: any) {
     res.status(401).json({ msg: "User Is Unauthorized" });
@@ -103,7 +102,6 @@ module.exports.google_login = async (req: Request, res: Response) => {
 
 module.exports.facebook_login = async (req: Request, res: Response) => {
   const { accessToken, userId } = req.body;
-  // console.log('from fb login -->', req.body)
   try {
     let urlGraphFacebook = `https://graph.facebook.com/v15.0/${userId}/?fields=name,email&access_token=${accessToken}`;
     const result = await fetch(urlGraphFacebook, {
@@ -156,7 +154,7 @@ module.exports.facebook_login = async (req: Request, res: Response) => {
           maxAge: 60 * 60 * 1000,
         });
         user[0].password = undefined;
-        return res.status(201).json({ user: user[0] });
+        return res.status(200).json({ user: user[0] });
       }
     }
   } catch (error: any) {

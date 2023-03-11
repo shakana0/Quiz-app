@@ -128,9 +128,7 @@ module.exports.logout = (req: any, res: Response, next: any) => {
       });
       req.cookies.jwt = "";
       // res.end();
-      return res
-        .status(200)
-        .json({ msg: "You are successfully logged out!", prevToken });
+      return res.status(200).json({ msg: "You are successfully logged out!" });
     }
   );
 };
@@ -150,25 +148,21 @@ module.exports.socialMediaLogout = (req: any, res: Response, next: any) => {
     maxAge: 1,
   });
   req.cookies.socialMediaToken = "";
-  return res
-    .status(200)
-    .json({ msg: "social media token is empty now :)", token });
+  return res.status(200).json({ msg: "social media token is empty now :)" });
 };
 
 module.exports.verifySocialMediaUser = (req: any, res: Response, next: any) => {
   const cookies = req.headers.cookie;
-  // console.log('cookies -->', cookies)
   let token;
   token = splitSocialilMediaToken(cookies, token);
-  // console.log("token -->", token);
   if (!token) {
     return res.status(400).json({ msg: "Unuthorized, could not find token" });
-  } else if (token.length > 1) {
+  } else if (token.length < 0) {
     req.body = { accessToken: `${token[0]}`, userId: `${token[1]}` };
-    next();
+    return next();
   }
-  req.body = { tokenId: `${token}` };
-  next();
+  req.body = { tokenId: `${token[0]}` };
+  return next();
 };
 
 module.exports.getFacebookUser = async (req: Request, res: Response) => {
@@ -178,20 +172,17 @@ module.exports.getFacebookUser = async (req: Request, res: Response) => {
     const result = await fetch(urlGraphFacebook, {
       method: "GET",
     });
-    console.log('result --->', result)
     const data = await result.json();
-    console.log('data --> ', data)
 
     if (data.error) {
-      console.log('error')
       return res.status(401).json(data);
     } else {
       //check if user alredy exists in db
       const user = await User.check_social_media_user(data.email);
       user[0].password = undefined;
-      return res.status(201).json({ user: user[0] });
+      return res.status(200).json({ user: user[0] });
     }
   } catch (error: any) {
-    res.status(401).json({ msg: "User Is Unauthorized" });
+    return res.status(401).json({ msg: "User Is Unauthorized" });
   }
 };
