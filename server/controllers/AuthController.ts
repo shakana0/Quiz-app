@@ -85,7 +85,7 @@ module.exports.google_login = async (req: Request, res: Response) => {
       user[0].password = undefined;
       return res.status(201).json({ user });
     } else {
-      console.log("user already exits :)");
+      console.log("user already exits :)", tokenId);
       res.cookie("socialMediaToken", tokenId, {
         httpOnly: true,
         sameSite: "none",
