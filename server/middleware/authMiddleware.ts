@@ -189,6 +189,8 @@ module.exports.getFacebookUser = async (req: Request, res: Response) => {
       return res.status(200).json({ user: user[0] });
     }
   } catch (error: any) {
-    return res.status(401).json({ msg: "User Is Unauthorized" });
+    return res
+      .status(401)
+      .json({ msg: "User Is Unauthorized", accessToken, userId });
   }
 };

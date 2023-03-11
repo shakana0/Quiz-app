@@ -10,7 +10,10 @@ import { toggleModalState } from "../Modal/ModalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { gapi } from "gapi-script";
 import { useNavigate } from "react-router";
-import { fetchUserGoogleLogin } from "../Modal/AsyncThunkFunctions";
+import {
+  fetchUserGoogleLogin,
+  logoutSocialMediaUser,
+} from "../Modal/AsyncThunkFunctions";
 
 export const GoogleLoginBtn = () => {
   const dispatch = useDispatch();
@@ -55,6 +58,7 @@ export const GoogleLoginBtn = () => {
 
   const handleLogout = () => {
     console.log("you have been logged out successfully :)");
+    dispatch(logoutSocialMediaUser());
     dispatch(setLogInSuccess(false));
     dispatch(setAuthLogin({ google: false }));
     // localStorage.clear();

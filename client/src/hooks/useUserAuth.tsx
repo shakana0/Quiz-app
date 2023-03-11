@@ -31,7 +31,7 @@ const useUserAuth = () => {
     }
     if (firstRender && isGoogleLogIn.login) {
       setFirstRender(false);
-      console.log("refreshing google login, google: ");
+      console.log("refreshing google login");
       dispatch(fetchCurrentGoogleUser());
       //   dispatch(fetchUserGoogleLogin({ tokenId: isGoogleLogIn.token }));
     }
@@ -39,7 +39,6 @@ const useUserAuth = () => {
     //   setFirstRender(false);
     //   dispatch(fetchCurrentUser());
     // }
-    console.log(firstRender, "first render");
     if (firstRender && isFacebookLogIn.login) {
       setFirstRender(false);
       console.log("refreshing facebook login ");

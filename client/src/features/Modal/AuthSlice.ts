@@ -79,7 +79,7 @@ const AuthSlice = createSlice({
       }
     },
     setCurrentUser: (state, { payload }) => {
-      console.log("user --> ", payload);
+      console.log("setCurrentUser --> ", payload);
       if (payload === undefined) {
         state.logInSuccess = false;
       } else {

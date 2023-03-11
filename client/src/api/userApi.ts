@@ -100,6 +100,7 @@ export const loginWithFacebook = async (credentials: object) => {
 };
 
 export const socialMediaLogout = async () => {
+  console.log("socialMediaLogout was called");
   const res = await axios.post("/social-media-login-refresh", null, {
     withCredentials: true,
   });
@@ -117,6 +118,7 @@ export const currGoogleUser = async () => {
     const res = await axios.get("/curr-google-user", {
       withCredentials: true,
     });
+    console.log("currGoogleUser was called res --> ", res);
     return res;
   } catch (err: any) {
     console.log(err.response, "Token invalid or expired");
