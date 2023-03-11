@@ -1,6 +1,16 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { credentialsType, errorMsgsType } from "../../interface/userType";
-import * as api from "../../api/userApi";
+import {
+  fetchCurrentUser,
+  fetchLoggedInUser,
+  fetchNewUser,
+  fetchUserFacebookLogin,
+  fetchCurrentFacebookUser,
+  fetchUserGoogleLogin,
+  logoutUser,
+  refreshCurrentUser,
+} from "./AsyncThunkFunctions";
+// import * as api from "../../api/userApi";
 
 interface UserAuthType {
   userList: Array<credentialsType>;
@@ -28,65 +38,6 @@ const initialState: UserAuthType = {
   },
   authLogin: { isGoogleLogin: false, isFacebookLogin: false },
 };
-//fetch errors
-export const fetchNewUser: any = createAsyncThunk(
-  "user/fetchNewUser",
-  async (logInCredentials: object) => {
-    const response = await api.registerUser(logInCredentials);
-    return response;
-  }
-);
-
-//fetching loggedIn user
-export const fetchLoggedInUser: any = createAsyncThunk(
-  "user/fetchLoggedInUser",
-  async (logInCredentials: object) => {
-    const response = await api.loginUser(logInCredentials);
-    // console.log(response);
-    return response;
-  }
-);
-
-//fetching current user
-export const fetchCurrentUser: any = createAsyncThunk(
-  "user/fetchCurrentUser",
-  async () => {
-    const response = await api.userAuth();
-    return response;
-  }
-);
-
-//refresh current user
-export const refreshCurrentUser: any = createAsyncThunk(
-  "user/refreshCurrentUser",
-  async () => {
-    const response = await api.refreshToken();
-    return response;
-  }
-);
-
-export const logoutUser: any = createAsyncThunk("user/logoutUser", async () => {
-  const response = await api.logoutUser();
-  return response;
-});
-
-//fetch logged in user with Google
-export const fetchUserGoogleLogin: any = createAsyncThunk(
-  "user/fetchUserGoogleLogin",
-  async (idToken: object) => {
-    const response = await api.loginWithGoogle(idToken);
-    return response;
-  }
-);
-
-//fetch logged in user with Facebook
-export const fetchUserFacebookLogin: any = createAsyncThunk(
-  "user/fetchUserFacebookLogin",
-  async (credentials: object) => {
-    const response = await api.loginWithFacebook(credentials);
-    return response;
-  }
-);
 
 const AuthSlice = createSlice({
   name: "AuthState",
@@ -108,10 +59,7 @@ const AuthSlice = createSlice({
         // console.log(payload.facebook, 'payload.facebook')
         state.authLogin.isFacebookLogin = payload.facebook;
       }
-      localStorage.setItem(
-        "authLoginState",
-        JSON.stringify(state.authLogin)
-      );
+      localStorage.setItem("authLoginState", JSON.stringify(state.authLogin));
     },
     resetErrorMsgs: (state) => {
       state.errorMsgs = { emailAdress: "", userName: "", password: "" };
@@ -191,12 +139,23 @@ const AuthSlice = createSlice({
       }
     },
     [fetchUserFacebookLogin.fulfilled]: (state, { payload }) => {
-      // console.log(payload, "payload fb");
       if (payload) {
         state.activeUser = payload.data.user;
         state.logInSuccess = true;
       }
+      localStorage.setItem("isLoggedIn", "true");
+      console.log("state.logInSuccess", state.logInSuccess);
     },
+    // [fetchCurrentFacebookUser.fulfilled]: (state, { payload }) => {
+    //   console.log(payload, "payload");
+    //   if (payload === undefined) {
+    //     state.logInSuccess = false;
+    //   } else {
+    //     state.activeUser = payload.data.user;
+    //     state.logInSuccess = true;
+    //     localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
+    //   }
+    // },
   },
 });
 

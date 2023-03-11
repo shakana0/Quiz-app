@@ -155,9 +155,11 @@ module.exports.verifySocialMediaUser = (req: any, res: Response, next: any) => {
   const cookies = req.headers.cookie;
   let token;
   token = splitSocialilMediaToken(cookies, token);
+  console.log("token: ", token, token.length > 1);
   if (!token) {
     return res.status(400).json({ msg: "Unuthorized, could not find token" });
-  } else if (token.length < 0) {
+  } else if (token.length > 1) {
+    console.log("hej");
     req.body = { accessToken: `${token[0]}`, userId: `${token[1]}` };
     return next();
   }
@@ -167,13 +169,14 @@ module.exports.verifySocialMediaUser = (req: any, res: Response, next: any) => {
 
 module.exports.getFacebookUser = async (req: Request, res: Response) => {
   const { accessToken, userId } = req.body;
+  console.log(accessToken, userId);
   try {
     let urlGraphFacebook = `https://graph.facebook.com/v15.0/${userId}/?fields=name,email&access_token=${accessToken}`;
     const result = await fetch(urlGraphFacebook, {
       method: "GET",
     });
     const data = await result.json();
-
+    console.log("data --> ", data);
     if (data.error) {
       return res.status(401).json(data);
     } else {

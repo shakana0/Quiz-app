@@ -9,24 +9,25 @@ import { ProfileView } from "./features/profile/ProfileView";
 import { SingleQuizView } from "./features/singleQuiz/SingleQuizView";
 import { CreateQuiz } from "./features/quiz/CreateQuiz";
 import RequireAuth from "./hooks/RequireAuth";
-import {
-  fetchCurrentUser,
-  refreshCurrentUser,
-  fetchUserGoogleLogin,
-  fetchUserFacebookLogin,
-} from "./features/Modal/AuthSlice";
+// import {
+//   fetchCurrentUser,
+//   refreshCurrentUser,
+//   fetchUserGoogleLogin,
+//   fetchUserFacebookLogin,
+// } from "./features/Modal/AuthSlice";
 // import useAuth from "./hooks/userAuth";
 import { useNavigate } from "react-router-dom";
+import useUserAuth from "./hooks/useUserAuth";
+
 const App = () => {
-  const navigate = useNavigate();
-  const { logInSuccess, authLogin } = useSelector((state: any) => state.auth);
-  const [firstRender, setFirstRender] = useState(true);
-  const dispatch = useDispatch();
+  // const navigate = useNavigate();
+  // const { logInSuccess, authLogin } = useSelector((state: any) => state.auth);
+  // const [firstRender, setFirstRender] = useState(true);
+  // const dispatch = useDispatch();
   const [user, setUser] = useState(false);
   // const appContext = useAuth();
 
-  // console.log(user, "user");
-
+  const { logInSuccess } = useUserAuth();
   useEffect(() => {
     // user && JSON.parse(currUser) ? setUser(true) : setUser(false)
     // const currUser = JSON.parse(
@@ -40,51 +41,56 @@ const App = () => {
     // console.log(user, 'user')
   }, []);
 
-  useEffect(() => {
-    //null check
-    const isGoogleLogIn = JSON.parse(
-      window.localStorage.getItem("isGoogleLogIn") || "{}"
-    );
-    const isFacebookLogIn = JSON.parse(
-      window.localStorage.getItem("isFacebookLogIn") || "{}"
-    );
+  // useEffect(() => {
+  //   //null check
+  //   const isGoogleLogIn = JSON.parse(
+  //     window.localStorage.getItem("isGoogleLogIn") || "{}"
+  //   );
+  //   const isFacebookLogIn = JSON.parse(
+  //     window.localStorage.getItem("isFacebookLogIn") || "{}"
+  //   );
 
-    //fetching user on first render
-    if (firstRender && !isGoogleLogIn.login) {
-      setFirstRender(false);
-      dispatch(fetchCurrentUser());
-      // appContext.setAuth(activeUser);
-    }
-    if (firstRender && isGoogleLogIn.login) {
-      setFirstRender(false);
-      console.log("refreshing google login, token: ");
-      dispatch(fetchUserGoogleLogin({ tokenId: isGoogleLogIn.token }));
-    }
+  //   //fetching user on first render
+  //   if (firstRender && !isGoogleLogIn.login) {
+  //     setFirstRender(false);
+  //     dispatch(fetchCurrentUser());
+  //     // appContext.setAuth(activeUser);
+  //   }
+  //   if (firstRender && isGoogleLogIn.login) {
+  //     setFirstRender(false);
+  //     console.log("refreshing google login, token: ");
+  //     dispatch(fetchUserGoogleLogin({ tokenId: isGoogleLogIn.token }));
+  //   }
 
-    //fetching user on first render
-    if (firstRender && !isFacebookLogIn.login) {
-      setFirstRender(false);
-      dispatch(fetchCurrentUser());
-    }
-    console.log(firstRender, "first render")
-    if (firstRender && isFacebookLogIn.login) {
-      setFirstRender(false);
-      console.log("refreshing facebook login, token: ");
-      dispatch(fetchUserFacebookLogin({ accessToken: isFacebookLogIn.accessToken, userId: isFacebookLogIn.userId}));
-    }
+  //   //fetching user on first render
+  //   if (firstRender && !isFacebookLogIn.login) {
+  //     setFirstRender(false);
+  //     dispatch(fetchCurrentUser());
+  //   }
+  //   console.log(firstRender, "first render");
+  //   if (firstRender && isFacebookLogIn.login) {
+  //     setFirstRender(false);
+  //     console.log("refreshing facebook login, token: ");
+  //     dispatch(
+  //       fetchUserFacebookLogin({
+  //         accessToken: isFacebookLogIn.accessToken,
+  //         userId: isFacebookLogIn.userId,
+  //       })
+  //     );
+  //   }
 
-    //refeshing current user
-    let interval = setInterval(() => {
-      //vet inte om det behövs
-      if (authLogin.isGoogleLogin) {
-        dispatch(fetchUserGoogleLogin({ tokenId: isGoogleLogIn.token }));
-      } else {
-        dispatch(refreshCurrentUser());
-      }
-      console.log("refreshing :)");
-    }, 10 * 60 * 3000);
-    return () => clearInterval(interval);
-  }, []);
+  //   //refeshing current user
+  //   let interval = setInterval(() => {
+  //     //vet inte om det behövs
+  //     if (authLogin.isGoogleLogin) {
+  //       dispatch(fetchUserGoogleLogin({ tokenId: isGoogleLogIn.token }));
+  //     } else {
+  //       dispatch(refreshCurrentUser());
+  //     }
+  //     console.log("refreshing :)");
+  //   }, 10 * 60 * 3000);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   return (
     <>

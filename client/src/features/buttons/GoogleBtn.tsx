@@ -5,15 +5,12 @@ import GoogleLogin, {
   GoogleLoginResponseOffline,
   GoogleLogout,
 } from "react-google-login";
-import {
-  setLogInSuccess,
-  fetchUserGoogleLogin,
-  setAuthLogin,
-} from "../Modal/AuthSlice";
+import { setLogInSuccess, setAuthLogin } from "../Modal/AuthSlice";
 import { toggleModalState } from "../Modal/ModalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { gapi } from "gapi-script";
 import { useNavigate } from "react-router";
+import { fetchUserGoogleLogin } from "../Modal/AsyncThunkFunctions";
 
 export const GoogleLoginBtn = () => {
   const dispatch = useDispatch();
@@ -43,8 +40,8 @@ export const GoogleLoginBtn = () => {
       // dispatch(setAuthLogin(true));
       localStorage.setItem(
         "isGoogleLogIn",
-        // JSON.stringify({ login: true, token: '' })
-        JSON.stringify({ login: true, token: res.tokenId })
+        JSON.stringify({ login: true, token: "" })
+        // JSON.stringify({ login: true, token: res.tokenId })
       );
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
       setIsSignedIn(true);

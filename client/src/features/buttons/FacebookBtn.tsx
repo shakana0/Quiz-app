@@ -5,12 +5,9 @@ import { useNavigate } from "react-router";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 // import Cookie from 'js-cookie'
-import {
-  fetchUserFacebookLogin,
-  setLogInSuccess,
-  setAuthLogin,
-} from "../Modal/AuthSlice";
+import { setLogInSuccess, setAuthLogin } from "../Modal/AuthSlice";
 import { toggleModalState } from "../Modal/ModalSlice";
+import { fetchUserFacebookLogin } from "../Modal/AsyncThunkFunctions";
 //extend the Window interface and turning off type checking
 declare global {
   interface Window {
@@ -55,7 +52,7 @@ export const FacebookLoginBtn = () => {
         JSON.stringify({
           login: true,
           // accessToken: res.accessToken,
-          userId: res.userID,
+          // userId: res.userID,
         })
       );
       dispatch(toggleModalState({ showModal: false, modalType: "" }));

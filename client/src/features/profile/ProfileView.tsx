@@ -6,9 +6,9 @@ import { AuthBtn } from "../buttons/AuthBtn";
 import { useSelector } from "react-redux";
 import { QuizList } from "../quiz/QuizList";
 import { useNavigate } from "react-router";
-import { logoutUser } from "../Modal/AuthSlice";
 import { GoogleLoginBtn } from "../buttons/GoogleBtn";
 import { FacebookLoginBtn } from "../buttons/FacebookBtn";
+import { logoutUser } from "../Modal/AsyncThunkFunctions";
 
 export const ProfileView = () => {
   const navigate = useNavigate();

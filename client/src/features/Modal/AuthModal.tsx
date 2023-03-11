@@ -6,19 +6,13 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import { AuthBtn } from "../buttons/AuthBtn";
 import { toggleModalState, setActiveForm } from "./ModalSlice";
-import {
-  setLogInSuccess,
-  fetchLoggedInUser,
-  fetchNewUser,
-  resetErrorMsgs,
-  setIsCorrect,
-} from "./AuthSlice";
+import { setLogInSuccess, resetErrorMsgs, setIsCorrect } from "./AuthSlice";
 import { credentialsType } from "../../interface/userType";
 import { useNavigate } from "react-router-dom";
-// import * as api from "../../api/userApi";
 import useAuth from "../../hooks/userAuth";
-import { GoogleLoginBtn } from "../buttons/GoogleBtn"
+import { GoogleLoginBtn } from "../buttons/GoogleBtn";
 import { FacebookLoginBtn } from "../buttons/FacebookBtn";
+import { fetchNewUser, fetchLoggedInUser } from "./AsyncThunkFunctions";
 
 export const Modal = () => {
   const appContext = useAuth();
@@ -175,7 +169,7 @@ export const Modal = () => {
   };
 
   const handleLogIn = async () => {
-    console.log('hejsaan')
+    console.log("hejsaan");
     const res = await dispatch(fetchLoggedInUser(logInCredentials));
 
     // appContext.setAuth({
@@ -184,7 +178,7 @@ export const Modal = () => {
     //   password: "riri1234",
     // });
 
-    console.log(res, 'res.payload.data');
+    console.log(res, "res.payload.data");
     // const user =  JSON.parse(localStorage.getItem("isLoggedIn") || 'false')
     // appContext.setAuth(user);
 
@@ -263,8 +257,8 @@ export const Modal = () => {
 
             <div className="sign-up-btn-container">
               <div>
-                <GoogleLoginBtn/>
-                <FacebookLoginBtn/>
+                <GoogleLoginBtn />
+                <FacebookLoginBtn />
               </div>
               <div className="or-email">
                 <span></span>
@@ -354,8 +348,8 @@ export const Modal = () => {
           </div>
           <div className="btn-container">
             {RenderModalToggleBtns()}
-            <GoogleLoginBtn/>
-            <FacebookLoginBtn/>
+            <GoogleLoginBtn />
+            <FacebookLoginBtn />
           </div>
           <div className="input-box">
             <input

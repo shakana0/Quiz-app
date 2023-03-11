@@ -3,7 +3,6 @@ import axios from "axios";
 // axios.defaults.baseURL = "https://quiz-app-backend-heroku.herokuapp.com";
 axios.defaults.baseURL = "https://quiz-app-backend-uco1.onrender.com/";
 
-
 // axios.defaults.headers.common = {
 //   "Content-Type": "application/json",
 //   withCredentials: true,
@@ -89,14 +88,11 @@ export const loginWithGoogle = async (idToken: object) => {
 };
 
 //facebook login post request
-
 export const loginWithFacebook = async (credentials: object) => {
-  // console.log(credentials, 'user info')
   try {
     const res = await axios.post("/facebook-login", credentials, {
       withCredentials: true,
     });
-    // console.log(res, "reeeess");
     return res;
   } catch (err: any) {
     console.log(err, "err");
@@ -111,8 +107,31 @@ export const socialMediaLogout = async () => {
   if (res.status === 200) {
     return res;
   }
-  console.log('Unable to logout. Plase try again.')
+  console.log("Unable to logout. Plase try again.");
   return new Error("Unable to logout. Plase try again.");
-}
+};
 
-/* MÅSTE SKAPA REFRESH OCKSÅ MEN FB INNEHÅLLER VEN USERID */
+export const currGoogleUser = async () => {
+  console.log("hello google");
+  try {
+    const res = await axios.get("/curr-google-user", {
+      withCredentials: true,
+    });
+    return res;
+  } catch (err: any) {
+    console.log(err.response, "Token invalid or expired");
+  }
+};
+
+export const currFacebookUser = async () => {
+  console.log("hello fb");
+  try {
+    const res = await axios.get("curr-facebook-user", {
+      withCredentials: true,
+    });
+    console.log("currFacebookUser was called res --> ", res);
+    return res;
+  } catch (err: any) {
+    console.log(err, "Token invalid or expired");
+  }
+};
