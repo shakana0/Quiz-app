@@ -35,127 +35,19 @@ export const Modal = () => {
   const [credentials, setCredentials] = useState<credentialsType>(
     initialCredentialsState
   );
-  // const [errors, setErrors] = useState<credentialsType>(
-  //   initialCredentialsState
-  // );
+
   const [logInCredentials, setLogInCredentials] = useState<credentialsType>(
     initialCredentialsState
   );
-  // const [isCorrect, setIsCorrect] = useState({
-  //   email: false,
-  //   userName: false,
-  //   password: false,
-  // });
 
   const resetForm = () => {
     //clears all input fields in form
     if (ref.current != null) {
       ref.current.reset();
     }
-    //clears all errors
-    // setErrors((current) => {
-    //   return {
-    //     ...current,
-    //     emailAdress: "",
-    //     userName: "",
-    //     password: "",
-    //   };
-    // });
-    //clear errorMsgs
     dispatch(resetErrorMsgs());
-    //clear check marks
-    // setIsCorrect((current) => {
-    //   return {
-    //     ...current,
-    //     email: false,
-    //     userName: false,
-    //     password: false,
-    //   };
-    // });
   };
 
-  // const validateForm = (event: any) => {
-  //   event.preventDefault();
-  //   let newErr = {
-  //     emailAdress: "",
-  //     userName: "",
-  //     password: "",
-  //   };
-  //   const validChar = /^[0-9a-zA-Z@.-_åäöÅÄÖ]+$/;
-  //   const emailValidFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  //   //validation for email
-  //   if (credentials.emailAdress === "") {
-  //     newErr.emailAdress = "Email adress is required";
-  //   } else if (!validChar.test(credentials.emailAdress)) {
-  //     newErr.emailAdress = "Invalid characters detected :(";
-  //   } else if (!emailValidFormat.test(credentials.emailAdress)) {
-  //     newErr.emailAdress =
-  //       "Email adress must be in correct format for e.g. name@gmail.com :( ";
-  //   } else if (
-  //     credentials.emailAdress.length! < 10 ||
-  //     credentials.emailAdress.length! > 20
-  //   ) {
-  //     newErr.emailAdress =
-  //       "Your email adress needs to be between 13 and 20 characters long";
-  //   } else {
-  //     setIsCorrect((current) => {
-  //       return {
-  //         ...current,
-  //         email: true,
-  //       };
-  //     });
-  //   }
-
-  //   //validation for user name
-  //   if (credentials.userName === "") {
-  //     newErr.userName = "User name is required";
-  //   } else if (!validChar.test(credentials.userName)) {
-  //     newErr.userName = "Invalid characters detected :(";
-  //   } else if (
-  //     credentials.userName.length! < 8 ||
-  //     credentials.userName.length! > 15
-  //   ) {
-  //     newErr.userName =
-  //       "Your user name needs to be between 8 and 15 characters long";
-  //   } else {
-  //     setIsCorrect((current) => {
-  //       return {
-  //         ...current,
-  //         userName: true,
-  //       };
-  //     });
-  //   }
-
-  //   //validation for password
-  //   if (credentials.password === "") {
-  //     newErr.password = "Password is required";
-  //   } else if (
-  //     credentials.password.length! < 8 ||
-  //     credentials.password.length! > 15
-  //   ) {
-  //     newErr.password =
-  //       "Your password needs to be between 8 and 15 characters long";
-  //   } else {
-  //     setIsCorrect((current) => {
-  //       return {
-  //         ...current,
-  //         password: true,
-  //       };
-  //     });
-  //   }
-  //   setErrors(newErr);
-  //   //checking if there is any errors
-  //   let noErr = [];
-  //   for (let value of Object.values(newErr)) {
-  //     if (value !== "") {
-  //       noErr.push("error");
-  //     }
-  //   }
-  //   if (!noErr.length) {
-  //     sendCredentials();
-  //   }
-  // };
   const sendCredentials = async () => {
     dispatch(resetErrorMsgs());
     const res = await dispatch(fetchNewUser(credentials));
@@ -192,15 +84,6 @@ export const Modal = () => {
       dispatch(setLogInSuccess(true));
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
       navigate("/");
-    } else {
-      // setErrors((current) => {
-      //   return {
-      //     ...current,
-      //     emailAdress: "Email adress or user name does not exist",
-      //     userName: "",
-      //     password: "Wrong password",
-      //   };
-      // });
     }
   };
 
