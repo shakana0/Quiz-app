@@ -39,13 +39,10 @@ const useUserAuth = () => {
 
     //refeshing current user
     let interval = setInterval(() => {
-      if (isFacebookLogIn.login) {
-        dispatch(fetchUserGoogleLogin());
+      if (isGoogleLogIn.login === false || isFacebookLogIn.login === false) {
+        console.log(isGoogleLogIn.login, isFacebookLogIn.login);
+        dispatch(refreshCurrentUser());
       }
-      if (isGoogleLogIn.login) {
-        dispatch(fetchUserGoogleLogin());
-      }
-      dispatch(refreshCurrentUser());
     }, 20 * 60 * 1000); //20min
     return () => clearInterval(interval);
   }, []);

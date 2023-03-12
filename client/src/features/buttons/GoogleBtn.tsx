@@ -37,13 +37,11 @@ export const GoogleLoginBtn = () => {
     if (user) {
       dispatch(setLogInSuccess(true));
       dispatch(setAuthLogin({ google: true }));
-      localStorage.setItem(
-        "isGoogleLogIn",
-        JSON.stringify({ login: true, token: "" })
-      );
+      localStorage.setItem("isGoogleLogIn", JSON.stringify({ login: true }));
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
     }
   };
+
   const handleFailure = (
     res: GoogleLoginResponse | GoogleLoginResponseOffline
   ) => {
@@ -99,3 +97,5 @@ export const GoogleLoginBtn = () => {
     </>
   );
 };
+
+// export const {handleLogin} = GoogleLoginBtn()

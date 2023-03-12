@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { GoogleLoginBtn } from "../buttons/GoogleBtn";
 import { FacebookLoginBtn } from "../buttons/FacebookBtn";
 import { fetchNewUser, fetchLoggedInUser } from "./AsyncThunkFunctions";
+import { Loader } from "../../components/Loader";
 
 export const Modal = () => {
   // const appContext = useAuth();
@@ -242,6 +243,8 @@ export const Modal = () => {
     if (modalType === "Sign Up") {
       return (
         <form action="" ref={ref}>
+          <Loader />
+
           <div className="close-icon-container">
             <CloseRoundedIcon
               className="close-icon"

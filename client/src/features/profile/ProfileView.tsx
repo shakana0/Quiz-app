@@ -13,11 +13,10 @@ import { logoutUser } from "../Modal/AsyncThunkFunctions";
 export const ProfileView = () => {
   const navigate = useNavigate();
   const disptach = useDispatch();
-  const { activeUser, authLogin } = useSelector((state: any) => state.auth);
+  const { activeUser } = useSelector((state: any) => state.auth);
   const authState = JSON.parse(
     window.localStorage.getItem("authLoginState") || "{}"
   );
-  console.log(authState, "authstate");
 
   return (
     <ProfileViewStyling>
@@ -30,7 +29,6 @@ export const ProfileView = () => {
           <button
             className="log-out-btn"
             onClick={() => {
-              // localStorage.removeItem("accessToken")
               // disptach(setLogInSuccess(false));
               disptach(logoutUser());
               disptach(resetErrorMsgs());

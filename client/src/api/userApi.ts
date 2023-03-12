@@ -9,15 +9,6 @@ axios.defaults.baseURL = "https://quiz-app-backend-uco1.onrender.com/";
 //   credentials: "include",
 // };
 
-// export const registerUser = async (user: object) => {
-//   try {
-//     const registeredUser = await axios.post("/user", user);
-//     return registeredUser;
-//   } catch (error: any) {
-//     return error.response;
-//   }
-// };
-
 export const registerUser = async (user: object) => {
   try {
     const res = await axios.post("/signup", user, {
@@ -48,6 +39,8 @@ export const userAuth = async () => {
     return res;
   } catch (err: any) {
     console.log(err.response, "Token invalid or expired");
+    socialMediaLogout();
+    localStorage.clear();
   }
 };
 
@@ -115,6 +108,8 @@ export const currGoogleUser = async () => {
     return res;
   } catch (err: any) {
     console.log(err.response, "Token invalid or expired");
+    socialMediaLogout();
+    localStorage.clear();
   }
 };
 
@@ -126,5 +121,7 @@ export const currFacebookUser = async () => {
     return res;
   } catch (err: any) {
     console.log(err, "Token invalid or expired");
+    socialMediaLogout();
+    localStorage.clear();
   }
 };
