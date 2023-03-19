@@ -25,6 +25,7 @@ interface UserAuthType {
     password: boolean;
   };
   authLogin: { isGoogleLogin: boolean; isFacebookLogin: boolean };
+  isLoading: boolean;
 }
 
 const initialState: UserAuthType = {
@@ -38,6 +39,7 @@ const initialState: UserAuthType = {
     password: false,
   },
   authLogin: { isGoogleLogin: false, isFacebookLogin: false },
+  isLoading: false,
 };
 
 const AuthSlice = createSlice({
@@ -79,7 +81,6 @@ const AuthSlice = createSlice({
       }
     },
     setCurrentUser: (state, { payload }) => {
-      console.log("setCurrentUser --> ", payload);
       if (payload === undefined) {
         state.logInSuccess = false;
       } else {
@@ -95,7 +96,11 @@ const AuthSlice = createSlice({
     },
   },
   extraReducers: {
+    [fetchNewUser.pending]: (state) => {
+      state.isLoading = true;
+    },
     [fetchNewUser.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
       if (payload.errors) {
         state.errorMsgs = payload.errors;
       } else {
@@ -103,7 +108,11 @@ const AuthSlice = createSlice({
         localStorage.setItem("isLoggedIn", "true");
       }
     },
+    [fetchLoggedInUser.pending]: (state) => {
+      state.isLoading = true;
+    },
     [fetchLoggedInUser.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
       if (payload.errors) {
         state.errorMsgs = payload.errors;
       } else {
@@ -117,10 +126,18 @@ const AuthSlice = createSlice({
     [refreshCurrentUser.fulfilled]: (state, actions) => {
       AuthSlice.caseReducers.setCurrentUser(state, actions);
     },
+    [logoutUser.pending]: (state) => {
+      state.isLoading = true;
+    },
     [logoutUser.fulfilled]: (state, actions) => {
+      state.isLoading = false;
       AuthSlice.caseReducers.setLoggedOutState(state, actions);
     },
+    [fetchUserGoogleLogin.pending]: (state) => {
+      state.isLoading = true;
+    },
     [fetchUserGoogleLogin.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
       if (payload) {
         state.activeUser = payload.data.user;
         state.logInSuccess = true;
@@ -130,7 +147,11 @@ const AuthSlice = createSlice({
     [fetchCurrentGoogleUser.fulfilled]: (state, actions) => {
       AuthSlice.caseReducers.setCurrentUser(state, actions);
     },
+    [fetchUserFacebookLogin.pending]: (state) => {
+      state.isLoading = true;
+    },
     [fetchUserFacebookLogin.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
       if (payload) {
         state.activeUser = payload.data.user;
         state.logInSuccess = true;
@@ -140,7 +161,11 @@ const AuthSlice = createSlice({
     [fetchCurrentFacebookUser.fulfilled]: (state, actions) => {
       AuthSlice.caseReducers.setCurrentUser(state, actions);
     },
+    [logoutSocialMediaUser.pending]: (state) => {
+      state.isLoading = true;
+    },
     [logoutSocialMediaUser.fulfilled]: (state, actions) => {
+      state.isLoading = false;
       AuthSlice.caseReducers.setLoggedOutState(state, actions);
     },
   },

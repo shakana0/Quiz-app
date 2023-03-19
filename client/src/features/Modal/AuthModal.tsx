@@ -27,9 +27,10 @@ export const Modal = () => {
   const ref = useRef<HTMLFormElement>(null);
   const { modalType } = useSelector((state: any) => state.modal);
   const { activeForm } = useSelector((state: any) => state.modal);
-  const { activeUser } = useSelector((state: any) => state.auth);
+  // const { activeUser } = useSelector((state: any) => state.auth);
   const { errorMsgs } = useSelector((state: any) => state.auth);
   const { isCorrect } = useSelector((state: any) => state.auth);
+  const { isLoading } = useSelector((state: any) => state.auth);
 
   //decreing state varibles
   const [credentials, setCredentials] = useState<credentialsType>(
@@ -126,8 +127,6 @@ export const Modal = () => {
     if (modalType === "Sign Up") {
       return (
         <form action="" ref={ref}>
-          <Loader />
-
           <div className="close-icon-container">
             <CloseRoundedIcon
               className="close-icon"
@@ -284,6 +283,7 @@ export const Modal = () => {
 
   return (
     <ModalStyling>
+      {isLoading && <Loader />}
       <div className="pic-container">
         <img
           src={require("../../assets/img/astronaut-coming-down.png")}
