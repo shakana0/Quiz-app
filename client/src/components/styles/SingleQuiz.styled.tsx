@@ -71,6 +71,7 @@ export const SingleQuizViewStyling = styled.div`
       width: 70%;
       .card-container {
         width: 100%;
+        cursor: pointer;
       }
       .front,
       .back {
@@ -93,7 +94,6 @@ export const SingleQuizViewStyling = styled.div`
       .back {
         background-color: #82a8e1;
         border: 4px solid #7486ac;
-
       }
 
       .pagination-btns {

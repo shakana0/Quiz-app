@@ -17,20 +17,19 @@ export const QuizCardStyling = styled.article`
     background-color: #0303a54c;
   }
   &:hover > .icon-container .delete-icon {
-      opacity: 1;
+    opacity: 1;
   }
   .icon-container {
     display: flex;
     justify-content: flex-end;
     box-sizing: border-box;
-    
     .delete-icon {
       font-size: 2rem;
       fill: red;
       opacity: 0;
-      transition: .5s ease;
-      &:hover{
-        transform: scale(1.1);
+      transition: 0.5s ease;
+      &:hover {
+        transform: scale(1.3);
       }
     }
   }

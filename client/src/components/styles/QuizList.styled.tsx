@@ -15,20 +15,20 @@ export const QuizListStyling = styled.div`
   align-items: center;
   overflow-y: auto;
 
-  .no-quizes-header{
+  .no-quizes-header {
     color: orange;
     -webkit-text-stroke: 1px #c702a9ea;
     font-size: 2.5rem;
   }
 
   ::-webkit-scrollbar {
-      background-color: transparent;
-      width: 10px;
-    }
+    background-color: transparent;
+    width: 10px;
+  }
 
-    ::-webkit-scrollbar-thumb {
-      background-color: #55018655;
-      border-radius: 10px;
-      width: 10px;
-    }
+  ::-webkit-scrollbar-thumb {
+    background-color: #55018655;
+    border-radius: 10px;
+    width: 10px;
+  }
 `;
