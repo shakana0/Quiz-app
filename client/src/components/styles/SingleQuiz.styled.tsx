@@ -8,21 +8,34 @@ export const SingleQuizViewStyling = styled.div`
 
   padding-top: 2rem;
 
-  .back-btn {
-    background-color: transparent;
-    border: none;
+  .top {
     display: flex;
-    align-items: center;
-    margin-left: 10%;
-
-    .back-icon {
-      font-size: 2rem;
-      margin-right: 0.5rem;
+    justify-content: space-between;
+    padding: 0 4rem;
+    .back-btn {
+      background-color: transparent;
+      border: none;
+      display: flex;
+      align-items: center;
+      .back-icon {
+        font-size: 2.2rem;
+        margin-right: 0.5rem;
+      }
+      h3 {
+        font-size: 1.6rem;
+      }
     }
-    h3 {
-      font-size: 1.2rem;
+    .delete-icon {
+      font-size: 2rem;
+      fill: red;
+      transition: 0.5s ease;
+      cursor: pointer;
+      &:hover {
+        transform: scale(1.3);
+      }
     }
   }
+
   h1 {
     margin: 3rem 0 2rem 10%;
   }

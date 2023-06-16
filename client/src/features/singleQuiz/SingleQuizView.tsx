@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { SingleQuizViewStyling } from "../../components/styles/SingleQuiz.styled";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { setCurrentQuiz } from "./QuizSlice";
 import { FlashCards } from "./games/FlashCards";
 import { Write } from "./games/Write";
 import { Match } from "./games/Match";
-
+import ConfirmDeletionDialog from "../confirmDeletionDialog/confirmDeletionDialog";
 
 export const SingleQuizView = () => {
   const disptach = useDispatch();
@@ -17,6 +18,8 @@ export const SingleQuizView = () => {
   const { activeUser } = useSelector((state: any) => state.auth);
   const { id }: any = useParams();
   const [currentGame, setCurrentGame] = useState("");
+  const [isConfirmDeletionDialogOpen, setIsConfirmDeletionDialogOpen] =
+    useState<boolean>(false);
 
   useEffect(() => {
     let quiz: any = {};
@@ -32,24 +35,40 @@ export const SingleQuizView = () => {
     }
     if (currentGame === "Write") {
       return <Write />;
-    }if (currentGame === "Match") {
+    }
+    if (currentGame === "Match") {
       return <Match />;
-    }else {
+    } else {
       return <FlashCards />;
     }
   };
 
   return (
     <SingleQuizViewStyling>
-      <button
-        className="back-btn"
-        onClick={() => {
-          navigate("/profile");
+      <ConfirmDeletionDialog
+        open={isConfirmDeletionDialogOpen}
+        onCancel={() => {
+          setIsConfirmDeletionDialogOpen(false);
         }}
-      >
-        <ArrowBackIosRoundedIcon className="back-icon" />
-        <h3>Back</h3>
-      </button>
+        onConfirm={() => {
+          setIsConfirmDeletionDialogOpen(false);
+        }}
+      />
+      <section className="top">
+        <button
+          className="back-btn"
+          onClick={() => {
+            navigate("/profile");
+          }}
+        >
+          <ArrowBackIosRoundedIcon className="back-icon" />
+          <h3>Back</h3>
+        </button>
+        <DeleteOutlineOutlinedIcon
+          className={"delete-icon"}
+          onClick={() => setIsConfirmDeletionDialogOpen(true)}
+        />
+      </section>
       <h1>{currentQuiz.titel}</h1>
       <p className="description">{currentQuiz.description}</p>
       <section className="game-board">
