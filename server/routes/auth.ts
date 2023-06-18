@@ -10,8 +10,7 @@ router.post("/login", Auth.login_post);
 router.get("/currUser", Verify.verifyToken, Verify.getUser);
 router.get("/refresh", Verify.refreshToken, Verify.verifyToken, Verify.getUser);
 router.post("/logout", Verify.verifyToken, Verify.logout);
-//post quiz
-router.post("/user/:id/quizes", Quiz.quiz_post);
+
 //google login
 router.post("/google-login", Auth.google_login);
 //facebook login
@@ -29,5 +28,11 @@ router.get(
   Verify.verifySocialMediaUser,
   Verify.getFacebookUser
 );
+
+//post quiz
+router.post("/user/:id/quizes", Quiz.quiz_post);
+//delete quiz
+router.delete("/user/:userId/:quizId/quiz", Quiz.quiz_delete);
+
 
 module.exports = router;

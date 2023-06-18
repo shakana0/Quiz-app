@@ -287,7 +287,7 @@ export const Modal = () => {
       <div className="pic-container">
         <img
           src={require("../../assets/img/astronaut-coming-down.png")}
-          alt=" picture of stronaut coming down"
+          alt="picture of stronaut coming down"
           width={450}
           height={450}
         />

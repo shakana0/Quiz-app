@@ -51,7 +51,7 @@ export const SingleQuizView = () => {
           setIsConfirmDeletionDialogOpen(false);
         }}
         onConfirm={() => {
-          setIsConfirmDeletionDialogOpen(false);
+          setIsConfirmDeletionDialogOpen(true);
         }}
       />
       <section className="top">

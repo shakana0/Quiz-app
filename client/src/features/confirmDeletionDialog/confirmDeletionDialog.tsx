@@ -1,4 +1,6 @@
 import { Box, Button, Modal, Typography } from "@mui/material";
+import { DialogStyles } from "../../components/styles/confirmDeletionDialog.styed";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface DialogProps {
   open: boolean;
@@ -8,39 +10,35 @@ interface DialogProps {
 
 const ConfirmDeletionDialog = ({ open, onConfirm, onCancel }: DialogProps) => {
   return (
-    <Modal
+    <DialogStyles
       open={open}
       onClose={onCancel}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      className={"modal"}
     >
-      <Box
-        display="flex"
-        // flexDirection="row"
-        mt={6}
-        style={{
-          gap: "50px",
-        }}
-      >
-        <Button variant="contained" color="error" onClick={onConfirm}>
-          Yes
-        </Button>
-        <Button
-          onClick={onCancel}
-          type="button"
-          variant="outlined"
-          color="inherit"
-        >
-          No
-        </Button>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          Text in a modal
-        </Typography>
-        {/* <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-        </Typography> */}
+      <Box className={"box"}>
+        <CloseIcon className="close-icon" onClick={onCancel} />
+        <div className="info-container">
+          <Typography id="modal-modal-title" variant="h5" component="h2">
+            Are you sure you want to delete this quiz?
+          </Typography>
+          <div className="btn-container">
+            <Button variant="contained" color="error" onClick={onConfirm}>
+              Yes
+            </Button>
+            <Button
+              onClick={onCancel}
+              type="button"
+              variant="outlined"
+              color="inherit"
+            >
+              No
+            </Button>
+          </div>
+        </div>
       </Box>
-    </Modal>
+    </DialogStyles>
   );
 };
 
