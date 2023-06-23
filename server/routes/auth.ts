@@ -33,6 +33,8 @@ router.get(
 router.post("/user/:id/quizes", Quiz.quiz_post);
 //delete quiz
 router.delete("/user/:userId/:quizId/quiz", Quiz.quiz_delete);
+//get all quizes
+router.get("/user/:userId/quizes", Quiz.quiz_get);
 
 
 module.exports = router;

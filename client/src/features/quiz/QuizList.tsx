@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { QuizListStyling } from "../../components/styles/QuizList.styled";
 import { QuizCard } from "./QuizCard";
 import { useSelector } from "react-redux";

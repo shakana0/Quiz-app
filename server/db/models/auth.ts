@@ -131,6 +131,19 @@ userSchema.statics.deleteQuiz = async function (
   return deleteQuiz;
 };
 
+userSchema.statics.getQuiz = async function (
+  this: any,
+  userId: String,
+) {
+  const allQuizes: any = await this.distinct(
+    'quizes', { _id: userId }
+  );
+  if (!allQuizes) {
+    throw "404";
+  }
+  return allQuizes;
+};
+
 userSchema.statics.add_google_user = async function (this: any, user: any) {
   const { emailAdress, userName, password } = user;
   const newUser = await this.create({ emailAdress, userName, password });

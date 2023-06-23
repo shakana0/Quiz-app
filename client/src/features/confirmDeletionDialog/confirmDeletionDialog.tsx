@@ -1,4 +1,4 @@
-import { Box, Button, Modal, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { DialogStyles } from "../../components/styles/confirmDeletionDialog.styed";
 import CloseIcon from "@mui/icons-material/Close";
 

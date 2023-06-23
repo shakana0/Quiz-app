@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { CreateQuizStyling } from "../../components/styles/CreateQuiz.styled";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import { AuthBtn } from "../buttons/AuthBtn";
 import { QuizType } from "../../interface/quizType";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as api from "../../api/quizApi";
 import { useNavigate } from "react-router";
+import { setQuizChange } from "../singleQuiz/QuizSlice";
 const { v4: uuidv4 } = require("uuid");
-//uuidv4();
 
 export const CreateQuiz = () => {
-  //   let testId = uuidv4();
-  // console.log(testId, ':)')
-
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { activeUser } = useSelector((state: any) => state.auth);
   const [counter, setCounter] = useState(2); //ful-hack
   const [quizCardList, setQuizCardList] = useState<number[]>([1]);
@@ -95,6 +93,7 @@ export const CreateQuiz = () => {
   };
   const sendQuiz = () => {
     api.postQuiz(activeUser._id, quiz);
+    dispatch(setQuizChange(true));
     navigate("/profile");
   };
 
@@ -195,7 +194,6 @@ export const CreateQuiz = () => {
           isFullWidth={true}
           btnText="Create"
           onClick={() => {
-            // setQuiz({ ...quiz, questions: [...currentQuestions] });
             validateForm();
           }}
         />

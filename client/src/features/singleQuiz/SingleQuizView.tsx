@@ -5,14 +5,15 @@ import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { setCurrentQuiz } from "./QuizSlice";
+import { setCurrentQuiz, setQuizChange } from "./QuizSlice";
 import { FlashCards } from "./games/FlashCards";
 import { Write } from "./games/Write";
 import { Match } from "./games/Match";
 import ConfirmDeletionDialog from "../confirmDeletionDialog/confirmDeletionDialog";
+import { deleteQuiz } from "../../api/quizApi";
 
 export const SingleQuizView = () => {
-  const disptach = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { currentQuiz } = useSelector((state: any) => state.quiz);
   const { activeUser } = useSelector((state: any) => state.auth);
@@ -20,13 +21,14 @@ export const SingleQuizView = () => {
   const [currentGame, setCurrentGame] = useState("");
   const [isConfirmDeletionDialogOpen, setIsConfirmDeletionDialogOpen] =
     useState<boolean>(false);
-
+   
   useEffect(() => {
     let quiz: any = {};
     if (activeUser.quizes != null) {
       quiz = activeUser.quizes.filter((quiz: any) => quiz.id === id);
-      disptach(setCurrentQuiz(quiz[0]));
+      dispatch(setCurrentQuiz(quiz[0]));
     }
+    
   }, []);
 
   const renderQuiz = () => {
@@ -51,7 +53,10 @@ export const SingleQuizView = () => {
           setIsConfirmDeletionDialogOpen(false);
         }}
         onConfirm={() => {
-          setIsConfirmDeletionDialogOpen(true);
+          deleteQuiz(activeUser._id, id)
+          setIsConfirmDeletionDialogOpen(false);
+          dispatch(setQuizChange(true));
+          navigate('/')
         }}
       />
       <section className="top">
