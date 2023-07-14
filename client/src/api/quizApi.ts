@@ -18,8 +18,7 @@ export const postQuiz = async (userId: string, quiz: object) => {
 export const deleteQuiz = async (userId: string, quizId: string) => {
   try {
     const res = await axios.delete(`/user/${userId}/${quizId}/quiz`);
-    console.log('deleteMsg', res.data.msg)
-    return res.data.msg;
+    return res;
   } catch (error: any) {
     return error.response;
   }

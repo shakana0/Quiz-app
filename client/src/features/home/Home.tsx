@@ -1,7 +1,17 @@
+import { useState } from "react";
 import { HomeStyling } from "../../components/styles/Home.styled";
 import { QuizList } from "../quiz/QuizList";
+import SnackBar from "../snackBar/snackBar";
+import { useSelector } from "react-redux";
 
 export const Home = () => {
+  const { deletedQuiz } = useSelector((state: any) => state.quiz);
+  const [deletedQuizSuccess, setDeletedQuizSuccess] = useState<boolean>(!!deletedQuiz.status);
+
+  // const resetDeletedQuiz = () =>{
+  //   dispatch(setDeletedQuiz({msg: "", status: ""}))
+  // }
+
   return (
     <HomeStyling>
       <div className="hero-img">
@@ -18,6 +28,13 @@ export const Home = () => {
       <section>
         <h1 className="recent-header">Recent</h1>
         <QuizList />
+        <SnackBar
+          open={deletedQuizSuccess}
+          msg={deletedQuiz.msg}
+          bgColor={deletedQuiz.status > 201 ? "error" : "success"}
+          onCancel={() => setDeletedQuizSuccess(false)}
+
+        />
       </section>
     </HomeStyling>
   );

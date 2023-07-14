@@ -52,6 +52,7 @@ export const refreshToken = async () => {
     return res;
   } catch (err: any) {
     console.log(err, "RefreshToken invalid or expired");
+    localStorage.clear();
   }
 };
 
