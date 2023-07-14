@@ -16,10 +16,10 @@ module.exports.quiz_post = async (req: Request, res: Response) => {
 //delete quiz
 module.exports.quiz_delete = async (req: Request, res: Response) => {
   try {
-    const deletedQuiz = await User.deleteQuiz(req.params.userId, req.params.quizId);
+    await User.deleteQuiz(req.params.userId, req.params.quizId);
     res.status(201).json({ msg: "Quiz was deleted successfully"});
   } catch (err: any) {
-    res.status(400).json({ err });
+    res.status(400).json({ msg: "An error occurred when trying to delete quiz" });
   }
 };
 
