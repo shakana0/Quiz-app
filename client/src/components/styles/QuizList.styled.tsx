@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 export const QuizListStyling = styled.div`
@@ -14,6 +13,7 @@ export const QuizListStyling = styled.div`
   justify-content: center;
   align-items: center;
   overflow-y: auto;
+  overflow-x: hidden;
 
   .no-quizes-header {
     color: orange;

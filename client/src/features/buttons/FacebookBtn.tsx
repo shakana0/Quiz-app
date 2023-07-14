@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-import { setLogInSuccess, setAuthLogin } from "../Modal/AuthSlice";
+import { setLogInSuccess } from "../Modal/AuthSlice";
 import { toggleModalState } from "../Modal/ModalSlice";
 import {
   fetchUserFacebookLogin,
@@ -24,7 +24,7 @@ export const FacebookLoginBtn = () => {
 
   let FB = window.FB;
   const responseFacebook = async (res: any) => {
-    console.log(res.accessToken)
+    // console.log(res.accessToken)
     const user = await dispatch(
       fetchUserFacebookLogin({
         accessToken: res.accessToken,
@@ -33,13 +33,6 @@ export const FacebookLoginBtn = () => {
     );
     if (user) {
       dispatch(setLogInSuccess(true));
-      dispatch(setAuthLogin({ facebook: true }));
-      localStorage.setItem(
-        "isFacebookLogIn",
-        JSON.stringify({
-          login: true,
-        })
-      );
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
     }
   };
@@ -54,8 +47,6 @@ export const FacebookLoginBtn = () => {
         xfbml: true, // parse XFBML
       });
     };
-
-    dispatch(setAuthLogin({ facebook: false }));
     dispatch(setLogInSuccess(false));
     localStorage.setItem(
       "authLoginState",
@@ -75,9 +66,7 @@ export const FacebookLoginBtn = () => {
       ) : (
         <FacebookLogin
           appId={`${process.env.REACT_APP_FACEBOOK_APP_ID}`}
-          // autoLoad={true}
           fields="name,email,picture"
-          // onClick={componentClicked}
           callback={responseFacebook}
           render={(renderProps) => (
             <button onClick={renderProps.onClick}>

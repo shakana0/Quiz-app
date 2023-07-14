@@ -17,14 +17,12 @@ interface UserAuthType {
   userList: Array<credentialsType>;
   logInSuccess: boolean;
   activeUser: object;
-  // errorMsgs: { emailAdress: string; userName: string; password: string };
   errorMsgs: errorMsgsType;
   isCorrect: {
     email: boolean;
     userName: boolean;
     password: boolean;
   };
-  authLogin: { isGoogleLogin: boolean; isFacebookLogin: boolean };
   isLoading: boolean;
 }
 
@@ -38,7 +36,6 @@ const initialState: UserAuthType = {
     userName: false,
     password: false,
   },
-  authLogin: { isGoogleLogin: false, isFacebookLogin: false },
   isLoading: false,
 };
 
@@ -47,17 +44,7 @@ const AuthSlice = createSlice({
   initialState,
   reducers: {
     setLogInSuccess: (state, { payload }) => {
-      state.authLogin.isGoogleLogin = false;
       state.logInSuccess = payload;
-    },
-    setAuthLogin: (state, { payload }) => {
-      if (payload.google) {
-        state.authLogin.isGoogleLogin = payload.google;
-      }
-      if (payload) {
-        state.authLogin.isFacebookLogin = payload.facebook;
-      }
-      localStorage.setItem("authLoginState", JSON.stringify(state.authLogin));
     },
     resetErrorMsgs: (state) => {
       state.errorMsgs = { emailAdress: "", userName: "", password: "" };
@@ -94,6 +81,9 @@ const AuthSlice = createSlice({
       state.logInSuccess = false;
       localStorage.setItem("isLoggedIn", JSON.stringify(state.logInSuccess));
     },
+    setIsLoading: (state, {payload}) => {
+      state.isLoading = payload;
+    }
   },
   extraReducers: {
     [fetchNewUser.pending]: (state) => {
@@ -141,7 +131,6 @@ const AuthSlice = createSlice({
       if (payload) {
         state.activeUser = payload.data.user;
         state.logInSuccess = true;
-        state.authLogin.isGoogleLogin = true;
       }
     },
     [fetchCurrentGoogleUser.fulfilled]: (state, actions) => {
@@ -171,6 +160,6 @@ const AuthSlice = createSlice({
   },
 });
 
-export const { setLogInSuccess, resetErrorMsgs, setIsCorrect, setAuthLogin } =
+export const { setLogInSuccess, resetErrorMsgs, setIsCorrect, setIsLoading } =
   AuthSlice.actions;
 export default AuthSlice.reducer;

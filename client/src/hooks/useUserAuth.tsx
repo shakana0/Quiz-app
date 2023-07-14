@@ -13,44 +13,55 @@ const useUserAuth = () => {
   const [firstRender, setFirstRender] = useState(true);
   const dispatch = useDispatch();
   const { quizChange } = useSelector((state: any) => state.quiz);
+  const [userStatus, setUserStatus] = useState<Number>(0);
+  const authLoginState = JSON.parse( window.localStorage.getItem("authLoginState") || "{}");
 
   useEffect(() => {
-    //null check
-    const isGoogleLogIn = JSON.parse(
-      window.localStorage.getItem("isGoogleLogIn") || "{}"
-    );
-    const isFacebookLogIn = JSON.parse(
-      window.localStorage.getItem("isFacebookLogIn") || "{}"
-    );
 
-    //fetching user on first render
-    if (firstRender && !isGoogleLogIn.login && !isFacebookLogIn.login || quizChange && !isGoogleLogIn.login && !isFacebookLogIn.login) {
-      setFirstRender(false);
-      dispatch(fetchCurrentUser());
-    }
-    if (firstRender && isGoogleLogIn.login || quizChange && isGoogleLogIn.login) {
-      setFirstRender(false);
-      dispatch(fetchCurrentGoogleUser());
-    }
-    if (firstRender && isFacebookLogIn.login || quizChange && isFacebookLogIn.login) {
-      setFirstRender(false);
-      dispatch(fetchCurrentFacebookUser());
-    }
-
-    //refeshing current user
-    let interval = setInterval(() => {
-      if (isGoogleLogIn.login === false || isFacebookLogIn.login === false) {
-        dispatch(refreshCurrentUser());
+    const getCurrentUsers = async () => {
+      //fetching user on first render or when quizlist is updated
+      const isSocialMediaLogin = (authLoginState.isGoogleLogin || authLoginState.isFacebookLogin)
+        
+      if (
+        ((firstRender && !isSocialMediaLogin) || (quizChange && !isSocialMediaLogin)) 
+      ) {
+        setFirstRender(false);
+        const userRes = await dispatch(fetchCurrentUser());
+        setUserStatus(userRes?.payload?.status);
       }
-    }, 20 * 60 * 1000); //20min
+      if (
+        (firstRender && authLoginState.isGoogleLogin) ||
+        (quizChange && authLoginState.isGoogleLogin)
+      ) {
+        setFirstRender(false);
+        const googleUserRes = await dispatch(fetchCurrentGoogleUser());
+        setUserStatus(googleUserRes?.payload?.status);
+      }
+      if (
+        (firstRender && authLoginState.isFacebookLogin) ||
+        (quizChange && authLoginState.isFacebookLogin)
+      ) {
+        setFirstRender(false);
+        const fbUserRes = await dispatch(fetchCurrentFacebookUser());
+        setUserStatus(fbUserRes?.payload?.status);
+      }
 
-    dispatch(setQuizChange(false));
+      //refeshing current user
+      let interval = setInterval(() => {
+        if (!isSocialMediaLogin) {
+          dispatch(refreshCurrentUser());
+        }
+      }, 20 * 60 * 1000); //20min
 
-    return () => clearInterval(interval);
-    
+      dispatch(setQuizChange(false));
+
+      return () => clearInterval(interval);
+    };
+
+    getCurrentUsers();
   }, [quizChange]);
 
-  return { logInSuccess };
+  return { logInSuccess, userStatus };
 };
 
 export default useUserAuth;

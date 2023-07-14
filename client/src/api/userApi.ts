@@ -71,7 +71,10 @@ export const loginWithGoogle = async (idToken: object) => {
     const res = await axios.post("/google-login", idToken, {
       withCredentials: true,
     });
-    return res;
+    localStorage.setItem(
+      "authLoginState",
+      JSON.stringify({ isGoogleLogin: true })
+    );    return res;
   } catch (err: any) {
     console.log(err, "err");
   }
@@ -83,7 +86,10 @@ export const loginWithFacebook = async (credentials: object) => {
     const res = await axios.post("/facebook-login", credentials, {
       withCredentials: true,
     });
-    return res;
+    localStorage.setItem(
+      "authLoginState",
+      JSON.stringify({ isFacebookLogin: true })
+    );    return res;
   } catch (err: any) {
     console.log(err, "err");
   }

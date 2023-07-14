@@ -1,7 +1,6 @@
-import React from "react";
 import { ProfileViewStyling } from "../../components/styles/Profile.styled";
 import { useDispatch } from "react-redux";
-import { resetErrorMsgs } from "../Modal/AuthSlice";
+import { resetErrorMsgs, setLogInSuccess } from "../Modal/AuthSlice";
 import { AuthBtn } from "../buttons/AuthBtn";
 import { useSelector } from "react-redux";
 import { QuizList } from "../quiz/QuizList";
@@ -12,7 +11,7 @@ import { logoutUser } from "../Modal/AsyncThunkFunctions";
 
 export const ProfileView = () => {
   const navigate = useNavigate();
-  const disptach = useDispatch();
+  const dispatch = useDispatch();
   const { activeUser } = useSelector((state: any) => state.auth);
   const authState = JSON.parse(
     window.localStorage.getItem("authLoginState") || "{}"
@@ -29,8 +28,9 @@ export const ProfileView = () => {
           <button
             className="log-out-btn"
             onClick={() => {
-              disptach(logoutUser());
-              disptach(resetErrorMsgs());
+              dispatch(logoutUser());
+              dispatch(resetErrorMsgs());
+              dispatch(setLogInSuccess(false));
               navigate("/");
             }}
           >

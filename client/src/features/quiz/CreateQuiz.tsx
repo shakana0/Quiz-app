@@ -7,7 +7,7 @@ import { QuizType } from "../../interface/quizType";
 import { useDispatch, useSelector } from "react-redux";
 import * as api from "../../api/quizApi";
 import { useNavigate } from "react-router";
-import { setQuizChange } from "../singleQuiz/QuizSlice";
+import { setIsLoading } from "../Modal/AuthSlice";
 const { v4: uuidv4 } = require("uuid");
 
 export const CreateQuiz = () => {
@@ -93,8 +93,8 @@ export const CreateQuiz = () => {
   };
   const sendQuiz = () => {
     api.postQuiz(activeUser._id, quiz);
-    dispatch(setQuizChange(true));
-    navigate("/profile");
+    dispatch(setIsLoading(true));
+    navigate("/");
   };
 
   return (
@@ -135,8 +135,8 @@ export const CreateQuiz = () => {
         <section className="card-section">
           <span className={questionsError ? "show-error" : "hide-error"}>
             <h4>
-              You need to have at least two cards, a term and definition to create
-              quiz.
+              You need to have at least two cards, a term and definition to
+              create quiz.
             </h4>
           </span>
           {quizCardList.map((cardNum: number) => (

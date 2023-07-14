@@ -1,10 +1,15 @@
 import styled from "styled-components";
 
-const LoaderStyling = styled.div`
+interface LoderProps {
+  isFixed: boolean;
+  hasBackground: boolean;
+}
+
+const LoaderStyling = styled.div<LoderProps>`
   min-width: 100%;
   height: 100%;
-  background-color: #b885e589;
-  position: fixed;
+  background: ${(props) => (props.hasBackground ? "#b885e589" : "transparant")};
+  position: ${(props) => (props.isFixed ? "fixed" : "static")};
   padding-left: 1rem;
   display: flex;
   align-items: center;
@@ -28,9 +33,14 @@ const LoaderStyling = styled.div`
   }
 `;
 
-export const Loader = () => {
+interface LoderProps {
+  isFixed: boolean;
+  hasBackground: boolean;
+}
+
+export const Loader = ({ isFixed, hasBackground }: LoderProps) => {
   return (
-    <LoaderStyling>
+    <LoaderStyling isFixed={isFixed} hasBackground={hasBackground}>
       <div className="loader"></div>
     </LoaderStyling>
   );

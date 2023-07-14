@@ -5,7 +5,7 @@ import GoogleLogin, {
   GoogleLoginResponseOffline,
   GoogleLogout,
 } from "react-google-login";
-import { setLogInSuccess, setAuthLogin } from "../Modal/AuthSlice";
+import { setLogInSuccess } from "../Modal/AuthSlice";
 import { toggleModalState } from "../Modal/ModalSlice";
 import { useDispatch } from "react-redux";
 import { gapi } from "gapi-script";
@@ -36,8 +36,6 @@ export const GoogleLoginBtn = () => {
     const user = await dispatch(fetchUserGoogleLogin({ tokenId: res.tokenId }));
     if (user) {
       dispatch(setLogInSuccess(true));
-      dispatch(setAuthLogin({ google: true }));
-      localStorage.setItem("isGoogleLogIn", JSON.stringify({ login: true }));
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
     }
   };
@@ -49,10 +47,8 @@ export const GoogleLoginBtn = () => {
   };
 
   const handleLogout = () => {
-    console.log("you have been logged out successfully :)");
     dispatch(logoutSocialMediaUser());
     dispatch(setLogInSuccess(false));
-    dispatch(setAuthLogin({ google: false }));
     localStorage.setItem(
       "authLoginState",
       JSON.stringify({ isGoogleLogin: false })
@@ -82,7 +78,6 @@ export const GoogleLoginBtn = () => {
           onSuccess={handleLogin}
           onFailure={handleFailure}
           cookiePolicy="single_host_origin"
-          // isSignedIn={isSignedIn}
           render={(renderProps) => (
             <button
               onClick={renderProps.onClick}
@@ -97,5 +92,3 @@ export const GoogleLoginBtn = () => {
     </>
   );
 };
-
-// export const {handleLogin} = GoogleLoginBtn()

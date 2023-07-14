@@ -71,7 +71,6 @@ export const Modal = () => {
     //   password: "riri1234",
     // });
 
-    console.log(res, "res.payload.data");
     // const user =  JSON.parse(localStorage.getItem("isLoggedIn") || 'false')
     // appContext.setAuth(user);
 
@@ -283,7 +282,7 @@ export const Modal = () => {
 
   return (
     <ModalStyling>
-      {isLoading && <Loader />}
+      {isLoading && <Loader isFixed hasBackground/>}
       <div className="pic-container">
         <img
           src={require("../../assets/img/astronaut-coming-down.png")}
