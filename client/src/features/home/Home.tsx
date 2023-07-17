@@ -2,15 +2,20 @@ import { useState } from "react";
 import { HomeStyling } from "../../components/styles/Home.styled";
 import { QuizList } from "../quiz/QuizList";
 import SnackBar from "../snackBar/snackBar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setDeletedQuiz } from "../singleQuiz/QuizSlice";
 
 export const Home = () => {
+  const dispatch = useDispatch();
   const { deletedQuiz } = useSelector((state: any) => state.quiz);
-  const [deletedQuizSuccess, setDeletedQuizSuccess] = useState<boolean>(!!deletedQuiz.status);
-
-  // const resetDeletedQuiz = () =>{
-  //   dispatch(setDeletedQuiz({msg: "", status: ""}))
-  // }
+  const [deletedQuizSuccess, setDeletedQuizSuccess] = useState<boolean>(
+    !!deletedQuiz.status
+  );
+  const error = deletedQuiz.status > 201;
+  const handleOnCancel = () => {
+    setDeletedQuizSuccess(false);
+    dispatch(setDeletedQuiz({ msg: "", status: "" }));
+  };
 
   return (
     <HomeStyling>
@@ -31,9 +36,8 @@ export const Home = () => {
         <SnackBar
           open={deletedQuizSuccess}
           msg={deletedQuiz.msg}
-          bgColor={deletedQuiz.status > 201 ? "error" : "success"}
-          onCancel={() => setDeletedQuizSuccess(false)}
-
+          bgColor={error ? "error" : "success"}
+          onCancel={() => handleOnCancel()}
         />
       </section>
     </HomeStyling>
