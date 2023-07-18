@@ -1,6 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import { DialogStyles } from "../../components/styles/confirmDeletionDialog.styed";
 import CloseIcon from "@mui/icons-material/Close";
+import Strings from "../../utils/strings";
 
 interface DialogProps {
   open: boolean;
@@ -21,11 +22,11 @@ const ConfirmDeletionDialog = ({ open, onConfirm, onCancel }: DialogProps) => {
         <CloseIcon className="close-icon" onClick={onCancel} />
         <div className="info-container">
           <Typography id="modal-modal-title" variant="h5" component="h2">
-            Are you sure you want to delete this quiz?
+            {Strings.confirmationDialog.text.confirmation}
           </Typography>
           <div className="btn-container">
             <Button variant="contained" color="error" onClick={onConfirm}>
-              Yes
+              {Strings.confirmationDialog.text.yes}
             </Button>
             <Button
               onClick={onCancel}
@@ -33,7 +34,7 @@ const ConfirmDeletionDialog = ({ open, onConfirm, onCancel }: DialogProps) => {
               variant="outlined"
               color="inherit"
             >
-              No
+              {Strings.confirmationDialog.text.no}
             </Button>
           </div>
         </div>

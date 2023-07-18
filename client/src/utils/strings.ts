@@ -79,6 +79,13 @@ const Strings = {
             signUp: "Sign Up", 
             create: 'Create'
         }
+    },
+    confirmationDialog:{
+        text:{
+            confirmation: "Are you sure you want to delete this quiz?",
+            yes: "Yes",
+            no: "No"
+        }
     }
 }
 
