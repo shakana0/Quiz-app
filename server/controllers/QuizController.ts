@@ -12,7 +12,6 @@ module.exports.quiz_post = async (req: Request, res: Response) => {
   }
 };
 
-
 //delete quiz
 module.exports.quiz_delete = async (req: Request, res: Response) => {
   try {

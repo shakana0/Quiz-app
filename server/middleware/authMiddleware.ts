@@ -8,7 +8,6 @@ const fetch = require("node-fetch");
 const splitJWT = (cookies: string, jwt: any) => {
   if (cookies !== undefined) {
     jwt = cookies.split(";").filter((name: string) => name.includes("jwt"))[0];
-    //kolla om det ens går att splitta efter att den har tagit specifik token
     if (!!jwt && jwt.includes("=")) {
       return jwt.split("=")[1];
     } else {
@@ -25,7 +24,6 @@ const splitSocialilMediaToken = (cookies: string, token: any) => {
     let userId = cookies
       .split(";")
       .filter((name: string) => name.includes("userId"))[0];
-    //kolla om det ens går att splitta efter att den har tagit specifik token
     if (!!token && token.includes("=")) {
       if (!!userId) {
         return [token.split("=")[1], userId.split("=")[1]];

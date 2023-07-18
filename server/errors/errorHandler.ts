@@ -10,9 +10,7 @@ export const handleErrors = (err: any) => {
   if (err.message === "incorrect email or user name") {
     errors.emailAdress = "Email or user name does not exist";
   }
-  // if (err.userName === "incorrect email or user name") {
-  //   errors.userName = "Email or user name does not exist";
-  // }
+
   if (err.message === "incorrect password") {
     errors.password = "Wrong password";
   }

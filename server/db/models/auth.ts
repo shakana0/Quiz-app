@@ -2,7 +2,21 @@ const mongoose = require("mongoose");
 const { isEmail } = require("validator");
 const bcrypt = require("bcrypt");
 const validChar = /^[0-9a-zA-Z@.-_åäöÅÄÖ]+$/;
-import { QuizType } from "./quizes";
+// import { QuizType } from "./quizes";
+
+interface QuestionType {
+  id: number;
+  term: string;
+  definition: string;
+}
+
+//alla nycklar och värden måste vara identiska till json format. Är caseSensitive//
+interface QuizType {
+  id: string;
+  titel: string;
+  description: string;
+  questions: Array<QuestionType>;
+}
 
 export const userSchema = new mongoose.Schema({
   emailAdress: {
