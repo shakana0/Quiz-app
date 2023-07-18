@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Header } from "../features/header/Header";
-import { Outlet } from "react-router-dom";
 
 const LaoutStyling = styled.div`
   margin: 0;
@@ -20,11 +19,7 @@ export const Layout = ({ children }: childrenProps) => {
     <LaoutStyling>
       <Header />
       <main>{children}</main>
-      {/* <main>
-        <Outlet/>
-      </main> */}
-
-      <footer></footer>
+      <footer/>
     </LaoutStyling>
   );
 };

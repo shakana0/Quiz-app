@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import StarsInSky from "../../assets/img/stars-in-the-sky.jpg";
-// import StarsInSky from "../../assets/img/pink-sky.jpg";
-
 
 export const HomeStyling = styled.div`
   background-color: #d4acfc;

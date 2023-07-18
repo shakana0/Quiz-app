@@ -8,7 +8,6 @@ import { toggleModalState, setActiveForm } from "./ModalSlice";
 import { setLogInSuccess, resetErrorMsgs, setIsCorrect } from "./AuthSlice";
 import { credentialsType } from "../../interface/userType";
 import { useNavigate } from "react-router-dom";
-// import useAuth from "../../hooks/userAuth";
 import { GoogleLoginBtn } from "../buttons/GoogleBtn";
 import { FacebookLoginBtn } from "../buttons/FacebookBtn";
 import { fetchNewUser, fetchLoggedInUser } from "./AsyncThunkFunctions";
@@ -16,8 +15,6 @@ import { Loader } from "../../components/Loader";
 import Strings from "../../utils/strings";
 
 export const Modal = () => {
-  // const appContext = useAuth();
-
   const initialCredentialsState = {
     emailAdress: "",
     userName: "",
@@ -28,7 +25,6 @@ export const Modal = () => {
   const ref = useRef<HTMLFormElement>(null);
   const { modalType } = useSelector((state: any) => state.modal);
   const { activeForm } = useSelector((state: any) => state.modal);
-  // const { activeUser } = useSelector((state: any) => state.auth);
   const { errorMsgs } = useSelector((state: any) => state.auth);
   const { isCorrect } = useSelector((state: any) => state.auth);
   const { isLoading } = useSelector((state: any) => state.auth);
@@ -65,22 +61,6 @@ export const Modal = () => {
   const handleLogIn = async () => {
     console.log("hejsaan");
     const res = await dispatch(fetchLoggedInUser(logInCredentials));
-
-    // appContext.setAuth({
-    //   emailAdress: "riri@gmail.com",
-    //   userName: "riri1234",
-    //   password: "riri1234",
-    // });
-
-    // const user =  JSON.parse(localStorage.getItem("isLoggedIn") || 'false')
-    // appContext.setAuth(user);
-
-    // if (Object.keys(activeUser).length !== 0) {
-    //   dispatch(setLogInSuccess(true));
-    //   window.localStorage.setItem("isLoggedIn", "true");
-    //   dispatch(toggleModalState({ showModal: false, modalType: "" }));
-    //   navigate("/");
-    // }
     if (res.payload.data) {
       dispatch(setLogInSuccess(true));
       dispatch(toggleModalState({ showModal: false, modalType: "" }));
@@ -166,9 +146,7 @@ export const Modal = () => {
               className={isCorrect.email ? "check-icon" : "hide"}
             />
           </div>
-          {/* <p className="error">{errors && errors.emailAdress}</p> */}
           <p className="error">{errorMsgs.emailAdress}</p>
-
           <div className="input-box">
             <input
               type="text"
@@ -250,9 +228,7 @@ export const Modal = () => {
               className={isCorrect.email ? "check-icon" : "hide"}
             />
           </div>
-          {/* <p className="error">{errors && errors.emailAdress}</p> */}
           <p className="error">{errorMsgs.emailAdress}</p>
-
           <div className="input-box">
             <input
               type="password"
