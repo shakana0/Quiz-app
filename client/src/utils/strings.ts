@@ -76,7 +76,8 @@ const Strings = {
             authLogIn: "Log In",
             fbLogIn: "Log In With Facebook",
             googleLogIn: "Log In With Google",
-            signUp: "Sign Up"
+            signUp: "Sign Up", 
+            create: 'Create'
         }
     }
 }

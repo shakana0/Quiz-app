@@ -8,6 +8,7 @@ import { AuthBtn } from "../buttons/AuthBtn";
 import { Modal } from "../Modal/AuthModal";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleModalState, setActiveForm } from "../Modal/ModalSlice";
+import Strings from "../../utils/strings";
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -68,7 +69,7 @@ export const Header = () => {
             <AuthBtn
               variant="secondary-icon"
               isFullWidth={false}
-              btnText="Create"
+              btnText={Strings.globalButtons.button.create}
             />
           </Link>
         </>
@@ -81,7 +82,7 @@ export const Header = () => {
           <AuthBtn
             variant="secondary-icon"
             isFullWidth={false}
-            btnText="Create"
+            btnText={Strings.globalButtons.button.create}
             onClick={SignUp}
           />
         </>

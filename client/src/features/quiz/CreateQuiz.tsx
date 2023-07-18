@@ -192,7 +192,7 @@ export const CreateQuiz = () => {
           className="create-btn"
           variant="tertiary"
           isFullWidth={true}
-          btnText="Create"
+          btnText={Strings.globalButtons.button.create}
           onClick={() => {
             validateForm();
           }}
