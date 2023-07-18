@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
+import CompleetedQuizCard from "../../quizAnswerCards/CompleetedQuizCard";
+import Strings from "../../../utils/strings";
+import WrongAnswerCard from "../../quizAnswerCards/WrongAnswerCard";
 export const Match = () => {
   const { currentQuiz } = useSelector((state: any) => state.quiz);
   const [currIndex, setCurrIndex] = useState(1);
   const [points, setPoints] = useState(0);
   const [wrong, setWrong] = useState(false);
-  // const [quiz, setQuiz] = useState<any>([]);
   let currQuiz: any = [];
 
   const renderCurrentDefinition = () => {
@@ -14,19 +16,7 @@ export const Match = () => {
         (question: any) => question.id === currIndex
       );
       if (wrong === true) {
-        return (
-          <article className="wrong">
-            <span className="angry-emoji">😡</span>
-            <h2>Wrong!</h2>
-            <button
-              onClick={() => {
-                setWrong(false);
-              }}
-            >
-              Continue
-            </button>
-          </article>
-        );
+        return <WrongAnswerCard onContinue={() => setWrong(false)} />;
       }
       if (
         currIndex <= currentQuiz.questions.length - 1 + 1 &&
@@ -38,21 +28,17 @@ export const Match = () => {
               <p>{currQuiz[0].definition}</p>
             </section>
             <section className="alternatives">
-              <p>Choose mathcing term</p>
+              <p>{Strings.singleQuiz.text.choose}</p>
               {renderTerms()}
             </section>
           </>
         );
       } else {
         return (
-          <article className="compleeted">
-            <span className="smiling-emoji">😊</span>
-            <h2>
-              Good Job! You got {points}/
-              {currentQuiz.questions && currentQuiz.questions.length} terms
-              right.
-            </h2>
-          </article>
+          <CompleetedQuizCard
+            points={points}
+            questions={currentQuiz.questions.length}
+          />
         );
       }
     }
@@ -79,11 +65,13 @@ export const Match = () => {
     }
 
     let termsArr = [];
-    termsArr = allTerms.filter((term) => termsArr.length < 4 ? termsArr.push(term) : null)
+    termsArr = allTerms.filter((term) =>
+      termsArr.length < 4 ? termsArr.push(term) : null
+    );
     //checking  if the right term is not in array
-    if(!termsArr.includes(currQuiz[0].term)){
-      termsArr.splice(Math.floor(Math.random()*termsArr.length), 1)
-      termsArr.push(currQuiz[0].term)
+    if (!termsArr.includes(currQuiz[0].term)) {
+      termsArr.splice(Math.floor(Math.random() * termsArr.length), 1);
+      termsArr.push(currQuiz[0].term);
     }
 
     if (currentQuiz.questions.length) {

@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ReactCardFlip from "react-card-flip";
 import { useSelector } from "react-redux";
+import CompleetedQuizCard from "../../quizAnswerCards/CompleetedQuizCard";
+import Strings from "../../../utils/strings";
 
 export const FlashCards = () => {
   const { currentQuiz } = useSelector((state: any) => state.quiz);
@@ -31,13 +33,9 @@ export const FlashCards = () => {
       }
       if (page > currentQuiz.questions.length - 1) {
         return (
-          <article className="compleeted">
-            <span className="smiling-emoji">😊</span>
-            <h2>
-              Good Job! You've compleeted{" "}
-              {currentQuiz.questions && currentQuiz.questions.length} terms.
-            </h2>
-          </article>
+          <CompleetedQuizCard
+            questions={currentQuiz.questions.length}
+          />
         );
       }
     }
@@ -58,7 +56,7 @@ export const FlashCards = () => {
               }
             }}
           >
-            back
+            {Strings.singleQuiz.buttons.back}
           </button>
           <button
             onClick={() => {
@@ -73,7 +71,7 @@ export const FlashCards = () => {
               }
             }}
           >
-            next
+            {Strings.singleQuiz.buttons.next}
           </button>
         </div>
       </>

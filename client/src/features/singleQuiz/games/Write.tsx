@@ -1,5 +1,7 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import CompleetedQuizCard from "../../quizAnswerCards/CompleetedQuizCard";
+import WrongAnswerCard from "../../quizAnswerCards/WrongAnswerCard";
 
 export const Write = () => {
   const ref = useRef<HTMLInputElement>(null);
@@ -16,19 +18,7 @@ export const Write = () => {
         (question: any) => question.id === index
       );
       if (wrong === true) {
-        return (
-          <article className="wrong">
-            <span className="angry-emoji">😡</span>
-            <h2>Wrong!</h2>
-            <button
-              onClick={() => {
-                setWrong(false);
-              }}
-            >
-              Continue
-            </button>
-          </article>
-        );
+        return <WrongAnswerCard onContinue={() => setWrong(false)} />;
       }
       if (index <= currentQuiz.questions.length - 1 + 1 && wrong === false) {
         return (
@@ -51,13 +41,10 @@ export const Write = () => {
         );
       } else {
         return (
-          <article className="compleeted">
-            <span className="smiling-emoji">😊</span>
-            <h2>
-              Good Job! You got {points}/
-              {currentQuiz.questions && currentQuiz.questions.length} terms right.
-            </h2>
-          </article>
+          <CompleetedQuizCard
+            points={points}
+            questions={currentQuiz.questions.length}
+          />
         );
       }
     }

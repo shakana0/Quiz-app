@@ -9,9 +9,10 @@ import { setCurrentQuiz, setDeletedQuiz } from "./QuizSlice";
 import { FlashCards } from "./games/FlashCards";
 import { Write } from "./games/Write";
 import { Match } from "./games/Match";
-import ConfirmDeletionDialog from "../confirmDeletionDialog/confirmDeletionDialog";
 import { deleteQuiz } from "../../api/quizApi";
 import { setIsLoading } from "../Modal/AuthSlice";
+import ConfirmDeletionDialog from "../confirmDeletionDialog/ConfirmDeletionDialog";
+import Strings from "../../utils/strings";
 
 export const SingleQuizView = () => {
   const dispatch = useDispatch();
@@ -31,10 +32,10 @@ export const SingleQuizView = () => {
     }
   }, []);
 
- const handleConfirmation =async () => {
+  const handleConfirmation = async () => {
     // const res = await deleteQuiz("fhhf", "id");
     const res = await deleteQuiz(activeUser._id, id);
-    dispatch(setDeletedQuiz({msg: res?.data?.msg, status: res?.status}))
+    dispatch(setDeletedQuiz({ msg: res?.data?.msg, status: res?.status }));
     setIsConfirmDeletionDialogOpen(false);
     dispatch(setIsLoading(true));
     navigate("/");
@@ -73,7 +74,7 @@ export const SingleQuizView = () => {
           }}
         >
           <ArrowBackIosRoundedIcon className="back-icon" />
-          <h3>Back</h3>
+          <h3>{Strings.singleQuiz.back}</h3>
         </button>
         <DeleteOutlineOutlinedIcon
           className={"delete-icon"}
@@ -84,27 +85,27 @@ export const SingleQuizView = () => {
       <p className="description">{currentQuiz.description}</p>
       <section className="game-board">
         <div className="quiz-btns">
-          <p>Pick a study mode!</p>
+          <p>{Strings.singleQuiz.text.pick}</p>
           <button
             onClick={() => {
               setCurrentGame("Flashcards");
             }}
           >
-            Flashcards
+            {Strings.singleQuiz.quizNames.flashCards}
           </button>
           <button
             onClick={() => {
               setCurrentGame("Write");
             }}
           >
-            Write
+            {Strings.singleQuiz.quizNames.write}
           </button>
           <button
             onClick={() => {
               setCurrentGame("Match");
             }}
           >
-            Match
+            {Strings.singleQuiz.quizNames.match}
           </button>
         </div>
         {renderQuiz()}

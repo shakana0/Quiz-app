@@ -82,6 +82,7 @@ export const SingleQuizViewStyling = styled.div`
       display: flex;
       flex-direction: column;
       width: 70%;
+      min-height: 400px;
       .card-container {
         width: 100%;
         cursor: pointer;
@@ -107,6 +108,7 @@ export const SingleQuizViewStyling = styled.div`
       .back {
         background-color: #82a8e1;
         border: 4px solid #7486ac;
+        text-align: center;
       }
 
       .pagination-btns {
@@ -143,9 +145,12 @@ export const SingleQuizViewStyling = styled.div`
       border-radius: 20px;
       box-sizing: border-box;
 
-      .smiling-emoji,
-      .angry-emoji {
+      .emoji {
         font-size: 5rem;
+      }
+      h1{
+        margin: 2rem 0;
+        font-size: 2rem;
       }
     }
     .wrong {
@@ -163,6 +168,7 @@ export const SingleQuizViewStyling = styled.div`
     /* Write */
     .write-container {
       width: 70%;
+      min-height: 400px;
       border: 4px solid #7a70b7;
       border-radius: 20px;
       background-color: #342882;
