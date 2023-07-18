@@ -4,6 +4,7 @@ import { QuizList } from "../quiz/QuizList";
 import SnackBar from "../snackBar/snackBar";
 import { useDispatch, useSelector } from "react-redux";
 import { setDeletedQuiz } from "../singleQuiz/QuizSlice";
+import Strings from "../../utils/strings";
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ export const Home = () => {
     <HomeStyling>
       <div className="hero-img">
         <div className="overlay">
-          <h1>HOME</h1>
+          <h1>{Strings.home.pageHader.toUpperCase()}</h1>
         </div>
         <img
           src={require("../../assets/img/astronaut-hanging-ship.png")}
@@ -31,7 +32,7 @@ export const Home = () => {
         />
       </div>
       <section>
-        <h1 className="recent-header">Recent</h1>
+        <h1 className="recent-header">{Strings.home.recent}</h1>
         <QuizList />
         <SnackBar
           open={deletedQuizSuccess}

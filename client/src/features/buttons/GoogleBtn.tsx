@@ -14,6 +14,7 @@ import {
   fetchUserGoogleLogin,
   logoutSocialMediaUser,
 } from "../Modal/AsyncThunkFunctions";
+import Strings from "../../utils/strings";
 
 export const GoogleLoginBtn = () => {
   const dispatch = useDispatch();
@@ -68,7 +69,7 @@ export const GoogleLoginBtn = () => {
               disabled={renderProps.disabled}
               className="log-out-btn"
             >
-              G Log Out
+              {Strings.globalButtons.button.googleLogout}
             </button>
           )}
         ></GoogleLogout>
@@ -84,7 +85,7 @@ export const GoogleLoginBtn = () => {
               disabled={renderProps.disabled}
             >
               <GoogleIcon className="google-icon" />
-              <p>Log In With Google</p>
+              <p> {Strings.globalButtons.button.googleLogIn}</p>
             </button>
           )}
         ></GoogleLogin>

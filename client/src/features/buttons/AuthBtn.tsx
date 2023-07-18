@@ -1,4 +1,3 @@
-import React from "react";
 import { AuthBtnStyle } from "../../components/styles/AuthBtn.styled"
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 import { LogiInButtonProps } from "../../interface/componentsPropsTypes";

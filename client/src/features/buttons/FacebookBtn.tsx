@@ -8,6 +8,7 @@ import {
   fetchUserFacebookLogin,
   logoutSocialMediaUser,
 } from "../Modal/AsyncThunkFunctions";
+import Strings from "../../utils/strings";
 //extend the Window interface and turning off type checking
 declare global {
   interface Window {
@@ -61,7 +62,7 @@ export const FacebookLoginBtn = () => {
     <>
       {authState.isFacebookLogin ? (
         <button className="log-out-btn" onClick={facebookLogout}>
-          Fb Log out
+          {Strings.globalButtons.button.fbLogOut}
         </button>
       ) : (
         <FacebookLogin
@@ -71,7 +72,7 @@ export const FacebookLoginBtn = () => {
           render={(renderProps) => (
             <button onClick={renderProps.onClick}>
               <FacebookIcon className="facebook-icon" />
-              <p>Log In With Facebook</p>
+              <p> {Strings.globalButtons.button.fbLogIn}</p>
             </button>
           )}
         />

@@ -13,6 +13,7 @@ import { GoogleLoginBtn } from "../buttons/GoogleBtn";
 import { FacebookLoginBtn } from "../buttons/FacebookBtn";
 import { fetchNewUser, fetchLoggedInUser } from "./AsyncThunkFunctions";
 import { Loader } from "../../components/Loader";
+import Strings from "../../utils/strings";
 
 export const Modal = () => {
   // const appContext = useAuth();
@@ -94,7 +95,7 @@ export const Modal = () => {
         <AuthBtn
           variant="secondary-light"
           isFullWidth={false}
-          btnText="Log In"
+          btnText={Strings.globalButtons.button.authLogIn}
           className={activeForm.logIn ? "isActive" : ""}
           onClick={(event: React.MouseEvent<HTMLElement>) => {
             dispatch(
@@ -107,7 +108,7 @@ export const Modal = () => {
         <AuthBtn
           variant="secondary-light"
           isFullWidth={false}
-          btnText="Sign Up"
+          btnText={Strings.globalButtons.button.signUp}
           className={activeForm.signUp ? "isActive" : ""}
           onClick={(event: React.MouseEvent<HTMLElement>) => {
             dispatch(
@@ -145,7 +146,7 @@ export const Modal = () => {
               </div>
               <div className="or-email">
                 <span></span>
-                <p>Or Email</p>
+                <p>{Strings.authModal.text.orEmail}</p>
                 <span></span>
               </div>
             </div>
@@ -204,8 +205,7 @@ export const Modal = () => {
           <AuthBtn
             variant="secondary"
             isFullWidth={true}
-            btnText="Sign Up"
-            // onClick={validateForm}
+            btnText={Strings.globalButtons.button.signUp}
             onClick={sendCredentials}
           />
         </form>
@@ -272,7 +272,7 @@ export const Modal = () => {
           <AuthBtn
             variant="secondary"
             isFullWidth={true}
-            btnText="Log In"
+            btnText={Strings.globalButtons.button.authLogIn}
             onClick={handleLogIn}
           />
         </form>

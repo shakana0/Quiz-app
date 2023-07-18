@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as api from "../../api/quizApi";
 import { useNavigate } from "react-router";
 import { setIsLoading } from "../Modal/AuthSlice";
+import Strings from "../../utils/strings";
 const { v4: uuidv4 } = require("uuid");
 
 export const CreateQuiz = () => {
@@ -107,7 +108,7 @@ export const CreateQuiz = () => {
       >
         <section className="quiz-info">
           <div>
-            <h1>Create a new quiz</h1>
+            <h1>{Strings.createQuizPage.pageHader}</h1>
             <input
               type="text"
               placeholder="Enter a title like “Chemistry -chapter 2”"
@@ -134,10 +135,7 @@ export const CreateQuiz = () => {
         </section>
         <section className="card-section">
           <span className={questionsError ? "show-error" : "hide-error"}>
-            <h4>
-              You need to have at least two cards, a term and definition to
-              create quiz.
-            </h4>
+            <h4>{Strings.createQuizPage.text.error}</h4>
           </span>
           {quizCardList.map((cardNum: number) => (
             <article className="quiz-card" key={cardNum}>
@@ -154,7 +152,9 @@ export const CreateQuiz = () => {
                   }}
                 />
                 <div>
-                  <button className="add-file-btn">Upload Image</button>
+                  <button className="add-file-btn">
+                    {Strings.createQuizPage.buttons.upload}
+                  </button>
                   <DeleteOutlineOutlinedIcon
                     className="delete-icon"
                     onClick={() => {
@@ -185,7 +185,7 @@ export const CreateQuiz = () => {
             }}
           >
             <AddIcon className="add-icon" />
-            <h2>Add Another Card</h2>
+            <h2>{Strings.createQuizPage.buttons.add}</h2>
           </button>
         </section>
         <AuthBtn

@@ -7,6 +7,7 @@ import { Loader } from "../../components/Loader";
 import { setIsLoading } from "../Modal/AuthSlice";
 import { setQuizChange } from "../singleQuiz/QuizSlice";
 import useUserAuth from "../../hooks/useUserAuth";
+import Strings from "../../utils/strings";
 
 export const QuizList = () => {
   const dispatch = useDispatch();
@@ -35,7 +36,7 @@ export const QuizList = () => {
   const renderList = () => {
     if (!allQuizes.length) {
       return (
-        <h1 className="no-quizes-header">You don't have any quizes yet</h1>
+        <h1 className="no-quizes-header">{Strings.quizList.text.empty}</h1>
       );
     } else {
       return (

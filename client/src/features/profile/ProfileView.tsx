@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 import { GoogleLoginBtn } from "../buttons/GoogleBtn";
 import { FacebookLoginBtn } from "../buttons/FacebookBtn";
 import { logoutUser } from "../Modal/AsyncThunkFunctions";
+import Strings from "../../utils/strings";
 
 export const ProfileView = () => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ export const ProfileView = () => {
               navigate("/");
             }}
           >
-            Log Out
+            {Strings.globalButtons.button.authLogOut}
           </button>
         )}
         <section className="profile-info">

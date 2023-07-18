@@ -1,4 +1,34 @@
 const Strings = {
+    landingPage: {
+        pageHader: "Have fun learning",
+        text: {
+            createQuiz: "Make your own quizes. Customize quiz with flashcards on repeat,shuffle, etc.",
+            inviteFriends: "Invite friends and take quizes together.",
+            callFriends: "Give your friends a call and practice together live."
+        },
+        button: {
+            getStarted: "Get started"
+        }
+    },
+    home: {
+        pageHader: "Home",
+        recent: "Recent"
+    },
+    authModal: {
+        text: {
+            orEmail: "Or Email"
+        }
+    },
+    createQuizPage: {
+        pageHader: "Create a new quiz",
+        text: {
+            error: "You need to have at least two cards, a term and definition to create quiz.",
+        },
+        buttons: {
+            upload: "Upload Image",
+            add: "Add Another Card"
+        }
+    },
     singleQuiz: {
         back: "Back",
         completedQuizMsg: {
@@ -28,9 +58,25 @@ const Strings = {
             write: "Write",
             match: "Match"
         },
-        flashCards:{
+        flashCards: {
             compleeted: "You have compleeted ",
             terms: " terms"
+        }
+    },
+    quizList: {
+        text: {
+            empty: "You don't have any quizes yet"
+        }
+    },
+    globalButtons: {
+        button: {
+            authLogOut: "Log Out",
+            fbLogOut: "fb Log Out",
+            googleLogout: "g Log out",
+            authLogIn: "Log In",
+            fbLogIn: "Log In With Facebook",
+            googleLogIn: "Log In With Google",
+            signUp: "Sign Up"
         }
     }
 }
