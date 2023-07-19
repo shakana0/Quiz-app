@@ -5,7 +5,7 @@ import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { setCurrentQuiz, setDeletedQuiz } from "./QuizSlice";
+import { setCurrentQuiz, setQuizInfo } from "./QuizSlice";
 import { FlashCards } from "./games/FlashCards";
 import { Write } from "./games/Write";
 import { Match } from "./games/Match";
@@ -35,7 +35,7 @@ export const SingleQuizView = () => {
   const handleConfirmation = async () => {
     // const res = await deleteQuiz("fhhf", "id");
     const res = await deleteQuiz(activeUser._id, id);
-    dispatch(setDeletedQuiz({ msg: res?.data?.msg, status: res?.status }));
+    dispatch(setQuizInfo({ msg: res?.data?.msg, status: res?.status }));
     setIsConfirmDeletionDialogOpen(false);
     dispatch(setIsLoading(true));
     navigate("/");

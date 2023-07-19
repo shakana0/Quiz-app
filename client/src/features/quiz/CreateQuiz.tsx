@@ -9,6 +9,7 @@ import * as api from "../../api/quizApi";
 import { useNavigate } from "react-router";
 import { setIsLoading } from "../Modal/AuthSlice";
 import Strings from "../../utils/strings";
+import { setQuizInfo } from "../singleQuiz/QuizSlice";
 const { v4: uuidv4 } = require("uuid");
 
 export const CreateQuiz = () => {
@@ -92,8 +93,9 @@ export const CreateQuiz = () => {
       sendQuiz();
     }
   };
-  const sendQuiz = () => {
-    api.postQuiz(activeUser._id, quiz);
+  const sendQuiz = async () => {
+    const res = await api.postQuiz(activeUser._id, quiz);
+    dispatch(setQuizInfo({ msg: res?.data?.msg, status: res?.status }));
     dispatch(setIsLoading(true));
     navigate("/");
   };

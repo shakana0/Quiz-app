@@ -3,19 +3,19 @@ import { HomeStyling } from "../../components/styles/Home.styled";
 import { QuizList } from "../quiz/QuizList";
 import SnackBar from "../snackBar/snackBar";
 import { useDispatch, useSelector } from "react-redux";
-import { setDeletedQuiz } from "../singleQuiz/QuizSlice";
+import { setQuizInfo } from "../singleQuiz/QuizSlice";
 import Strings from "../../utils/strings";
 
 export const Home = () => {
   const dispatch = useDispatch();
-  const { deletedQuiz } = useSelector((state: any) => state.quiz);
+  const { quizInfo } = useSelector((state: any) => state.quiz);
   const [deletedQuizSuccess, setDeletedQuizSuccess] = useState<boolean>(
-    !!deletedQuiz.status
+    !!quizInfo.status
   );
-  const error = deletedQuiz.status > 201;
+  const error = quizInfo.status > 201;
   const handleOnCancel = () => {
     setDeletedQuizSuccess(false);
-    dispatch(setDeletedQuiz({ msg: "", status: "" }));
+    dispatch(setQuizInfo({ msg: "", status: "" }));
   };
 
   return (
@@ -36,7 +36,7 @@ export const Home = () => {
         <QuizList />
         <SnackBar
           open={deletedQuizSuccess}
-          msg={deletedQuiz.msg}
+          msg={quizInfo.msg}
           bgColor={error ? "error" : "success"}
           onCancel={() => handleOnCancel()}
         />

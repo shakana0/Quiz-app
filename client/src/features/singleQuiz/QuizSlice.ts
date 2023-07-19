@@ -4,7 +4,7 @@ import { QuizType } from "../../interface/quizType";
 interface ModalType {
   currentQuiz: QuizType;
   quizChange: boolean;
-  deletedQuiz: {msg: string, status: string}
+  quizInfo: {msg: string, status: string}
 }
 
 const initialState: ModalType = {
@@ -15,7 +15,7 @@ const initialState: ModalType = {
     questions: [],
   },
   quizChange: false,
-  deletedQuiz: {msg: "", status: ""}
+  quizInfo: {msg: "", status: ""}
 };
 
 const QuizSlice = createSlice({
@@ -28,11 +28,11 @@ const QuizSlice = createSlice({
     setQuizChange: (state, { payload }) => {
       state.quizChange = payload
     },
-    setDeletedQuiz: (state, { payload }) => {
-      state.deletedQuiz = {msg: payload.msg, status: payload.status}
+    setQuizInfo: (state, { payload }) => {
+      state.quizInfo = {msg: payload.msg, status: payload.status}
     },
   },
 });
 
-export const { setCurrentQuiz, setQuizChange, setDeletedQuiz } = QuizSlice.actions;
+export const { setCurrentQuiz, setQuizChange, setQuizInfo } = QuizSlice.actions;
 export default QuizSlice.reducer;
