@@ -6,9 +6,9 @@ const User = require("../db/models/auth")
 module.exports.quiz_post = async (req: Request, res: Response) => {
   try {
     const postedQuiz = await User.postQuiz(req.params.id, req.body);
-    res.status(201).json(postedQuiz);
+    res.status(201).json({msg: "Quiz was saved successfully", postedQuiz});
   } catch (err: any) {
-    res.status(400).json({ err });
+    res.status(400).json({ msg: "An error occurred when trying to save quiz" });
   }
 };
 
