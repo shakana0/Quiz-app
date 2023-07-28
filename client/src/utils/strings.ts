@@ -1,3 +1,5 @@
+import ImageSearch from "../features/handleImage/ImageSearch"
+
 const Strings = {
     landingPage: {
         pageHader: "Have fun learning",
@@ -26,6 +28,7 @@ const Strings = {
         },
         buttons: {
             upload: "Upload Image",
+            getImg: "Get Image",
             add: "Add Another Card"
         }
     },
@@ -85,6 +88,11 @@ const Strings = {
             confirmation: "Are you sure you want to delete this quiz?",
             yes: "Yes",
             no: "No"
+        }
+    },
+    ImageSearch:{
+        text:{
+            error: "Sorry, no images found"
         }
     }
 }

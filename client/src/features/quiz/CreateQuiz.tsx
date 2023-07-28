@@ -10,6 +10,7 @@ import { useNavigate } from "react-router";
 import { setIsLoading } from "../Modal/AuthSlice";
 import Strings from "../../utils/strings";
 import { setQuizInfo } from "../singleQuiz/QuizSlice";
+import ImageSearch from "../handleImage/ImageSearch";
 const { v4: uuidv4 } = require("uuid");
 
 export const CreateQuiz = () => {
@@ -18,6 +19,7 @@ export const CreateQuiz = () => {
   const { activeUser } = useSelector((state: any) => state.auth);
   const [counter, setCounter] = useState(2); //ful-hack
   const [quizCardList, setQuizCardList] = useState<number[]>([1]);
+
   const initialQuestionsState = {
     id: 1,
     term: "",
@@ -29,6 +31,8 @@ export const CreateQuiz = () => {
     description: "",
     questions: [],
   };
+  const [searchTerm, setSearchTerm] = useState(initialQuestionsState);
+
   const [currentQuestions, setQuestions] = useState<any[]>([
     initialQuestionsState,
   ]);
@@ -45,14 +49,27 @@ export const CreateQuiz = () => {
     setQuizCardList([...updatedCardList]);
   };
   const addQuestions = () => {
-    currentQuestions.push({ id: counter, term: "", definition: "" });
+    currentQuestions.push({
+      id: counter,
+      term: "",
+      definition: "",
+    });
   };
   const [quizErrors, setQuizErrors] = useState(initialQuizState);
   const [questionsError, setQueztionsError] = useState(false);
+
   useEffect(() => {
     setQuiz({ ...quiz, questions: [...currentQuestions] });
   }, [counter]); //using counter as dependency because quiz is an object but
   //the changes which we wish to follow are the same in both counter and quiz thefore we can use counter.
+
+  const renderImageSearch = (cardNum: number) => {
+    return (
+      <ImageSearch
+        searchTerm={searchTerm.id === cardNum ? searchTerm.term : ""}
+      />
+    );
+  };
 
   const validateForm = () => {
     setQuizErrors(initialQuizState);
@@ -146,16 +163,28 @@ export const CreateQuiz = () => {
                   type="text"
                   placeholder="Enter Term..."
                   onChange={(event) => {
-                    for (let question of currentQuestions) {
-                      if (question.id === cardNum) {
-                        question.term = event?.target.value;
-                      }
-                    }
+                    currentQuestions.find((question) =>
+                      question.id === cardNum
+                        ? (question.term = event?.target.value)
+                        : false
+                    );
                   }}
                 />
                 <div>
-                  <button className="add-file-btn">
-                    {Strings.createQuizPage.buttons.upload}
+                  <button
+                    className="add-file-btn"
+                    onClick={() => {
+                      currentQuestions.find((question) =>
+                        question.id === cardNum
+                          ? setSearchTerm({
+                              ...question,
+                              term: question.term,
+                            })
+                          : false
+                      );
+                    }}
+                  >
+                    {Strings.createQuizPage.buttons.getImg}
                   </button>
                   <DeleteOutlineOutlinedIcon
                     className="delete-icon"
@@ -169,13 +198,14 @@ export const CreateQuiz = () => {
                 type="text"
                 placeholder="Enter Definition..."
                 onChange={(event) => {
-                  for (let question of currentQuestions) {
-                    if (question.id === cardNum) {
-                      question.definition = event?.target.value;
-                    }
-                  }
+                  currentQuestions.find((question) =>
+                    question.id === cardNum
+                      ? (question.definition = event?.target.value)
+                      : false
+                  );
                 }}
               />
+              {renderImageSearch(cardNum)}
             </article>
           ))}
           <button

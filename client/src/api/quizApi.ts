@@ -22,3 +22,15 @@ export const deleteQuiz = async (userId: string, quizId: string) => {
     return error.response;
   }
 };
+
+//Search images
+export const getImages = async (pageNum: number, searchTerm: string) => {
+  try {
+    const response = await axios.get(
+      `https://api.unsplash.com/search/photos?page=${pageNum}&per_page=5&query=${searchTerm}&client_id=${process.env.REACT_APP_UNSPLASH_ACCESS_KEY}`
+    );
+    return response.data.results
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
