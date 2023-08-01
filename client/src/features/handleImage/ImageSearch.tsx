@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getImages } from "../../api/quizApi";
 import Strings from "../../utils/strings";
+import { ImageSearchStyling } from "../../components/styles/ImageSearch.styed";
 
 interface imageSearchProps {
   searchTerm: any;
@@ -28,7 +29,7 @@ const ImageSearch = ({ searchTerm }: imageSearchProps) => {
   }, [searchTerm]);
 
   return (
-    <>
+    <ImageSearchStyling>
       {error ? (
         <h2>{Strings.ImageSearch.text.error}</h2>
       ) : (
@@ -37,14 +38,14 @@ const ImageSearch = ({ searchTerm }: imageSearchProps) => {
             <img
               key={image.id}
               src={image.urls.small}
-              width={200}
-              height={200}
+              width={190}
+              height={190}
               alt={image.alt_description}
             />
           ))}
         </section>
       )}
-    </>
+    </ImageSearchStyling>
   );
 };
 

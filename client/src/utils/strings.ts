@@ -1,5 +1,3 @@
-import ImageSearch from "../features/handleImage/ImageSearch"
-
 const Strings = {
     landingPage: {
         pageHader: "Have fun learning",
@@ -92,7 +90,7 @@ const Strings = {
     },
     ImageSearch:{
         text:{
-            error: "Sorry, no images found"
+            error: "Sorry, no images found \u{1F623}"
         }
     }
 }
