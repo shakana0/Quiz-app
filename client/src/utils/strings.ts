@@ -92,6 +92,12 @@ const Strings = {
         text:{
             error: "Sorry, no images found \u{1F623}"
         }
+    },
+    ImageUpload:{
+        text:{
+            lableText: "You can drag and drop image",
+            error: "File type not supported. Only images can be uploaded"
+        }
     }
 }
 

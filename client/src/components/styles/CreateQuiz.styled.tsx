@@ -101,7 +101,7 @@ export const CreateQuizStyling = styled.div`
               height: 45px;
               margin: 1rem 2rem 0 0;
             }
-            //fixa ikonen
+           
             .delete-icon {
               align-self: flex-start;
               font-size: 2rem;

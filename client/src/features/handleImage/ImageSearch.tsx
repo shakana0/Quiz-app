@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getImages } from "../../api/quizApi";
 import Strings from "../../utils/strings";
 import { ImageSearchStyling } from "../../components/styles/ImageSearch.styed";
+import ImageUpload from "./ImageUpload";
 
 interface imageSearchProps {
   searchTerm: any;
@@ -31,7 +32,11 @@ const ImageSearch = ({ searchTerm }: imageSearchProps) => {
   return (
     <ImageSearchStyling>
       {error ? (
+        <>
         <h2>{Strings.ImageSearch.text.error}</h2>
+        <ImageUpload/>
+        </>
+        
       ) : (
         <section className="image-container">
           {images.map((image: any) => (
