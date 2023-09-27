@@ -4,10 +4,20 @@ const bcrypt = require("bcrypt");
 const validChar = /^[0-9a-zA-Z@.-_åäöÅÄÖ]+$/;
 // import { QuizType } from "./quizes";
 
+export interface imageType {
+  lastModified: number
+  lastModifiedDate: object
+  name: string
+  size: number
+  type: string
+  webkitRelativePath: string
+}
+
 interface QuestionType {
   id: number;
   term: string;
   definition: string;
+  image: string | imageType
 }
 
 //alla nycklar och värden måste vara identiska till json format. Är caseSensitive//
@@ -119,7 +129,7 @@ userSchema.statics.userAuth = async function (this: any, id: string) {
 userSchema.statics.postQuiz = async function (
   this: any,
   id: String,
-  quiz: QuizType
+  quiz: QuizType,
 ) {
   const newQuiz: any = await this.findOneAndUpdate(
     { _id: id },

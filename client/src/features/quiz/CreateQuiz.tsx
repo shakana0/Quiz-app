@@ -3,7 +3,7 @@ import { CreateQuizStyling } from "../../components/styles/CreateQuiz.styled";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import { AuthBtn } from "../buttons/AuthBtn";
-import { QuizType } from "../../interface/quizType";
+import { QuizType, imageType } from "../../interface/quizType";
 import { useDispatch, useSelector } from "react-redux";
 import * as api from "../../api/quizApi";
 import { useNavigate } from "react-router";
@@ -19,11 +19,13 @@ export const CreateQuiz = () => {
   const { activeUser } = useSelector((state: any) => state.auth);
   const [counter, setCounter] = useState(2); //ful-hack
   const [quizCardList, setQuizCardList] = useState<number[]>([1]);
+  const [selectedImg, setSelectedImg] = useState<string | imageType>("");
 
   const initialQuestionsState = {
     id: 1,
     term: "",
     definition: "",
+    image: selectedImg,
   };
   const initialQuizState: QuizType = {
     id: uuidv4(),
@@ -53,6 +55,7 @@ export const CreateQuiz = () => {
       id: counter,
       term: "",
       definition: "",
+      image: "",
     });
   };
   const [quizErrors, setQuizErrors] = useState(initialQuizState);
@@ -60,13 +63,19 @@ export const CreateQuiz = () => {
 
   useEffect(() => {
     setQuiz({ ...quiz, questions: [...currentQuestions] });
-  }, [counter]); //using counter as dependency because quiz is an object but
+    currentQuestions.find((question) =>
+      question.id === searchTerm.id ? (question.image = selectedImg) : ""
+    );
+  }, [counter, selectedImg]); //using counter as dependency because quiz is an object but
   //the changes which we wish to follow are the same in both counter and quiz thefore we can use counter.
+
+console.log('quiz', quiz)
 
   const renderImageSearch = (cardNum: number) => {
     return (
       <ImageSearch
         searchTerm={searchTerm.id === cardNum ? searchTerm.term : ""}
+        setSelectedImg={setSelectedImg}
       />
     );
   };
@@ -106,9 +115,10 @@ export const CreateQuiz = () => {
       setQueztionsError(true);
       currentErr.push("error");
     }
-    if (!currentErr.length) {
-      sendQuiz();
-    }
+    // if (!currentErr.length) {
+    //   sendQuiz();
+    // }
+    sendQuiz();
   };
   const sendQuiz = async () => {
     const res = await api.postQuiz(activeUser._id, quiz);

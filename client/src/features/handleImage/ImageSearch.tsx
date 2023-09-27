@@ -5,12 +5,14 @@ import { ImageSearchStyling } from "../../components/styles/ImageSearch.styed";
 import ImageUpload from "./ImageUpload";
 
 interface imageSearchProps {
-  searchTerm: any;
+  searchTerm: string;
+  setSelectedImg: (selectedImg: string) => void;
 }
 
-const ImageSearch = ({ searchTerm }: imageSearchProps) => {
+const ImageSearch = ({ searchTerm, setSelectedImg }: imageSearchProps) => {
   const [images, setImages] = useState([]);
   const [error, setError] = useState<boolean>(false);
+  const [isActive, setIsActive] = useState<string>('');
 
   useEffect(() => {
     const handleSearch = async () => {
@@ -33,10 +35,9 @@ const ImageSearch = ({ searchTerm }: imageSearchProps) => {
     <ImageSearchStyling>
       {error ? (
         <>
-        <h2>{Strings.ImageSearch.text.error}</h2>
-        <ImageUpload/>
+          <h2>{Strings.ImageSearch.text.error}</h2>
+          <ImageUpload setSelectedImg={setSelectedImg} />
         </>
-        
       ) : (
         <section className="image-container">
           {images.map((image: any) => (
@@ -46,6 +47,11 @@ const ImageSearch = ({ searchTerm }: imageSearchProps) => {
               width={190}
               height={190}
               alt={image.alt_description}
+              onClick={() => {
+                setSelectedImg(image.urls.small);
+                setIsActive(image.id);
+              }}
+              className={isActive === image.id ? "active" : ""}
             />
           ))}
         </section>

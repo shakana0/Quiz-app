@@ -3,7 +3,8 @@ const Auth = require("../controllers/AuthController");
 const Verify = require("../middleware/authMiddleware");
 const router = Router();
 const Quiz = require("../controllers/QuizController");
-// import { google_login } from "../controllers/AuthController"
+const UploadImg = require("../middleware/uploadMiddleware")
+
 
 router.post("/signup", Auth.signup_post);
 router.post("/login", Auth.login_post);
@@ -30,7 +31,7 @@ router.get(
 );
 
 //post quiz
-router.post("/user/:id/quizes", Quiz.quiz_post);
+router.post("/user/:id/quizes", UploadImg.array('images'), Quiz.quiz_post);
 //delete quiz
 router.delete("/user/:userId/:quizId/quiz", Quiz.quiz_delete);
 //get all quizes

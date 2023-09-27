@@ -1,15 +1,39 @@
 import axios from "axios";
+import { QuizType } from "../interface/quizType";
 
-axios.defaults.baseURL = "https://quiz-app-backend-uco1.onrender.com/";
+// axios.defaults.baseURL = "https://quiz-app-backend-uco1.onrender.com/";
 
-export const postQuiz = async (userId: string, quiz: object) => {
+export const postQuiz = async (userId: string, quiz: any) => {
+  console.log('created quiz --> ', quiz)
   try {
-    const postedQuiz = await axios.post(`/user/${userId}/quizes`, quiz);
+    const formData = new FormData()
+    // const blobData = new Blob([quiz.questions[0].image], { type: quiz.questions[0].image.type });
+    // const blobDataa = new File([Blob], "filename")
+
+    quiz.questions.forEach((question: any) => {
+      formData.append('images', question.image);
+    });
+    formData.append('data', JSON.stringify(quiz));
+
+    const postedQuiz = await axios.post(`http://localhost:3030/user/${userId}/quizes`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+    });
     return postedQuiz;
   } catch (error: any) {
     return error.response;
   }
 };
+// export const postQuiz = async (userId: string, quiz: object) => {
+//   console.log('created quiz --> ', quiz)
+//   try {
+//     // const postedQuiz = await axios.post(`/user/${userId}/quizes`, quiz);
+//     // return postedQuiz;
+//   } catch (error: any) {
+//     return error.response;
+//   }
+// };
 
 //Edit quiz
 

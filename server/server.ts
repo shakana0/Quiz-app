@@ -20,6 +20,7 @@ app.use(
 );
 // app.set("trust proxy", 1); //if using heroku
 app.use(authRoutes);
+app.use('/images', express.static('uploads/images'));
 
 //Mongoose Connection
 import { connect } from "mongoose";
