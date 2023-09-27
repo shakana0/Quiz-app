@@ -2,4 +2,6 @@
 from = "/*"
 to = "/index.html"
 status = 200
-ci = npm run build
+
+ command = "npm run build"
+ 
