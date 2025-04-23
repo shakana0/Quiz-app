@@ -66,10 +66,12 @@ Currently being rebuilt and redesigned – live demo coming soon!
 ![Quiz Home UI](client/src/assets/img/png)
 
 ### 🧩 Quiz Profile Page
-![Quiz Home UI](client/src/assets/img/quiz-app-profile.png)
+<img src="client/src/assets/img/quiz-app-profile.png" alt="Quiz Dashboard" width="500" />
 
 ### 📊 Game Dashboard
-![Quiz Dashboard UI](client/src/assets/img/quiz-app-game-board.png)
+![Quiz Dashboard UI]()
+
+<img src="client/src/assets/img/quiz-app-game-board.png" alt="Quiz Dashboard" width="500" />
 
 ---
 
